@@ -2,11 +2,15 @@
 id: DR-001
 artifact_status: draft
 authority: evidence
+research_status_at_publication: completed
+recommendation_status_at_publication: proposed
+evidence_as_of: 2026-09-03
 owner: agentic-development-research
 question: coordinator gates and artifact lifecycle before Workflow v1
 scope: coordinator-gates-and-artifact-lifecycle-requirements-before-workflow-v1
 decision_consumer: coordinator DR-001 recommendation-disposition decision before Workflow v1 design
 repository: ahtoxaandy999/agentic-development-workflow
+repository_state: "main@f9e6642118114ef991770f3d871023f2e4a5defb; accepted baseline 13b05e075ec04aa91494cd18f7d29f7249028cb5"
 repository_state_at_authorization: "main@265f171502de8a2d8844ae4ccf277c58e56a20cb; verified 2026-09-03"
 research_gate_ref: ADW-DR-001-GATE-001
 research_gate_correction_ref: ADW-DR-001-GATE-CORR-001

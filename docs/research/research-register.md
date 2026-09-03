@@ -40,7 +40,7 @@ branch_protection_status: unavailable-for-private-repository-under-current-plan
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
-next_gate: DR-001 evidence production
+next_gate: DR-001 independent source review
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -76,12 +76,12 @@ Artifact: [ADW-BOOTSTRAP-RESEARCH-001](ADW-BOOTSTRAP-RESEARCH-001.md).
 
 The source review accepted this note as research evidence. The adoption reference accepted only the scope stated above. The note's publication-time recommendation remains `proposed`; this register records the later current disposition.
 
-## Active research
+## Completed research awaiting independent source review
 
 ```yaml
 id: DR-001
 question: coordinator gates and artifact lifecycle before Workflow v1
-research_status: in-progress
+research_status: completed
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-001.md
 dependency: accepted Bootstrap Context Baseline v0
@@ -89,12 +89,15 @@ dependency_status: satisfied
 research_gate_ref: ADW-DR-001-GATE-001
 research_gate_correction_ref: ADW-DR-001-GATE-CORR-001
 research_started_on: 2026-09-03
-next_gate: DR-001 evidence production
+evidence_as_of: 2026-09-03
+review_target: "DR-001@sha256:825204b8c45da36c4c7cd087d572e0b014352aee7a6fe1c54e0772aaec6acf0f"
+review_target_bytes: 66017
+next_gate: DR-001 independent source review
 ```
 
-The durable contract exists at [ADW-DR-001](ADW-DR-001.md). DR-001 is authorized by `ADW-DR-001-GATE-001` as corrected by `ADW-DR-001-GATE-CORR-001` and is in progress. Evidence has not yet been produced. The next gate is DR-001 evidence production.
+The durable contract and completed evidence exist at [ADW-DR-001](ADW-DR-001.md). Evidence production is complete, and the exact draft report is frozen as `DR-001@sha256:825204b8c45da36c4c7cd087d572e0b014352aee7a6fe1c54e0772aaec6acf0f` (66017 bytes). DR-001 is awaiting independent source review. Its recommendations remain proposed and non-normative.
 
-`docs/research/ADW-DR-001.md` owns the authorized DR-001 contract and evolving research content. This Research Register owns mutable research status, dependencies, the artifact pointer, current decision disposition, supersession, and the next gate.
+`docs/research/ADW-DR-001.md` owns the frozen publication-time evidence. This Research Register owns mutable research status, dependencies, the artifact pointer, current decision disposition, supersession, and the next gate.
 
 ## Deferred research
 
