@@ -40,7 +40,7 @@ branch_protection_status: unavailable-for-private-repository-under-current-plan
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
-next_gate: DR-001 recommendation-disposition gate
+next_gate: Workflow v1 prerequisite-research sequencing gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -76,12 +76,13 @@ Artifact: [ADW-BOOTSTRAP-RESEARCH-001](ADW-BOOTSTRAP-RESEARCH-001.md).
 
 The source review accepted this note as research evidence. The adoption reference accepted only the scope stated above. The note's publication-time recommendation remains `proposed`; this register records the later current disposition.
 
-## Source-reviewed research awaiting coordinator disposition
+## Source-reviewed research with accepted coordinator disposition
 
 ```yaml
 id: DR-001
 question: coordinator gates and artifact lifecycle before Workflow v1
 research_status: reviewed
+current_decision_status: accepted
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-001.md
 dependency: accepted Bootstrap Context Baseline v0
@@ -90,8 +91,12 @@ research_gate_ref: ADW-DR-001-GATE-001
 research_gate_correction_ref: ADW-DR-001-GATE-CORR-001
 research_started_on: 2026-09-03
 evidence_as_of: 2026-09-03
+
 review_target: "DR-001@sha256:825204b8c45da36c4c7cd087d572e0b014352aee7a6fe1c54e0772aaec6acf0f"
 review_target_bytes: 66017
+review_target_blob: f142919d1ed1f6b1717cc965ab9232bbc60d4389
+review_target_commit: 9537e5f80af0ed04ed28bfd06573e8ef13b3ba6f
+
 source_review_ref: docs/research/ADW-DR-001-SOURCE-REVIEW-001.md
 source_review_record: "ADW-DR-001-SOURCE-REVIEW-001@sha256:fc710d1bdd3a1eba2c8fde4bd94ef7a5081ceb0a1cc0f5a0d74917173fd6deb4"
 source_review_record_bytes: 17105
@@ -101,10 +106,224 @@ source_review_findings:
   blocker: 0
   major: 0
   minor: 1
-next_gate: DR-001 recommendation-disposition gate
+
+decision_id: ADW-DR-001-DISPOSITION-001
+evidence_target: "DR-001@sha256:825204b8c45da36c4c7cd087d572e0b014352aee7a6fe1c54e0772aaec6acf0f"
+decided_on: 2026-09-03
+decision_scope: >
+  The twelve DR-001 recommendations are accepted as scoped inputs,
+  semantic constraints, conditional governance principles, or later design
+  inputs. This disposition does not create Workflow v1 and gains normative
+  effect only through a later explicitly authorized update to the applicable
+  authoritative owner.
+
+recommendation_dispositions:
+  - id: R1
+    disposition: ACCEPT
+    classification: semantic invariant
+    accepted_scope: >
+      Preserve distinct meanings for evidence, disposition, authorization,
+      candidate identity, verification, review, and acceptance.
+    qualification: >
+      Separate artifacts, actors, or formal gates are not required universally.
+    does_not_authorize: >
+      Workflow v1 sequencing or mandatory heavyweight ceremony.
+    later_dependency: >
+      Proportionate mechanism selection during later design.
+    proposed_owner_class: >
+      Existing project-charter state-separation scope.
+
+  - id: R2
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: conditional governance principle
+    accepted_scope: >
+      Give each mutable authoritative state class one current owner within
+      this repository and workflow control plane; treat other copies as references.
+    qualification: >
+      This is not asserted as a universal rule for every software system.
+      Concrete storage and synchronization remain unresolved.
+    does_not_authorize: >
+      A tracker, storage system, synchronization design, or universal owner map.
+    later_dependency: >
+      State-placement and synchronization design.
+    proposed_owner_class: >
+      Existing authority hierarchy plus the applicable authoritative owner
+      for each state class.
+
+  - id: R3
+    disposition: ACCEPT
+    classification: semantic invariant
+    accepted_scope: >
+      Bind every formal review to an immutable candidate identity; material
+      candidate changes require applicable renewed review.
+    qualification: >
+      Immutable identity proves content identity only.
+    does_not_authorize: >
+      Mandatory formal review for every task, or treating a SHA as proof of
+      authorship, approval, reviewer identity, retention, or acceptance.
+    later_dependency: >
+      Authentication, signing, retention, and enforcement design.
+    proposed_owner_class: >
+      Existing project-charter candidate semantics and applicable review-record owner.
+
+  - id: R4
+    disposition: ACCEPT
+    classification: semantic invariant
+    accepted_scope: >
+      Keep verification, review, and acceptance semantically distinct.
+    qualification: >
+      Conditional gates may be omitted where governance permits, but may not
+      be represented as completed or conflated.
+    does_not_authorize: >
+      Mandatory formal review or acceptance for every task.
+    later_dependency: >
+      Later design of conditional gate invocation.
+    proposed_owner_class: >
+      Existing project-charter acceptance-semantics scope.
+
+  - id: R5
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: conditional governance principle
+    accepted_scope: >
+      Require a conflict-free reviewer whenever independence is claimed, and
+      invoke independent review when consequence, uncertainty, privilege, or
+      applicable governance warrants it.
+    qualification: >
+      No universal invocation threshold is adopted.
+    does_not_authorize: >
+      An independent-review gate for every task.
+    later_dependency: >
+      Thresholds, conflict tests, authentication, applicable governance, and enforcement.
+    proposed_owner_class: >
+      Existing role/authority scope plus a later adopted workflow-governance owner.
+
+  - id: R6
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: conditional governance principle
+    accepted_scope: >
+      Reserve materially consequential authorization and acceptance for an
+      accountable coordinator or human risk owner. Consequence is contextual
+      and includes material effects on governed policy, shared baselines,
+      security or privilege, compliance, or comparable downstream reliance.
+    qualification: >
+      No numerical threshold is adopted, and ordinary code changes are not
+      automatically consequential.
+    does_not_authorize: >
+      A universal human-acceptance gate.
+    later_dependency: >
+      Context-specific invocation and accountability design.
+    proposed_owner_class: >
+      Existing project-charter role, authority, and acceptance scopes.
+
+  - id: R7
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: conditional governance principle
+    accepted_scope: >
+      Preserve addressable records for material authorizations, exceptions,
+      reviews, adoption, and acceptance when downstream reliance, audit,
+      recovery, or cross-session coordination depends on them.
+    qualification: >
+      Retention duration, storage mechanism, protection strength, and concrete
+      record owner remain unresolved.
+    does_not_authorize: >
+      Durable storage of every working note or selection of a record system.
+    later_dependency: >
+      Applicable governance and later retention/storage design.
+    proposed_owner_class: >
+      Existing research-evidence scope for research records and the applicable
+      accountable decision or task owner for other record classes.
+
+  - id: R8
+    disposition: ACCEPT
+    classification: conditional governance principle
+    accepted_scope: >
+      Tailor ceremony according to documented context and risk rather than
+      task size alone.
+    qualification: >
+      No scoring model or threshold is adopted.
+    does_not_authorize: >
+      A definition of small task, normative risk score, or formal treatment
+      of reversibility or blast radius.
+    later_dependency: >
+      Tailoring criteria require later evidence and design.
+    proposed_owner_class: >
+      Later adopted workflow-governance or policy owner.
+
+  - id: R9
+    disposition: ACCEPT
+    classification: semantic invariant
+    accepted_scope: >
+      Verify a proposed enforcement control's actual availability and effective
+      configuration before relying on it.
+    qualification: >
+      Applies at the point of reliance.
+    does_not_authorize: >
+      A protection product, mechanism, or compensating control.
+    later_dependency: >
+      Live configuration evidence and later enforcement/tooling selection.
+    proposed_owner_class: >
+      Applicable governance or control-policy owner.
+
+  - id: R10
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: semantic invariant
+    accepted_scope: >
+      Re-read live authoritative state at state-dependent transition gates,
+      including after acceptance when subsequent current state or coordination
+      depends on the accepted event.
+    qualification: >
+      No standalone synchronization phase is required after every task.
+    does_not_authorize: >
+      A concrete synchronization or dual-write architecture.
+    later_dependency: >
+      Identification of state-dependent gates and synchronization design.
+    proposed_owner_class: >
+      Applicable live-state owner plus the relevant governance owner for the rule.
+
+  - id: R11
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: later design input
+    accepted_scope: >
+      For consequential delegated execution, provide repository and authority,
+      baseline/ref, objective, inputs, allowed scope, non-goals, acceptance
+      criteria, verification, stop conditions, and required evidence destination.
+      For independent review, provide immutable target, requirements, claimed
+      scope, linked verification evidence, relevant context, criteria,
+      independence expectation, stop boundary, dispositions, and a durable
+      findings destination when reliance warrants it.
+    qualification: >
+      Categories may be combined and scaled; no fixed schema or mandatory full
+      packet for trivial work is adopted.
+    does_not_authorize: >
+      A task schema, review schema, tracker, or document format.
+    later_dependency: >
+      Later workflow and packet-representation design.
+    proposed_owner_class: >
+      Later adopted task-contract and review-contract owner classes.
+
+  - id: R12
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: semantic invariant
+    accepted_scope: >
+      Within this repository/control-plane authority model, treat chat, memory,
+      local worktrees, and handoffs as working or navigation state unless
+      explicitly promoted into an authoritative owner.
+    qualification: >
+      These media remain useful; the restriction concerns authority and is
+      not asserted universally for every system.
+    does_not_authorize: >
+      Discarding useful context or treating informal state as inherently invalid.
+    later_dependency: >
+      Promotion, provenance, and synchronization design if needed.
+    proposed_owner_class: >
+      Existing project-charter authority-hierarchy scope.
+
+next_gate: Workflow v1 prerequisite-research sequencing gate
 ```
 
-The durable contract and source-reviewed evidence exist at [ADW-DR-001](ADW-DR-001.md). DR-001 has passed independent source review for evidence quality, and the verdict is tied to the exact frozen target `DR-001@sha256:825204b8c45da36c4c7cd087d572e0b014352aee7a6fe1c54e0772aaec6acf0f` (66017 bytes). The [durable review artifact](ADW-DR-001-SOURCE-REVIEW-001.md) records one non-blocking MINOR finding; it does not require a new frozen report target. DR-001 recommendations remain proposed and non-normative. The next gate is coordinator recommendation disposition.
+The durable contract and source-reviewed evidence exist at [ADW-DR-001](ADW-DR-001.md). DR-001 has completed and passed independent source review for evidence quality, and the verdict is tied to the exact frozen target `DR-001@sha256:825204b8c45da36c4c7cd087d572e0b014352aee7a6fe1c54e0772aaec6acf0f` (66017 bytes). Coordinator decision `ADW-DR-001-DISPOSITION-001` sets `current_decision_status: accepted`. All twelve recommendations are accepted within their recorded scopes and qualifications: five are `ACCEPT` and seven are `ACCEPT WITH QUALIFICATION`; none is rejected or deferred as a whole. The overbroad interpretations identified by each decision boundary are not accepted.
+
+The recommendations are accepted inputs and constraints only. This disposition does not create Workflow v1, and `docs/research/ADW-DR-001.md` does not become normative or active through this decision. Normative effect still requires later explicit materialization into the applicable authoritative owner. The [durable review artifact](ADW-DR-001-SOURCE-REVIEW-001.md) records one non-blocking MINOR finding, which must be preserved in future use; it does not require a new frozen report target. The next gate is the Workflow v1 prerequisite-research sequencing gate.
 
 `docs/research/ADW-DR-001.md` owns the frozen publication-time evidence. This Research Register owns mutable research status, dependencies, the artifact pointer, current decision disposition, supersession, and the next gate.
 
