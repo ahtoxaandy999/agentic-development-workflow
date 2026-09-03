@@ -5,7 +5,7 @@ artifact_status: draft
 maturity: bootstrap
 owner: chatgpt-coordinator
 task_contract_status: authorized
-design_stage: contract-durable
+design_stage: initial-design-complete
 task_id: ADW-WF1-DESIGN-GATE-001
 design_base_sha: 29581dc9b7d1f2c368e2eca9098500ddabbd3a49
 input_disposition_refs:
@@ -626,3 +626,477 @@ The next eligible gate after durable materialization is:
 Workflow v1 initial design candidate gate
 
 That gate still requires a fresh live repository re-read.
+
+---
+
+# Workflow v1 Initial Design Proposal
+
+## Proposal status and authority boundary
+
+The preceding contract records the authorized contract and materialization state. Statements there such as “No substantive Workflow v1 design has yet been produced” describe that earlier contract-durable stage. This appended section is the current substantive proposal. Neither the preceding contract nor this proposal has normative effect yet.
+
+This proposal defines required tool-agnostic behavior. It does not implement Workflow v1, choose mechanisms, authorize repository writes, or establish an accepted candidate. Its current design stage means only that producer-side design and verification are complete enough for later byte-exact persistence and independent review.
+
+## Purpose, terminology, and design decisions
+
+Workflow v1 coordinates bounded work from clarification through a validated outcome while preserving authority, identity, evidence, and failure semantics. It is a semantic workflow, not a required artifact sequence or Git branching model.
+
+Terms:
+
+| Term | Meaning |
+|---|---|
+| authoritative owner | The sole current owner allowed to change one mutable authoritative state class. References and caches do not become co-owners. |
+| authority | A current grant from an accountable owner defining permitted decisions or actions. Authentication, identity, approval, and capability do not imply authority. |
+| task contract | The context-scaled semantic agreement that bounds an objective, authority, scope, inputs, validation, evidence, stopping, and escalation. It need not use a fixed schema. |
+| working output | Mutable, non-candidate work that has not been assigned an immutable candidate identity. |
+| candidate | Exact immutable content submitted to a gate that relies on content identity. For a repository candidate, identity is the exact full commit SHA. |
+| verification | Evidence-producing checks against specified properties. Producer verification may be performed by the executor but is not independent review. |
+| review | Deliberate evaluation of a defined subject and criteria. Independence exists only when the reviewer is conflict-free for that subject. |
+| acceptance | An explicit decision by the authorized accountable owner about a precisely identified subject. It is not inferred from verification, review, persistence, or use. |
+| gate | A predicate controlling a transition. Applicability, satisfaction, and freshness are separately represented. |
+| side-effect domain | State whose mutation can affect an external, shared, privileged, or otherwise relied-upon system. |
+| containment | Verified cessation or bounded isolation of further effects across every relevant side-effect domain. |
+| rehydration | Reconstruction of sufficient current context from authoritative pointers and validated identities before a loss-sensitive action. |
+| join | Accountable reconciliation of declared branch obligations into one integration decision; it is not mere receipt of messages. |
+
+The proposal makes these decisions:
+
+| Decision | Required behavior |
+|---|---|
+| ADW-WF1-DD-001 — orthogonal state | Represent task control, work product, verification, review, decision, normativity, baseline acceptance, and parallel join as distinct semantic state planes. Artifact or Git state may evidence a plane but may not substitute for it. |
+| ADW-WF1-DD-002 — explicit conditional gates | Every invoked conditional gate records applicability, satisfaction, freshness, subject, criteria, owner, and evidence. Required-and-passed, not-applicable-with-rationale, and required-but-unsatisfied are distinct. |
+| ADW-WF1-DD-003 — single mutable owner | Assign exactly one current authoritative owner to every mutable state class. Other representations are references, evidence, or disposable working state. Ownership transfer is explicit and atomic at the semantic boundary. |
+| ADW-WF1-DD-004 — bounded commitment | A task becomes ready and may be authorized only when a qualified executor can act without inventing material intent and the result can be verified at the stated boundary. Unknowns are resolved, bounded as learning work, or block commitment. |
+| ADW-WF1-DD-005 — immutable relied-upon identity | Pin and freshly verify every identity or effective-configuration dimension actually relied upon at dispatch, resumption, join, publication, review, acceptance, or other state-dependent transition. Identity proves only which object was examined. |
+| ADW-WF1-DD-006 — outcome-traceable decomposition | Decomposed units have explicit outcomes, boundaries, dependencies, interfaces, local verification, integration points, and recomposition obligations. Vertical slices are preferred only when they best expose behavioral or end-to-end learning. |
+| ADW-WF1-DD-007 — bounded delegation | Delegated authority is no broader than the parent authority and is explicit enough to constrain action, validation, evidence, ceilings, stopping, and escalation. Delegation of work is not delegation of acceptance unless the accountable owner separately grants that authority. |
+| ADW-WF1-DD-008 — controlled parallelism | Parallel work is eligible only when independence, read/write sets, side effects, invariants, dependencies, isolation, ownership, and join behavior are known sufficiently for the proposed concurrency. No concurrency count is universal. |
+| ADW-WF1-DD-009 — correction by impact | A material correction creates a new candidate identity. Impact analysis determines affected verification and review; unaffected evidence carries forward only with an explicit, supported finding. |
+| ADW-WF1-DD-010 — reliance-based durability | Make state durable before downstream authority, reliance, audit, recovery, or cross-session coordination depends on it. Keep disposable exploration ephemeral and promote it explicitly when reliance changes. |
+| ADW-WF1-DD-011 — operation-aware interruption | Cancellation request, acknowledgement, verified containment, reconciliation, recovery, and compensation are distinct. Retry depends on operation semantics and evidence of prior effects. |
+| ADW-WF1-DD-012 — qualitative proportionality | Scale representation and ceremony using consequence, uncertainty, reversibility, privilege, affected scope, and context, while retaining semantic invariants. No universal score, threshold, or small-task exemption exists. |
+| ADW-WF1-DD-013 — unattended denial by default | This design grants no unattended or AFK authority. Necessary evidence can only make a task eligible for a later explicit decision; incomplete evidence denies eligibility. |
+| ADW-WF1-DD-014 — mechanism deferral | The design states behavior and evidence obligations. Storage, schemas, products, identity systems, enforcement, topology, automation, and numeric limits remain for later authorized decisions. |
+
+## Lifecycle and semantic state model
+
+Workflow state is a vector. A work item occupies one value in each applicable plane; no single numeric phase or universal linear process is implied.
+
+| State plane | Values and meaning |
+|---|---|
+| task control | framing; ready; authorized; active; blocked; stop-requested; containment-unverified; contained; recovering; completed; cancelled; abandoned |
+| work product | none; working; proposed-output; candidate-identified; superseded |
+| verification | not-invoked; pending; passed; failed; stale |
+| review | not-evaluated; not-applicable; required-pending; passed; rejected; stale |
+| disposition | none; pending; accepted; rejected; deferred; superseded |
+| normative status | non-normative; adopted; superseded |
+| baseline acceptance | not-applicable; pending; accepted-exact-identity; rejected; superseded |
+| join | not-applicable; planned; branches-active; pending; passed; partial; failed; conflicted |
+| cancellation | none; requested; acknowledged; containment-unverified; contained; residual-effects |
+| recovery | not-applicable; assessment; retry-authorized; reconciling; compensated; recovered; intervention-required |
+
+A terminal value in one plane does not collapse another. For example, a verified candidate may still have review required-pending, no disposition, non-normative status, and no accepted baseline. Completed task control means the authorized task stopped with its required terminal accounting; it does not imply candidate acceptance or normative adoption.
+
+Blocked preserves resumability when the obstacle might be resolved. Abandoned is an explicit accountable decision that the bounded task will not continue. Cancelled requires containment or an explicit residual-effects record; merely requesting cancellation cannot produce cancelled.
+
+### Gate semantics
+
+A gate evaluation contains:
+
+- the transition and exact subject it governs;
+- its accountable owner and evaluation time;
+- applicability: required or not-applicable, with the governing rule and rationale;
+- satisfaction, only when required: passed or unsatisfied;
+- freshness: current or stale for every relied-upon authority, identity, configuration, dependency, and prerequisite;
+- criteria, evidence pointers, exceptions, and unresolved conditions;
+- the permitted destination state if effective.
+
+Effective outcomes are:
+
+| Outcome | Meaning and transition effect |
+|---|---|
+| required and passed | Criteria are satisfied with current evidence; the named transition may proceed. |
+| not applicable and legitimately omitted | A governing rule permits omission and the accountable owner records the rationale; no pass is claimed. |
+| required but not satisfied | The transition is denied and the item remains in or moves to a non-success state such as framing, blocked, failed, or pending. |
+| invalid or stale | The evaluation relied on the wrong subject, unauthorized owner, missing criteria, altered identity, stale authority/configuration, or contradictory state; any claimed pass is void and must be reevaluated. |
+
+Absence of a record is not not-applicable. When downstream reliance requires the outcome, both required passes and not-applicable rationales become durable before the transition.
+
+### Transition rules
+
+The table specifies semantic transitions. Each source and destination names the state-plane values changed by that transition; unmentioned planes retain their current values unless a stated predicate invalidates them. Implementations may combine transitions when all owners, predicates, and evidence remain distinguishable.
+
+| Transition | Source → destination | Transition owner and required authority | Required evidence and conditional gates | Invalid or blocked conditions | Durable effect |
+|---|---|---|---|---|---|
+| frame work | no task or blocked → framing | coordinator or assigned task authority with a current mandate to define the work | authoritative objective source, known authority boundary, current baseline pointers when already relied upon | conflicting owner, unverifiable source, or required scope expansion | durable only when another actor/session or later decision will rely on the framing |
+| declare ready | framing → ready | task-contract owner within current framing authority | contextual readiness finding; observable acceptance conditions; unknowns classified; dependencies and interfaces sufficient | executor would have to invent material intent; authority, outcome, acceptance, or material unknown is unresolved | current ready decision and relied-upon task contract become durable |
+| authorize | ready → authorized | coordinator or accountable human/risk owner authorized for the consequence | exact task contract; current authority; required exception or risk decisions; any prerequisite gate passed or legitimately not applicable | self-authorization, stale baseline, scope exceeds owner authority, required gate unsatisfied | authorization subject, scope, owner, time, ceilings, and stop boundary become durable when reliance follows |
+| dispatch or resume | authorized, blocked, or contained → active | coordinator or execution-control owner acting under the authorization | fresh reread of relied-upon authority, baseline, inputs, dependencies, and effective controls; delegate identity/configuration when relied upon | revoked or stale authority, changed critical input, unresolved conflict, unverified required control, containment still uncertain | execution identity, baseline, scope, and start/resumption decision become durable when consequential |
+| delegate | authorized or active parent → bounded child authorized or framing | parent task authority; child grant cannot exceed parent | context-scaled delegation contract and exact relied-upon inputs; independence and ceiling decisions if concurrent | recursive or expanded authority not granted, ambiguous owner, missing stop/escalation, inability to validate | durable child authority and parent/child dependency where downstream coordination relies |
+| produce output | active → proposed-output with verification pending or not-invoked | executor within assigned scope | output identity or location, deviations, side effects, evidence, unresolved items | work escaped scope, ambiguous effect, missing required evidence, stale inputs affecting result | relied-upon output and execution evidence become durable |
+| verify | pending or not-invoked → passed, failed, or stale | designated verifier; executor may perform producer verification unless independence is required | criteria, exact subject, environment/configuration identities when relied upon, result evidence | wrong subject, altered candidate, unverifiable environment, suppressed failure | durable result when publication, review, acceptance, recovery, or coordination relies |
+| request stop | active or blocked → stop-requested | coordinator, accountable risk owner, authorized execution controller, or executor responding to a mandatory stop trigger | reason, affected operations and domains, requested boundary | treating the request as completion or containment | request becomes durable for consequential or cross-session work |
+| acknowledge cancellation | stop-requested → cancellation acknowledged and containment-unverified | actor or control responsible for each operation/domain | acknowledgement tied to operation identities; known in-flight work | acknowledgement inferred from silence or request delivery | durable acknowledgement and inventory of unresolved domains |
+| verify containment | containment-unverified → contained or residual-effects | accountable side-effect or execution-control owner | observation across all relevant processes, queues, credentials, publications, and external effects; reconciliation needs | any relevant domain unobserved or continuing; ambiguous completion | durable containment finding, residual effects, and restrictions on resumption |
+| recover or reconcile | contained, failed, partial, conflicted, or residual-effects → recovering, recovered, or intervention-required | state/side-effect owner with explicit recovery authority | operation classification, prior-effect evidence, stable identifiers/version preconditions as applicable, recovery plan, validation | blind retry, unauthorized compensation, irreversible effects presented as rolled back, unresolved ambiguity | durable recovery decisions, attempts, effects, validation, and residual risk |
+| enter join | branches-active → join pending | named aggregation owner | declared membership, required/optional status, exact branch outputs, dependency results, local validation, side effects, freshness | unknown branch set, competing aggregator, missing ownership, stale baseline | join inventory and observed result states become durable when relied upon |
+| pass join | join pending → passed and integrated output pending verification | aggregation/integration owner | every required result present and acceptable; optional omissions recorded as not applicable or omitted; conflicts resolved; integrated verification defined; current baseline | missing/failed required result, unresolved conflict, stale shared state, unreconciled side effect | join decision, included identities, exclusions, conflict disposition, and integration subject become durable |
+| record non-passing join | join pending → partial, failed, or conflicted | aggregation owner | complete accounting of received, missing, failed, excluded, and ambiguous results; containment/recovery obligations | relabeling incomplete required work as successful | durable non-success state and safe next action |
+| identify candidate | proposed-output with applicable producer verification → candidate-identified | candidate-producing owner under explicit publication/persistence authority | exact immutable content identity, scope claim, provenance/evidence pointers, producer verification status | mutable reference used as identity, required verification failed, publication authority absent | candidate identity and claimed scope become durable; persistence alone confers no acceptance |
+| invoke review | candidate-identified or defined non-candidate subject → review required-pending or not-applicable | accountable governance/task owner, not the candidate executor acting beyond authority | qualitative invocation decision; exact subject; criteria; conflict test; evidence/context | omitted gate has no legitimate rationale; reviewer conflict where independence is claimed; mutable target | invocation or not-applicable rationale becomes durable when disposition relies on it |
+| conclude review | required-pending → passed or rejected | assigned reviewer; independent reviewer must be conflict-free | exact unchanged target, criteria, findings, verification links, scope, independence basis when claimed | self-review claimed independent, target changed, critical context stale, findings destination unavailable when reliance requires durability | durable verdict/findings bound to exact subject |
+| correct candidate | candidate-identified, review rejected, or verification failed → prior candidate superseded and new working output | authorized executor/corrector; no acceptance power follows | correction record and impact analysis identifying changed content, load-bearing assumptions, affected verification and review | editing in place while retaining prior identity; unsupported claim that evidence is unaffected | old identity remains historical; new identity exists only after immutable persistence |
+| reverify or rereview | corrected working output or new candidate → applicable verification/review states | relevant verifier and reviewer owners | new identity; impact analysis; affected checks rerun; unchanged evidence carried only with explicit support | automatic inheritance from prior candidate, missed changed assumption, conflicted reviewer | new results bind to new identity; prior verdict remains only for prior identity |
+| disposition | verified/reviewed subject as required → accepted, rejected, or deferred disposition | coordinator or accountable human/risk owner authorized for that consequence | exact subject; all required gates passed; omitted gates have legitimate rationales; current authority and evidence | executor self-acceptance, inference from pass/merge/use, stale candidate, unresolved required finding | durable disposition identifies subject, scope, rationale, and owner |
+| normative adoption | accepted design disposition → normative adopted | owner authorized to amend the designated normative artifact | explicit adoption decision naming recommendation/design, target owner, scope, exact identity, and faithful materialization | candidate or disposition treated as policy; target owner unspecified; materialization differs | normative owner and adoption record become durable; this is separate from baseline acceptance |
+| baseline acceptance | exact persisted candidate with required review/disposition → accepted-exact-identity | coordinator/accountable owner under baseline policy | exact full commit identity, current review and decision records, fresh live state | branch, tag, short identity, changed commit, or successful checks treated as acceptance | durable acceptance record bound to exact identity |
+| complete task | active, recovered, or disposition state → completed | task owner | terminal accounting against authorized objective, outputs, validation, side effects, evidence, unresolved items, and next gate | missing required result, ambiguous effects hidden, or dependent plane falsely treated as passed | durable completion only when downstream reliance or coordination requires it |
+
+A state-dependent transition is reevaluated after any material change to its subject, authority, critical input, dependency, effective configuration, or governing rule. Prior evidence remains historical but cannot authorize the changed transition.
+
+## Roles and authority
+
+One actor may hold multiple roles only when their duties do not conflict and no independence claim is made.
+
+| Role | May | Must not |
+|---|---|---|
+| ChatGPT coordinator | frame work; resolve bounded design choices; determine contextual gate applicability within granted authority; issue or request authorization; coordinate joins; present candidates and evidence | infer authorization, adoption, or acceptance; broaden scope; claim human risk authority it does not hold; accept its own work without an explicit authorized decision |
+| accountable human or risk owner | authorize consequential scope; own exceptions and residual risk; require independence; accept, reject, defer, stop, abandon, or approve recovery within their authority | treat tool capability, authentication, or another actor’s confidence as approval; accept an unidentified or stale subject |
+| researcher | gather and analyze evidence under a research gate; preserve source qualification and uncertainty | convert evidence or recommendations into policy; change current disposition unless assigned that owner |
+| executor | act inside exact scope; produce outputs; report deviations, evidence, side effects, and blockers; perform producer verification when allowed | self-authorize expansion; suppress failures; claim independent review; self-accept; continue past a stop trigger |
+| verifier | execute or assess specified checks and bind results to the exact subject | claim review or acceptance solely from checks; reuse stale results without impact support |
+| reviewer | evaluate a defined subject and criteria; issue findings and a review verdict | broaden review into acceptance; imply independence without a conflict test |
+| independent reviewer | perform review with no authorship, execution, acceptance stake, or other material conflict for the subject | review their own candidate as independent; change the candidate under review; accept it by implication |
+| aggregation/integration owner | own branch accounting, resolve or escalate conflicts, produce one integration subject, and decide whether the join passes | hide missing or failed branches; allow multiple authoritative aggregators for one join |
+| repository maintainer or state custodian | preserve designated artifacts, enforce exact-base operations, and execute separately authorized persistence | create workflow policy through maintenance; treat a write, commit, push, or merge as acceptance |
+| authoritative state or side-effect owner | validate current state, control mutation, reconcile effects, and authorize applicable recovery | permit a competing mutable owner or claim rollback where effects remain |
+| evidence custodian | protect, redact, retain, and provide addressable relied-upon evidence under applicable rules | retain unnecessary secrets or become the owner of the underlying decision merely by storing its evidence |
+
+Consequential authorization and acceptance are reserved for an accountable coordinator or human risk owner whose authority covers the effect. Consequence is contextual: governed policy, shared baselines, security or privilege, compliance, irreversible/external effects, and comparable downstream reliance are relevant. Ordinary work is not automatically consequential, and no numerical threshold is defined.
+
+## Authoritative-state ownership
+
+| Mutable state class | Sole current authoritative owner | References that do not own it |
+|---|---|---|
+| research status, research dispositions, dependencies, supersession, DR-005 dependency | Research Register | reports, summaries, candidate proposal |
+| repository current next gate and design-contract navigation pointer | Research Register | chat, handoff, task notes |
+| this design task contract, substantive proposal, design-stage metadata | this design artifact until a later explicit ownership change | reviews, disposition records, copied proposals |
+| task objective, scope, readiness, authority, ceilings, stop boundary | designated task-contract owner | executor notes and summaries |
+| live repository, external system, or effective control state | the relevant live system and accountable control owner | local copies, caches, reports |
+| mutable execution progress and current operation/cancellation state | designated run/task execution-state owner | logs and handoffs unless explicitly promoted |
+| each side-effect domain | its designated state/side-effect owner | executor cache or orchestration status |
+| decomposition graph, dependency status, required branch membership | designated task/decomposition owner | child task summaries |
+| aggregation and join disposition for one parallel group | one named aggregation owner | branch producers |
+| working output | designated executor or editor until handoff | reviewers and evidence stores |
+| immutable candidate content | no mutable owner; it is immutable | branches, tags, working trees, descriptions |
+| candidate registry/pointer and supersession relation, when needed | designated candidate-record owner | mutable branch names |
+| verification state | designated verification-record owner | candidate metadata or review |
+| review verdict and findings | designated review-record owner; reviewer authors the result | candidate author, task summary |
+| design disposition or other recommendation decision | coordinator/accountable-human disposition record owner | Research Register except where it is explicitly the adopted owner for research disposition |
+| normative Workflow v1 content and adoption state | later explicitly designated normative owner and adoption record | this non-normative proposal |
+| accepted baseline identity | baseline-acceptance record owner | file front matter, branch, tag, check result |
+| evidence retention/protection metadata | designated evidence custodian | underlying task or decision owner remains unchanged |
+| project-specific product state and operating rules | the applicable project repository/system owner | this cross-project control plane |
+
+Ownership transfer identifies the state class, previous owner, new owner, transfer authority, effective point, and reconciliation of in-flight writes. Until that succeeds, the previous owner remains authoritative. Mirroring is permitted only as a labeled reference with freshness/provenance and without independent mutation.
+
+## Readiness, task formation, and delegation
+
+### Contextual readiness
+
+The task-contract owner asks whether the current bounded commitment is executable and verifiable, not whether every future fact is known. Sufficient context includes, as material to the task:
+
+- intended outcome and why it is relied upon;
+- current authority and accountable owner;
+- included and excluded scope, allowed actions, constraints, and assumptions;
+- exact baseline and critical input identities;
+- interfaces, dependencies, invariants, and side-effect domains;
+- material unknowns and uncertainty;
+- observable local, integrated, and outcome acceptance conditions;
+- evidence destination, ceilings, stop conditions, and escalation path.
+
+Each material unknown is resolved before commitment, converted into separately bounded learning or risk-reduction work with its own observable result, or recorded as a blocker. Refinement during execution is allowed when the task contract authorizes the decision range and the refinement does not invent material intent or expand authority. Otherwise the executor stops for reframing.
+
+Representation scales to the context. Trivial, low-consequence, reversible work may express several semantics together; consequential or cross-session work needs addressable detail. Semantic absence is not excused by a short format.
+
+### Decomposition, dependencies, integration, and recomposition
+
+A decomposition is valid when:
+
+- every unit traces to an authorized outcome or an explicit enabling, infrastructure, risk-reduction, or learning need;
+- the unit boundary and interfaces are independently understandable;
+- inputs, outputs, read/write sets, side effects, invariants, dependencies, and responsible owner are explicit to the degree relied upon;
+- local verification can establish the unit’s promised boundary;
+- integrated verification and final outcome validation are assigned;
+- integration and recomposition points say who combines which exact outputs, in what dependency condition, and how omissions or conflicts are handled;
+- unavoidable coupling is visible and does not masquerade as independence.
+
+Use an observable vertical slice when behavioral, user, or end-to-end learning is the objective and the slice is coherent and economical. Use horizontal or enabling work when it is necessary for infrastructure, risk reduction, feasibility, or learning and its value and integration dependency are explicit. Unit size and scheduling are contextual.
+
+A dependency is satisfied only by the exact required result and its specified validation state. A pointer to in-progress work, a partial result, or an unverified substitute does not satisfy it. Recomposition cannot pass until all required dependency results and side effects are accounted for. Integrated verification tests the composed subject; local branch verification alone is insufficient when interactions matter.
+
+### Delegation semantics
+
+A consequential or otherwise nontrivial delegation communicates enough of the following semantic information for the delegate and later verifier to reach the same boundaries:
+
+- granting owner, authority source, delegate role, and permitted decisions;
+- objective, expected output, and relation to the parent outcome;
+- repository/system scope, exact baseline, relied-upon inputs, and effective configuration;
+- allowed reads, writes, actions, side-effect domains, and explicit non-goals;
+- constraints, assumptions, dependencies, interfaces, invariants, and isolation expectations;
+- local validation, integrated acceptance, and evidence destination;
+- privilege, time/resource/effect ceilings where relevant, without universal numeric defaults;
+- required progress or exception reporting;
+- stop triggers, cancellation contact, containment obligations, safe next action, and escalation destination.
+
+The parent remains responsible for dependency and join accounting. A delegate may further delegate only if that power is explicit, bounded, and consistent with the same ownership and evidence rules. Delegation never enlarges authority through recursion. A delegated result is a proposal or task output until the owner of the receiving state validates and promotes it.
+
+## Candidate, verification, review, correction, and acceptance
+
+Formation feedback tests whether intent, boundaries, risks, and acceptance conditions are adequate before or during work. It may change framing and is not execution verification.
+
+Execution verification tests specified properties of the exact output using reproducible or otherwise reconstructable evidence. Producer verification may support candidacy but carries no review independence.
+
+Peer review finds defects or improves quality through another qualified perspective. It is not necessarily independent and never substitutes for outcome validation or acceptance.
+
+Independent review is invoked when applicable governance or a contextual decision based on consequence, uncertainty, privilege, affected scope, conflict exposure, or downstream reliance warrants it. The invocation owner records required or not-applicable before disposition. An independent reviewer must be conflict-free for the exact subject and receives its immutable identity, requirements, claimed scope, relevant context, linked verification, review criteria, independence expectation, stop boundary, allowed dispositions, and findings destination.
+
+Integration validation checks interactions and recomposed invariants against the integrated subject. Outcome validation checks whether the authorized result achieves the intended observable outcome. Either may expose a design or framing defect even when local checks pass.
+
+A formal candidate record identifies exact immutable content, provenance, claimed scope, relevant baseline, known deviations, producer verification, and pending gates. For Git persistence, only the full commit SHA identifies the candidate. A branch, tag, short SHA, diff narrative, file digest alone, author name, or working tree is insufficient. Candidate identity does not prove authority, provenance trust, correctness, retention, review, or acceptance.
+
+Correction follows these rules:
+
+1. Record the finding and determine whether content, behavior, evidence, assumptions, interfaces, dependencies, side effects, or criteria change.
+2. Any change to candidate content creates a new immutable candidate identity. The prior candidate remains historical and may be marked superseded; it is never edited while retaining identity.
+3. Analyze affected scope relationally. Materiality means the change or a changed load-bearing assumption can alter a relied-upon conclusion, not that it crosses a line-count threshold.
+4. Rerun affected verification and integrated/outcome validation. Carry prior evidence only when the unchanged subject, assumptions, environment, and criteria are demonstrated.
+5. Renew any applicable review whose target or load-bearing basis changed. A prior verdict remains bound to the prior identity.
+6. Submit the new exact identity for disposition. No executor, verifier, or reviewer may infer acceptance.
+
+A review rejection is a non-success review outcome. It may cause correction, reframing, abandonment, or an explicitly authorized exception process; it cannot be relabeled passed. Coordinator disposition, normative adoption, and baseline acceptance remain later distinct decisions even after a review passes.
+
+## Durable and ephemeral state
+
+Durability is required before another actor, session, decision, recovery step, audit, or authority grant relies on the state. Durable records are addressable, attributable to their state owner, protected according to consequence, and bound to exact subjects when identity matters. At minimum when relied upon, durability covers material authorizations and exceptions, task/delegation boundaries, candidate identities, gate evaluations, review findings and verdicts, dispositions and acceptance, join accounting, side effects, cancellation/containment, recovery decisions, and unresolved residual risk.
+
+Exploration, scratch reasoning, transient progress narration, caches, and summaries may remain ephemeral while no downstream reliance depends on them. Promotion is explicit: identify the authoritative owner, reconcile against current state, record provenance and effective time, and label superseded copies. Copying text into a durable medium is not promotion by itself.
+
+Logs and evidence do not become mutable workflow-state owners merely because they are durable. The relevant task, decision, side-effect, or state owner remains authoritative. Secret material is excluded or redacted to the minimum necessary; redaction must preserve enough context to understand the relied-upon event without exposing credentials or unnecessary sensitive data.
+
+## Handoff and fresh-context rehydration
+
+A handoff is navigation state. For consequential continuation it points to:
+
+- authoritative task contract and authority owner;
+- current objective, allowed scope/actions, non-goals, constraints, and stop boundary;
+- exact baseline and critical input/output identities;
+- current state-plane values and owner of each mutable class;
+- completed progress and remaining obligations;
+- material decisions, exceptions, assumptions, uncertainty, blockers, and residual risk;
+- dependencies, interfaces, side effects, parallel membership, and join state;
+- verification, review, disposition, cancellation, containment, and recovery states;
+- evidence locations and the safest authorized next action.
+
+A fresh actor does not treat prose as lossless. Before a loss-sensitive, state-dependent action it reads the authoritative pointers, verifies access and identity, rereads current mutable state from its owner, checks that authority remains effective, validates relied-upon configuration/control state, and reconciles discrepancies. Missing or inconsistent critical identity, authority, ownership, containment, or dependency data blocks action.
+
+If navigation prose conflicts with an authoritative owner, the authoritative owner controls and the discrepancy is recorded. If two artifacts both claim mutable authority or precedence is unclear, action stops for owner resolution. More history does not cure an authority conflict.
+
+## Parallelism, isolation, and joins
+
+Parallel work is eligible only after the task/decomposition owner establishes enough information about independence, read/write sets, side-effect domains, invariants, dependencies, output identities, validation, ownership, ceilings, and join behavior. Eligibility is reevaluated when any of those change.
+
+Permitted semantic classes are:
+
+| Class | Eligibility and ownership |
+|---|---|
+| read-only parallel work | Inputs may be read concurrently when reads do not consume or mutate hidden state and snapshots/freshness requirements are compatible. |
+| isolated outputs | Each branch has an exclusive output and side-effect domain; integration occurs through a named join owner. |
+| proposal-only contributors | Contributors create non-authoritative proposals; one authoritative writer validates, selects, and performs the sole mutation. |
+| shared mutation | Allowed only when effective version/conflict control, ownership, isolation, and recovery are verified at reliance time. Without that evidence, serialize or redesign the work. |
+
+No worker may concurrently mutate the same authoritative state under ambiguous ownership. Parallel direct-main repository writes are not authorized by this proposal. Under the current accepted repository protection state, routine, parallel, automated, and AFK repository writes remain unauthorized.
+
+A parallel plan names the aggregation owner, branch membership, required versus optional results, dependencies, exact output/evidence expectations, side-effect domains, conflict policy, stop propagation, partial-result policy, integration subject, and local/integrated validation.
+
+At join, the aggregation owner:
+
+1. freezes or otherwise identifies the considered result set without choosing a mechanism;
+2. accounts for every declared branch as present, missing, failed, cancelled, partial, stale, or excluded;
+3. verifies exact result identities, authority, required local validation, baseline freshness, side effects, and dependency satisfaction;
+4. rejects or escalates conflicting ownership, overlapping mutation, unresolved invariant violations, and ambiguous external effects;
+5. distinguishes an optional omission with a legitimate rationale from a required missing result;
+6. forms one integration subject and runs required integrated verification;
+7. records pass, partial, failed, or conflicted plus the safe next action.
+
+A required missing, failed, stale, or uncontained result prevents join pass. Partial outputs may be retained as evidence or inputs only if the task owner explicitly reframes their permitted use; partial never silently becomes complete. Optional results may be omitted only under the declared rule and are recorded as omitted or not applicable, never passed. A failed branch does not require discarding sound independent results, but carrying them forward requires exact identity, impact analysis, and a new authorized integration plan.
+
+## Reconstructable evidence
+
+Evidence is sufficient when an authorized fresh actor can reconstruct the relied-upon claim and distinguish fact, inference, decision, and unresolved uncertainty. Depending on context, record:
+
+- authority source, grant, actor/role, applicable approval, and effective time;
+- task, operation, candidate, baseline, dependency, configuration, and environment identities actually relied upon;
+- expected versus observed preconditions;
+- reads, writes, external calls, publications, privilege use, and other material side effects;
+- progress milestones and current owner;
+- inputs and outputs with integrity/provenance appropriate to reliance;
+- resource consumption and ceiling state when relevant to safety or authorization;
+- verification criteria, method, result, and limitations;
+- review subject, independence basis, findings, and verdict;
+- failures, exceptions, retries, deduplication/version keys, and reconciliation;
+- stop and cancellation requests, acknowledgements, containment observations, residual effects, and recovery;
+- redaction, access, retention, and evidence-integrity decisions where relied upon.
+
+Evidence is expectation-checked: a trace or named actor is not trusted solely because it exists. Capture only what is needed; do not record secrets or unnecessary sensitive payloads. This design sets no product, schema, sampling policy, protection mechanism, or universal retention duration.
+
+## Stop, cancellation, containment, retry, and recovery
+
+Mandatory stop triggers include authority loss or ambiguity; stale or unverifiable relied-upon state; unexpected scope or content; conflicting mutable owners; required scope expansion; ceiling breach or inability to observe a ceiling; verification failure that invalidates safe continuation; unplanned shared mutation; ambiguous or consequential external effect; secret exposure; inability to preserve required evidence; missing required dependency; cancellation request from an authorized owner; or any condition the task contract names.
+
+The actor stops initiating new effects, preserves evidence, reports the last known safe state, identifies in-flight operations and affected domains, and escalates to the named owner. Emergency containment allowed by the task contract may proceed, but no new remediation or rollback authority is inferred.
+
+Cancellation is a protocol:
+
+- request records desired scope and operations;
+- acknowledgement proves the relevant controller received and acted on the request;
+- containment verification observes that new effects have ceased or are isolated across all relevant domains;
+- reconciliation determines completed, partial, duplicated, queued, published, or ambiguous effects;
+- recovery or compensation occurs only with authority and operation-specific evidence;
+- residual effects and risk remain explicit.
+
+Before retry, classify the operation as safely repeatable, conditionally repeatable with stable identity/deduplication/version precondition, compensatable but not reversible, irreversible, nondeterministic, or ambiguous. Use the applicable safeguards and verify prior effects. Ambiguous completion blocks blind retry. A compensation is a new authorized effect and does not claim the previous reality was restored.
+
+Recovery ends only when the authoritative state owner validates the resulting state against an authorized target, all side effects and evidence are reconciled to the required degree, and residual risk is accepted or escalated. Otherwise the state is intervention-required, not recovered.
+
+## Qualitative proportionality
+
+The task-contract or governance owner tailors representation, durability, review formality, independence, integrated verification depth, evidence protection, recovery planning, and intervention using:
+
+- consequence and downstream reliance;
+- uncertainty, novelty, coupling, and conflict exposure;
+- reversibility and ambiguity of side effects;
+- privilege and sensitivity;
+- affected users, systems, repositories, policy, and scope;
+- cross-session duration and number of coordinating actors;
+- applicable safety, legal, regulatory, or organizational governance.
+
+Low-consequence, local, reversible, well-understood work may combine records and use lightweight feedback. Higher-consequence, uncertain, privileged, external, irreversible, parallel, or cross-session work requires more explicit and durable boundaries.
+
+The following invariants do not disappear through proportionality: current authority; one mutable owner; bounded scope; observable success; honest gate applicability; no omission-as-pass; immutable identity when formal review/acceptance relies on content; freshness at state-dependent transitions; failure visibility; no self-acceptance; no false independence; side-effect accounting; stop/escalation on authority conflict or unsafe ambiguity; and no unattended authority by implication.
+
+## Unattended and AFK boundary
+
+Workflow v1 design itself grants no unattended, AFK, automated-write, privileged, destructive, or externally consequential execution authority. Consequential work remains subject to task-specific evidence, authorization, and later verification of the selected mechanism and its effective configuration.
+
+Before unattended operation may even be considered, the accountable risk owner must have current evidence, as applicable, for:
+
+- bounded task authority and exact allowed actions;
+- fresh baseline, inputs, dependencies, identities, and effective configuration;
+- isolated or enforceably controlled read/write and side-effect domains;
+- per-task least privilege and secret handling;
+- semantic safety of repeated, partial, delayed, reordered, and ambiguous effects;
+- enforceable resource, time, privilege, mutation, and external-effect ceilings;
+- reconstructable observability and evidence protection;
+- tested cancellation acknowledgement and verified-containment behavior;
+- operation-aware retry, reconciliation, recovery, and residual-risk handling;
+- reachable accountable intervention and a defined safe state when intervention is unavailable.
+
+These categories are necessary, not sufficient. If any applicable category is missing, stale, unverified, or only asserted by the proposed mechanism, eligibility is denied. Passing the screen creates no authority; a separate explicit task-specific authorization and any applicable governance decision are still required. No numeric eligibility threshold or categorical safe task class is created.
+
+## Failure and escalation behavior
+
+| Condition | Required state and response |
+|---|---|
+| stale baseline or critical identity | invalidate the dependent gate; stop dispatch, join, publication, review, acceptance, or resumption; reread and reframe impact |
+| authority conflict or two mutable owners | block mutation; preserve evidence; escalate to the accountable owner for an explicit ownership decision |
+| failed verification | verification failed; do not promote, join-pass, or accept on that basis; correct, reframe, waive only through an authorized exception, or stop |
+| review rejection | review rejected for the exact subject; correct and create a new identity if content changes, reframe, explicitly defer/reject, or use a separately authorized exception |
+| missing required parallel result | join partial or failed, never passed; account for the branch and either recover, reauthorize a reduced outcome, or stop |
+| failed required branch | join failed unless the task owner explicitly reframes dependencies; unaffected results remain proposals/evidence until authorized reuse |
+| partial completion | label partial; identify satisfied and unsatisfied obligations, side effects, and safe next action; no completion claim |
+| material candidate correction | supersede prior candidate for current consideration; create new identity; rerun affected verification and applicable review |
+| ambiguous external effect | stop new effects; containment-unverified; inspect and reconcile before retry or disposition |
+| failed or incomplete containment | remain containment-unverified or residual-effects; deny completion, unsafe resume, and unattended continuation; escalate |
+| unreconciled side effects | recovery or intervention-required; do not claim rollback, recovery, or successful cancellation |
+| inaccessible required evidence | dependent gate unsatisfied or invalid; preserve available evidence and escalate |
+| ceiling breach | stop new effects, request/verify containment, record exposure, and require accountable recovery decision |
+| secret or sensitive-data exposure | stop affected flow, contain access where authorized, preserve secret-safe evidence, and escalate under the responsible security owner |
+| unexpected scope expansion | block and return to framing/authorization; no executor may ratify the expansion |
+| disagreement that does not affect an owned state | record uncertainty and continue only if the task contract permits; otherwise escalate before reliance |
+
+No failure, omission, timeout, silence, or unavailable evidence defaults to success.
+
+## Later-stage boundary and DR-005 handoff
+
+Until later disposition, all design decisions in this proposal remain proposal state. Byte-exact persistence would create a candidate identity only; independent review, design disposition, normative adoption, and baseline acceptance would still be separate.
+
+Only an explicit later adoption decision naming the target normative owner, scope, exact design identity, and faithful materialization can make Workflow v1 normative. Project repositories continue to own project-specific architecture, product state, risk constraints, acceptance conditions, side-effect semantics, and operating rules. Post-v1 evidence may refine ceremony cost, retention policy, and domain-specific controls without silently amending the adopted workflow.
+
+If the initial tool-agnostic design is later dispositioned and the Research Register dependency plus an explicit research gate are satisfied, DR-005 may evaluate mechanisms against these requirements:
+
+- represent orthogonal lifecycle planes and conditional gate outcomes without omission-as-pass;
+- enforce or reliably evidence one mutable owner, explicit ownership transfer, and current authoritative pointers;
+- pin and reverify relied-upon identity and effective configuration at state-dependent transitions;
+- express context-scaled task/delegation authority, least privilege, ceilings, stopping, and escalation;
+- preserve immutable candidates and bind verification/review/acceptance records to exact identities;
+- support isolated work, version/conflict control for shared mutation, single aggregation ownership, full join accounting, and partial/failure states;
+- support fresh-context rehydration from authoritative sources and detect stale or conflicting state;
+- produce protected, secret-safe, reconstructable evidence with appropriate integrity, access, redaction, and retention controls;
+- distinguish stop request, acknowledgement, verified containment, residual effects, and accountable intervention;
+- support operation-aware stable identifiers, deduplication/version preconditions, retry, reconciliation, compensation, and recovery;
+- enforce unattended-operation ceilings and denial when necessary evidence or control effectiveness is incomplete;
+- verify authentication, authorization, approval, actor/configuration identity, provenance, review independence, and correctness as distinct claims.
+
+DR-005 must test actual availability and effective configuration at the point of reliance. It may compare tools and mechanisms but may not redefine accepted workflow semantics by convenience. This handoff does not start DR-005 and selects no tool.
+
+## Conformance scenarios
+
+| Scenario | Required resolution |
+|---|---|
+| conditional gate legitimately omitted | A reversible local documentation correction has no governing requirement for independent review. The task/governance owner records review applicability as not-applicable with the contextual rule and rationale. The review plane is not-applicable, never passed; verification and any required acceptance remain separate. |
+| gate falsely claimed passed | An executor labels an independent-review gate passed using their own producer check. The subject lacks a conflict-free review record. The claimed pass is invalid, the review remains required-pending, and disposition is blocked. |
+| stale state before transition | A task was authorized against baseline A, but live reread before dispatch resolves baseline B or a changed effective control. Dispatch is denied; prior authorization remains historical, impact is assessed, and the task returns to framing or reauthorization. |
+| parallel join missing a required result | Three branches are declared required; two pass locally and one is missing. The aggregator records complete branch accounting and join partial or failed. It cannot produce join passed. A reduced outcome requires explicit reframing and authorization. |
+| material candidate correction | Review finds a changed interface contract. The correction changes candidate content and a load-bearing integration assumption. The prior identity and verdict remain historical; a new immutable identity is created, affected local/integration checks rerun, and applicable independent review is renewed. |
+| uncertain cancellation | A stop request is acknowledged by the controller, but an external publication may still be queued. State remains containment-unverified with ambiguous external effect. No retry, completion, or unattended continuation occurs until inspection and reconciliation establish containment or residual effects. |
+| fresh-context rehydration | A new executor receives a summary plus pointers. It reads the task-contract owner, resolves the exact baseline and dependencies, rereads current cancellation and verification state, and detects a stale summary. Authoritative state controls; the corrected safe next action is recorded before resumption. |
+| unattended evidence incomplete | A proposed unattended mutation has bounded scope and logs, but cancellation containment has not been tested and privilege ceilings are not enforceably verified. Necessary evidence is incomplete, so unattended eligibility is denied. No manual success or tool capability overrides the denial. |
+| optional parallel result omitted | A branch declared optional under a recorded rule yields no result. The join records the omission and rationale as omitted or not applicable, not passed. Join may pass only if all required results and integrated verification succeed. |
+| ambiguous retry | An external operation timed out after dispatch and lacks a stable deduplication key. Completion is ambiguous, so blind retry is blocked; the side-effect owner must reconcile or authorize a different recovery action. |
+| executor proposes scope expansion | Execution exposes an additional repository requiring mutation. The executor stops and returns to framing; the original authorization cannot be stretched to cover the new repository. |
+| carried-forward evidence after correction | A candidate wording-only correction leaves executable content and criteria unchanged. Impact analysis identifies the exact unaffected checks and assumptions. Only supported evidence carries forward; the new candidate still receives a new identity and any review whose target changed is reevaluated for applicability. |
+
+These scenarios are conformance obligations: an implementation that cannot represent the required non-success and not-applicable states is nonconforming.
+
+## Traceability to accepted dispositions
+
+| Design decisions | Accepted controlling inputs |
+|---|---|
+| DD-001, DD-002 | DR-001 R1, R4; DR-002 R6; DR-003 PR07 |
+| DD-003, DD-010 | DR-001 R2, R7, R12; DR-002 R7; DR-003 PR04, PR05, PR06 |
+| DD-004, DD-006 | DR-002 R1–R5 |
+| DD-005, DD-009 | DR-001 R3, R9, R10; DR-003 PR02, PR07 |
+| DD-007 | DR-001 R11; DR-003 PR01, PR11 |
+| DD-008 | DR-002 R3, R5; DR-003 PR03, PR04 |
+| DD-011 | DR-003 PR09, PR10 |
+| DD-012 | DR-001 R5, R6, R8; DR-002 R9 |
+| DD-013 | DR-003 PR08, PR09, PR10, PR11 |
+| DD-014 | DR-001 qualifications and later dependencies; DR-002 qualifications; DR-003 PR12 |
+
+The controlling disposition records are ADW-DR-001-DISPOSITION-001 and ADW-DR-002-003-DISPOSITION-001. This mapping carries their accepted scopes and qualifications, not the full research recommendations or overbroad interpretations they excluded.
+
+## Unresolved and deferred items
+
+| Item | Classification and blocking effect | Owner or later gate |
+|---|---|---|
+| candidate persistence, exact commit identity, independent review, design disposition, normative adoption, and baseline acceptance | pending lifecycle gates, not unresolved design; they block their respective later claims but do not block candidate content readiness | separately authorized repository persistence, review, coordinator/accountable-human disposition, adoption, and acceptance owners |
+| concrete artifact schemas and packet formats | mechanism deferred; non-blocking because the required semantic information and ownership are defined | DR-005 or later explicitly adopted implementation design |
+| tracker, storage, synchronization, logging, tracing, identity, credential, attestation, orchestration, queue, worktree, isolation, and automation choices | mechanism/tooling deferred; non-blocking for tool-agnostic design | DR-005 after its dependency and explicit gate |
+| effective enforcement controls and branch protection alternatives | current repository restriction remains controlling; future mechanism evidence is non-blocking for this proposal but blocks modes that depend on it | applicable governance owner and DR-005; accepted bootstrap protection decision remains unchanged |
+| context-specific review invocation, risk acceptance, ceilings, retention, and recovery parameters | project/task policy inputs; non-blocking because decision owners and qualitative semantics are defined; absence at execution blocks the affected gate | accountable project/task/risk owner under later adopted policy |
+| project-specific side-effect classifications, acceptance criteria, architecture, and operating rules | intentionally project-specific; non-blocking for cross-project design, required before affected execution | applicable project repository or system owner |
+| empirical optimization of ceremony cost and generally applicable retention periods | post-v1 research; non-blocking | later explicit research/adoption gates |
+| identity and effective-configuration mechanism validation | deferred enforcement work; non-blocking for design and blocking for any transition that proposes to rely on an unverified control | DR-005 and the accountable control owner |
+
+There are no blocking unresolved design semantics. The remaining items are explicit later gates, mechanism choices, or project-specific parameters. Two competent implementers can derive the same required behavior: where a mechanism or contextual parameter is absent, the corresponding relied-upon transition remains blocked rather than being invented.
