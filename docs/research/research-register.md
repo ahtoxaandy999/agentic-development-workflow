@@ -30,32 +30,26 @@ From this materialization onward, this register is the sole repository owner of 
 ## Current bootstrap gate
 
 ```yaml
+baseline_name: Bootstrap Context Baseline v0
+baseline_status: accepted
+accepted_sha: 13b05e075ec04aa91494cd18f7d29f7249028cb5
+acceptance_decision_ref: ADW-BOOTSTRAP-ACCEPT-001
+acceptance_record: GitHub Issue #1
 branch_protection_path: PATH B
 branch_protection_status: unavailable-for-private-repository-under-current-plan
 review_control: temporary-manual-sha-freeze
+review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
-next_gate: independent candidate review under temporary manual SHA-freeze
+next_gate: DR-001 research gate
 ```
 
-The coordinator adopted this temporary manual SHA-freeze because the required branch-protection capability is unavailable for this private repository under the current plan and configuration. The control applies only to independent review of the bootstrap candidate.
+Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
 
-During independent candidate review:
+Under protection decision `ADW-BOOTSTRAP-PROTECTION-DEC-001`, the temporary manual SHA-freeze served the independent bootstrap candidate review, which passed with no findings. That review control is now completed; it does not imply that `main` remains frozen after baseline acceptance, and it did not and does not replace branch protection.
 
-1. Remote `main` must remain pinned to the exact candidate SHA reported by this execution.
-2. No pushes to `main` are permitted.
-3. No force pushes are permitted.
-4. No GitHub web edits are permitted.
-5. No merges are permitted.
-6. No Codex repository writes are permitted.
-7. No ChatGPT or GitHub connector writes are permitted.
-8. The reviewer must verify remote `main` immediately before review.
-9. The reviewer must review that exact full SHA.
-10. The reviewer must verify remote `main` again immediately after review.
-11. Any SHA change invalidates the review.
+Branch protection remains unavailable for this private repository under the current plan and configuration. It remains mandatory before routine agent writes, parallel execution, AFK execution, automated writes, or multiple maintainers or contributors.
 
-The manual SHA-freeze is temporary and bootstrap-specific. It does not replace branch protection. Branch protection must be revisited before routine agent writes, parallel execution, AFK execution, automated writes, or multiple maintainers or contributors.
-
-The candidate SHA is not reviewed or accepted by this entry.
+Workflow v1 remains unadopted.
 
 ## Reviewed research and adopted disposition
 
@@ -89,10 +83,10 @@ id: DR-001
 question: coordinator gates and artifact lifecycle before Workflow v1
 research_status: planned
 dependency: accepted Bootstrap Context Baseline v0
-blocked_until: accepted Bootstrap Context Baseline v0
+dependency_status: satisfied
 ```
 
-DR-001 is the first post-baseline research task. It has not started and is blocked until the baseline is explicitly accepted.
+DR-001 is unblocked but remains planned and has not started. Its next gate is the separate DR-001 research gate.
 
 ## Deferred research
 
