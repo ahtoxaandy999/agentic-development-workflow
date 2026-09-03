@@ -1,20 +1,20 @@
 ---
 
 id: ADW-WF1-DESIGN-REVIEW-004
-artifact\_status: active
+artifact_status: active
 authority: evidence
-review\_type: independent-design-review
-review\_target\_commit: 2b9532682ae77bf5037f1b2fa45b720e5865d0ad
-review\_target\_parent: a19e700e93157b8b25eaab4f14c7c44fc3ea3f6e
-review\_target\_path: docs/design/ADW-WF1-DESIGN-001.md
-review\_target\_blob: afed983e7632caf3169dcbac7a80f8da8226d86d
-review\_target\_bytes: 109600
-review\_target\_sha256: f8ddb3626868289e44251088a2ddad291ce762dbb58ec824d70c5de5a7994411
+review_type: independent-design-review
+review_target_commit: 2b9532682ae77bf5037f1b2fa45b720e5865d0ad
+review_target_parent: a19e700e93157b8b25eaab4f14c7c44fc3ea3f6e
+review_target_path: docs/design/ADW-WF1-DESIGN-001.md
+review_target_blob: afed983e7632caf3169dcbac7a80f8da8226d86d
+review_target_bytes: 109600
+review_target_sha256: f8ddb3626868289e44251088a2ddad291ce762dbb58ec824d70c5de5a7994411
 verdict: accept-candidate-for-design-disposition
-reviewed\_on: 2026-09-03
+reviewed_on: 2026-09-03
 owner: agentic-development-independent-review
 supersedes: null
-----------------
+---
 
 **ADW-WF1-DESIGN-REVIEW-004**
 
