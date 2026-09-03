@@ -40,7 +40,9 @@ branch_protection_status: unavailable-for-private-repository-under-current-plan
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
-next_gate: Workflow v1 design gate
+workflow_v1_design_contract: docs/design/ADW-WF1-DESIGN-001.md
+workflow_v1_design_contract_task_id: ADW-WF1-DESIGN-GATE-001
+next_gate: Workflow v1 initial design candidate gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
