@@ -40,7 +40,7 @@ branch_protection_status: unavailable-for-private-repository-under-current-plan
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
-next_gate: parallel prerequisite research gates
+next_gate: independent DR-002 and DR-003 evidence completion and exact-byte freeze gates
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -391,9 +391,9 @@ unresolved_or_deferred:
     - generally applicable retention periods
 ```
 
-The sequencing decision authorizes DR-002 and DR-003, but neither task has started. They are independently eligible and may proceed in parallel; each still requires its own research gate and durable start transition. Workflow v1 design waits for both source reviews and coordinator dispositions.
+DR-002 and DR-003 are now in progress from the same durable authorization base. They remain independent and may conduct read-only evidence production in parallel. Each has its own contract, freeze target, source review, and later coordinator disposition. This does not authorize concurrent direct writes to `main`. Workflow v1 design still waits for both completed and disposed research streams.
 
-## Planned prerequisite research
+## In-progress prerequisite research
 
 ### DR-002
 
@@ -404,16 +404,19 @@ question: >
   clarification, specification, decomposition, vertical slicing, review,
   documentation, context transitions, and qualitative proportionality should
   constrain Workflow v1?
-research_status: planned
+research_status: in-progress
 owner: agentic-development-research
+artifact: docs/research/ADW-DR-002.md
 evidence_family: practitioner workflow patterns (Family A)
 dependency: ADW-DR-001-DISPOSITION-001
 dependency_status: satisfied
 parallel_with: DR-003
+research_gate_ref: ADW-DR-002-GATE-001
+research_started_on: 2026-09-03
 decision_consumer: Workflow v1 design gate
 source_review_required: true
 coordinator_disposition_required: true
-next_gate: DR-002 practitioner workflow formation and decomposition research gate
+next_gate: DR-002 evidence completion and exact-byte freeze gate
 ```
 
 ### DR-003
@@ -425,16 +428,19 @@ question: >
   bounded agent delegation, parallel work, state freshness, context handoffs,
   observability, correction/review waves, unattended execution, stopping,
   and recovery?
-research_status: planned
+research_status: in-progress
 owner: agentic-development-research
+artifact: docs/research/ADW-DR-003.md
 evidence_family: OpenAI agent/harness execution patterns plus parallelism and autonomy controls (Families B+C)
 dependency: ADW-DR-001-DISPOSITION-001
 dependency_status: satisfied
 parallel_with: DR-002
+research_gate_ref: ADW-DR-003-GATE-001
+research_started_on: 2026-09-03
 decision_consumer: Workflow v1 design gate
 source_review_required: true
 coordinator_disposition_required: true
-next_gate: DR-003 bounded agent execution, parallelism, and autonomy controls research gate
+next_gate: DR-003 evidence completion and exact-byte freeze gate
 ```
 
 DR-004 is intentionally not registered. No tooling, tracker, task schema, or review schema is selected.
