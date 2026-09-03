@@ -3,7 +3,7 @@ artifact: research-register
 artifact_status: active
 maturity: bootstrap
 authority: research-index
-as_of: 2026-09-02
+as_of: 2026-09-03
 ---
 
 # Research Register
@@ -31,8 +31,29 @@ From this materialization onward, this register is the sole repository owner of 
 
 ```yaml
 branch_protection_path: PATH B
-next_gate: enable and verify branch protection, then independent candidate review
+branch_protection_status: unavailable-for-private-repository-under-current-plan
+review_control: temporary-manual-sha-freeze
+control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
+next_gate: independent candidate review under temporary manual SHA-freeze
 ```
+
+The coordinator adopted this temporary manual SHA-freeze because the required branch-protection capability is unavailable for this private repository under the current plan and configuration. The control applies only to independent review of the bootstrap candidate.
+
+During independent candidate review:
+
+1. Remote `main` must remain pinned to the exact candidate SHA reported by this execution.
+2. No pushes to `main` are permitted.
+3. No force pushes are permitted.
+4. No GitHub web edits are permitted.
+5. No merges are permitted.
+6. No Codex repository writes are permitted.
+7. No ChatGPT or GitHub connector writes are permitted.
+8. The reviewer must verify remote `main` immediately before review.
+9. The reviewer must review that exact full SHA.
+10. The reviewer must verify remote `main` again immediately after review.
+11. Any SHA change invalidates the review.
+
+The manual SHA-freeze is temporary and bootstrap-specific. It does not replace branch protection. Branch protection must be revisited before routine agent writes, parallel execution, AFK execution, automated writes, or multiple maintainers or contributors.
 
 The candidate SHA is not reviewed or accepted by this entry.
 
