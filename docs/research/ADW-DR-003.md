@@ -2,6 +2,9 @@
 id: DR-003
 artifact_status: draft
 authority: evidence
+research_status_at_publication: completed
+recommendation_status_at_publication: proposed
+evidence_as_of: 2026-09-03
 owner: agentic-development-research
 question: >
   Which tool-agnostic execution-control requirements are necessary for
@@ -13,6 +16,7 @@ decision_consumer: >
   Separate coordinator DR-003 recommendation-disposition decision feeding the
   Workflow v1 design gate.
 repository: ahtoxaandy999/agentic-development-workflow
+repository_state: "main@89f55d237411eecdc4fbdf5c8b312630af968928; accepted baseline 13b05e075ec04aa91494cd18f7d29f7249028cb5"
 repository_state_at_authorization: "main@7d573ed97e16fe56b43a98ccaed93bb4764627e5; verified 2026-09-03"
 research_gate_ref: ADW-DR-003-GATE-001
 supersedes: null
