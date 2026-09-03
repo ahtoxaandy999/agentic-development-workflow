@@ -40,7 +40,7 @@ branch_protection_status: unavailable-for-private-repository-under-current-plan
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
-next_gate: independent DR-002 and DR-003 source review gates
+next_gate: parallel DR-002 and DR-003 recommendation disposition gates
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -391,9 +391,9 @@ unresolved_or_deferred:
     - generally applicable retention periods
 ```
 
-The DR-002 and DR-003 research streams are completed. Each now has its own immutable review target, and both await independent source review. No source review has occurred. Workflow v1 design still waits for both source reviews and later coordinator dispositions.
+DR-002 and DR-003 have each passed independent source review, and each review is tied to its own immutable frozen target. Source review establishes evidence quality only; neither recommendation set has been dispositioned or adopted. Both streams independently await coordinator recommendation disposition. Workflow v1 design still waits for both durable dispositions and the later join condition.
 
-## Completed prerequisite research awaiting independent source review
+## Source-reviewed prerequisite research awaiting coordinator disposition
 
 ### DR-002
 
@@ -404,7 +404,7 @@ question: >
   clarification, specification, decomposition, vertical slicing, review,
   documentation, context transitions, and qualitative proportionality should
   constrain Workflow v1?
-research_status: completed
+research_status: reviewed
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-002.md
 evidence_as_of: 2026-09-03
@@ -419,7 +419,16 @@ research_started_on: 2026-09-03
 decision_consumer: Workflow v1 design gate
 source_review_required: true
 coordinator_disposition_required: true
-next_gate: DR-002 independent source review gate
+source_review_ref: docs/research/ADW-DR-002-SOURCE-REVIEW-001.md
+source_review_record: "ADW-DR-002-SOURCE-REVIEW-001@sha256:c1ab54d5ccf1e6cd42c28fe4a2edb13d764150d7c2003ad4a50bcddba332b2b8"
+source_review_record_bytes: 12332
+source_review_verdict: accepted-as-source-reviewed-evidence
+source_reviewed_on: 2026-09-03
+source_review_findings:
+  blocker: 0
+  major: 0
+  minor: 1
+next_gate: DR-002 recommendation disposition gate
 ```
 
 ### DR-003
@@ -431,7 +440,7 @@ question: >
   bounded agent delegation, parallel work, state freshness, context handoffs,
   observability, correction/review waves, unattended execution, stopping,
   and recovery?
-research_status: completed
+research_status: reviewed
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-003.md
 evidence_as_of: 2026-09-03
@@ -446,7 +455,16 @@ research_started_on: 2026-09-03
 decision_consumer: Workflow v1 design gate
 source_review_required: true
 coordinator_disposition_required: true
-next_gate: DR-003 independent source review gate
+source_review_ref: docs/research/ADW-DR-003-SOURCE-REVIEW-001.md
+source_review_record: "ADW-DR-003-SOURCE-REVIEW-001@sha256:3981bd4040803f0ad685e120c81a85e0de68df9d6cc7889c9096a730adf46dbd"
+source_review_record_bytes: 10921
+source_review_verdict: accepted-as-source-reviewed-evidence
+source_reviewed_on: 2026-09-03
+source_review_findings:
+  blocker: 0
+  major: 0
+  minor: 3
+next_gate: DR-003 recommendation disposition gate
 ```
 
 DR-004 is intentionally not registered. No tooling, tracker, task schema, or review schema is selected.
