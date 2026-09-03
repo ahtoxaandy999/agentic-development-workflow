@@ -40,7 +40,7 @@ branch_protection_status: unavailable-for-private-repository-under-current-plan
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
-next_gate: Workflow v1 prerequisite-research sequencing gate
+next_gate: parallel prerequisite research gates
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -327,6 +327,118 @@ The recommendations are accepted inputs and constraints only. This disposition d
 
 `docs/research/ADW-DR-001.md` owns the frozen publication-time evidence. This Research Register owns mutable research status, dependencies, the artifact pointer, current decision disposition, supersession, and the next gate.
 
+## Workflow v1 prerequisite research sequence
+
+```yaml
+decision_id: ADW-WF1-PREREQ-SEQUENCE-001
+corrections:
+  - ADW-WF1-PREREQ-SEQUENCE-CORR-001
+  - ADW-WF1-PREREQ-SEQUENCE-CORR-002
+decided_on: 2026-09-03
+decision_scope: >
+  Authorize DR-002 and DR-003 as independent prerequisite research tasks that
+  may proceed in parallel. This decision does not start either task or design
+  Workflow v1.
+
+authorized_research:
+  - id: DR-002
+    canonical_question_ref: DR-002 register entry
+    purpose: practitioner workflow formation and decomposition evidence
+  - id: DR-003
+    canonical_question_ref: DR-003 register entry
+    purpose: bounded agent execution, parallelism, and autonomy-control evidence
+
+dependency_edges:
+  - ADW-DR-001-DISPOSITION-001 -> DR-002
+  - ADW-DR-001-DISPOSITION-001 -> DR-003
+  - DR-002 source review and coordinator disposition -> Workflow v1 design gate
+  - DR-003 source review and coordinator disposition -> Workflow v1 design gate
+  - initial tool-agnostic Workflow v1 design disposition -> DR-005
+
+parallel_group:
+  - DR-002
+  - DR-003
+
+initial_authorized_gates:
+  - DR-002 practitioner workflow formation and decomposition research gate
+  - DR-003 bounded agent execution, parallelism, and autonomy controls research gate
+
+workflow_v1_design_readiness: >
+  DR-002 and DR-003 each have an immutable evidence identity, accepted
+  independent source review, durable coordinator disposition, and no
+  unresolved material contradiction at their join.
+
+dr_005_placement_decision:
+  placement: after initial tool-agnostic Workflow v1 design
+  required_dependency: >
+    Initial tool-agnostic Workflow v1 design disposition and an explicit
+    DR-005 research gate.
+  reason: >
+    Tool selection consumes workflow capability and enforcement requirements
+    and must not define workflow semantics prematurely.
+
+unresolved_or_deferred:
+  design_time:
+    - concrete lifecycle and gate mechanics
+    - packet representation and possible schemas
+    - state owner map and synchronization
+    - candidate correction and review iteration
+  tooling_stage:
+    - tracker and persistence implementation
+    - enforcement, identity, Apps, MCP, skills, hooks, and automation
+  post_v1:
+    - empirical ceremony-cost optimization
+    - generally applicable retention periods
+```
+
+The sequencing decision authorizes DR-002 and DR-003, but neither task has started. They are independently eligible and may proceed in parallel; each still requires its own research gate and durable start transition. Workflow v1 design waits for both source reviews and coordinator dispositions.
+
+## Planned prerequisite research
+
+### DR-002
+
+```yaml
+id: DR-002
+question: >
+  Which tool-agnostic practitioner workflow patterns for question
+  clarification, specification, decomposition, vertical slicing, review,
+  documentation, context transitions, and qualitative proportionality should
+  constrain Workflow v1?
+research_status: planned
+owner: agentic-development-research
+evidence_family: practitioner workflow patterns (Family A)
+dependency: ADW-DR-001-DISPOSITION-001
+dependency_status: satisfied
+parallel_with: DR-003
+decision_consumer: Workflow v1 design gate
+source_review_required: true
+coordinator_disposition_required: true
+next_gate: DR-002 practitioner workflow formation and decomposition research gate
+```
+
+### DR-003
+
+```yaml
+id: DR-003
+question: >
+  Which tool-agnostic execution-control requirements are necessary for
+  bounded agent delegation, parallel work, state freshness, context handoffs,
+  observability, correction/review waves, unattended execution, stopping,
+  and recovery?
+research_status: planned
+owner: agentic-development-research
+evidence_family: OpenAI agent/harness execution patterns plus parallelism and autonomy controls (Families B+C)
+dependency: ADW-DR-001-DISPOSITION-001
+dependency_status: satisfied
+parallel_with: DR-002
+decision_consumer: Workflow v1 design gate
+source_review_required: true
+coordinator_disposition_required: true
+next_gate: DR-003 bounded agent execution, parallelism, and autonomy controls research gate
+```
+
+DR-004 is intentionally not registered. No tooling, tracker, task schema, or review schema is selected.
+
 ## Deferred research
 
 ```yaml
@@ -334,10 +446,12 @@ id: DR-005
 question: tooling evaluation and selection
 research_status: planned
 current_decision_status: deferred
-dependency: DR-001 disposition and an explicit DR-005 research gate
+dependency: initial tool-agnostic Workflow v1 design disposition and an explicit DR-005 research gate
+dependency_status: unsatisfied
+placement: after initial tool-agnostic Workflow v1 design
 ```
 
-No App, MCP server, skill, hook, connector workflow, or automation is selected by this entry.
+DR-005 remains deferred until after initial tool-agnostic Workflow v1 design. No App, MCP server, skill, hook, connector workflow, or automation is selected by this entry.
 
 ## Superseded
 
