@@ -11,7 +11,7 @@ verdict: accepted-as-source-reviewed-evidence
 reviewed_on: 2026-09-03
 owner: agentic-development-independent-review
 supersedes: null
-----------------
+---
 
 # ACCEPT AS SOURCE-REVIEWED EVIDENCE
 

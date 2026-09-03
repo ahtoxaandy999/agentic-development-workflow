@@ -456,8 +456,8 @@ decision_consumer: Workflow v1 design gate
 source_review_required: true
 coordinator_disposition_required: true
 source_review_ref: docs/research/ADW-DR-003-SOURCE-REVIEW-001.md
-source_review_record: "ADW-DR-003-SOURCE-REVIEW-001@sha256:3981bd4040803f0ad685e120c81a85e0de68df9d6cc7889c9096a730adf46dbd"
-source_review_record_bytes: 10921
+source_review_record: "ADW-DR-003-SOURCE-REVIEW-001@sha256:5b548b5fa2943b1d6faebef89acfad66359b7146b706726456f360048fc1ea3b"
+source_review_record_bytes: 10908
 source_review_verdict: accepted-as-source-reviewed-evidence
 source_reviewed_on: 2026-09-03
 source_review_findings:
