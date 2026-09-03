@@ -40,7 +40,7 @@ branch_protection_status: unavailable-for-private-repository-under-current-plan
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
-next_gate: parallel DR-002 and DR-003 recommendation disposition gates
+next_gate: Workflow v1 design gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -391,9 +391,9 @@ unresolved_or_deferred:
     - generally applicable retention periods
 ```
 
-DR-002 and DR-003 have each passed independent source review, and each review is tied to its own immutable frozen target. Source review establishes evidence quality only; neither recommendation set has been dispositioned or adopted. Both streams independently await coordinator recommendation disposition. Workflow v1 design still waits for both durable dispositions and the later join condition.
+DR-002 and DR-003 each have accepted coordinator dispositions within their recorded scopes and qualifications. Source review established evidence quality only, and recommendation disposition does not create normative Workflow v1 rules. The prerequisite compatibility assessment passed, with no same-scope material contradiction remaining between the accepted sets. Workflow v1 remains unadopted. Invocation of the Workflow v1 design gate requires a fresh live Research Register re-read.
 
-## Source-reviewed prerequisite research awaiting coordinator disposition
+## Source-reviewed prerequisite research with accepted coordinator disposition
 
 ### DR-002
 
@@ -405,6 +405,7 @@ question: >
   documentation, context transitions, and qualitative proportionality should
   constrain Workflow v1?
 research_status: reviewed
+current_decision_status: accepted
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-002.md
 evidence_as_of: 2026-09-03
@@ -428,7 +429,198 @@ source_review_findings:
   blocker: 0
   major: 0
   minor: 1
-next_gate: DR-002 recommendation disposition gate
+
+decision_id: ADW-DR-002-003-DISPOSITION-001
+decision_target: "DR-002@sha256:5458020be85cde909705fc1fbbc489c98e43ce0b6c058f6fd5d67901dc1ecb03"
+decided_on: 2026-09-03
+decision_scope: >
+  Accept DR-002 R1 through R9 only within their recorded scopes and
+  qualifications as Workflow v1 constraints, conditional principles, or later
+  design inputs. This disposition does not itself create or materialize
+  Workflow v1.
+
+recommendation_dispositions:
+  - id: R1
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 constraint - conditional readiness
+    accepted_scope: >
+      Require sufficient clarification of outcome, authority, scope,
+      constraints, assumptions, interfaces, material unknowns, and observable
+      acceptance conditions before the next bounded specification or execution
+      commitment.
+    qualification: >
+      Readiness is contextual. Unknowns may be resolved, bounded into learning
+      work, or recorded as blockers; no universal checklist or complete-up-front
+      requirement follows.
+    does_not_authorize: >
+      A fixed readiness schema, mandatory ceremony, lifecycle sequence, or
+      universal minimum document.
+    later_dependency: >
+      Workflow v1 readiness and escalation design.
+    proposed_owner_class: >
+      Later adopted workflow-governance/task-readiness owner; concrete artifact
+      is design-time unresolved.
+
+  - id: R2
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 semantic constraint
+    accepted_scope: >
+      Judge specification sufficiency by whether a qualified executor can
+      proceed without inventing material intent and whether the result can be
+      verified.
+    qualification: >
+      Controlled refinement remains permitted; applicable safety, regulatory,
+      or governance contexts may require fuller baselines.
+    does_not_authorize: >
+      A universal document size, format, completeness threshold, or rejection
+      of up-front baselines where required.
+    later_dependency: >
+      Context-specific readiness and verification design.
+    proposed_owner_class: >
+      Later adopted workflow-governance/task-contract owner.
+
+  - id: R3
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 constraint - conditional decomposition
+    accepted_scope: >
+      Require units to be coherent, outcome-traceable, bounded at interfaces,
+      dependency-aware, independently understandable, and verifiable at their
+      stated boundary.
+    qualification: >
+      Unit size and independent schedulability remain contextual; unavoidable
+      coupling is permitted when explicit.
+    does_not_authorize: >
+      A universal unit size, batch target, task schema, or requirement that
+      every unit run independently.
+    later_dependency: >
+      Decomposition, dependency, and recomposition design.
+    proposed_owner_class: >
+      Later adopted task/decomposition owner; concrete representation is
+      design-time unresolved.
+
+  - id: R4
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Later design input - conditional slicing preference
+    accepted_scope: >
+      Prefer observable vertical slices when behavioral, user, or end-to-end
+      learning feedback is the objective.
+    qualification: >
+      Vertical slicing is not universally superior. Explicit enabling,
+      infrastructure, risk-reduction, or learning work remains legitimate when
+      a valuable vertical slice is incoherent or uneconomic.
+    does_not_authorize: >
+      Mandatory vertical slicing, user-visible output for every unit, or a ban
+      on horizontal/enabling work.
+    later_dependency: >
+      Workflow v1 decomposition guidance and applicability criteria.
+    proposed_owner_class: >
+      Later adopted task/decomposition owner; otherwise design-time unresolved.
+
+  - id: R5
+    disposition: ACCEPT
+    classification: Workflow v1 semantic constraint
+    accepted_scope: >
+      Make dependencies, interfaces, integration/recomposition points, and
+      local versus integrated verification boundaries explicit during
+      decomposition.
+    qualification: >
+      None beyond the accepted scope; exact ordering remains a later mechanism
+      choice.
+    does_not_authorize: >
+      A scheduler, integration algorithm, topology, worktree strategy, or
+      sequencing rule.
+    later_dependency: >
+      Workflow v1 dependency and integration design.
+    proposed_owner_class: >
+      Later adopted task/dependency and integration owner.
+
+  - id: R6
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 constraint - feedback semantics with conditional invocation
+    accepted_scope: >
+      Preserve distinct purposes for formation review, execution verification,
+      peer review, integration validation, and outcome review, and provide
+      reviewers enough intent and change context.
+    qualification: >
+      No universal reviewer count, formal-review invocation rule, or claim that
+      peer review alone assures correctness.
+    does_not_authorize: >
+      Mandatory formal or independent review for every task, a reviewer-count
+      threshold, or conflation with verification or acceptance.
+    later_dependency: >
+      Conditional review invocation, independence, and correction-loop design.
+    proposed_owner_class: >
+      Existing Charter review/acceptance semantics plus a later adopted
+      workflow-governance owner.
+
+  - id: R7
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 governance constraint within this control plane
+    accepted_scope: >
+      Preserve information durably when downstream reliance, authority, audit,
+      recovery, or cross-session coordination depends on it; disposable working
+      detail may remain ephemeral.
+    qualification: >
+      Scoped to this repository/workflow control plane. No universal retention
+      duration, representation, protection strength, or rule for every working
+      note follows.
+    does_not_authorize: >
+      Universal retention, exhaustive logging, duplicate state stores, or
+      selection of a tracker or storage system.
+    later_dependency: >
+      Retention, state placement, protection, and synchronization design.
+    proposed_owner_class: >
+      Existing Research Register/research-evidence owners for research state;
+      otherwise the applicable authoritative decision/task owner, with concrete
+      non-research classes design-time unresolved.
+
+  - id: R8
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 constraint - fresh-context transition
+    accepted_scope: >
+      For consequential fresh-practitioner or fresh-agent transitions, preserve
+      sufficient objective, authority, baseline, progress, decisions,
+      dependencies, verification, uncertainty, and safe-next-action context
+      while retaining authoritative source pointers.
+    qualification: >
+      Human-to-agent transfer remains partly inferential. This is a content
+      constraint, not a fixed packet schema; execution-control semantics remain
+      governed by DR-003.
+    does_not_authorize: >
+      Agent autonomy, a handoff schema, promotion of summaries to authority, or
+      any execution mechanism.
+    later_dependency: >
+      DR-003 accepted controls and later handoff/rehydration design.
+    proposed_owner_class: >
+      Later task/delegation-context owner; concrete artifact is design-time
+      unresolved.
+
+  - id: R9
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 conditional governance principle
+    accepted_scope: >
+      Tailor clarification, documentation, review, integrated verification, and
+      correction safeguards using context, consequence, uncertainty,
+      reversibility, and affected scope.
+    qualification: >
+      These are qualitative inputs only. No numerical weights, thresholds,
+      universal small-task exemption, or controlling reversibility rule is
+      supported.
+    does_not_authorize: >
+      A risk score, automatic eligibility rule, numeric threshold, or removal
+      of otherwise applicable controls.
+    later_dependency: >
+      Context-specific tailoring criteria and accountable invocation design.
+    proposed_owner_class: >
+      Later adopted workflow-governance or risk-policy owner.
+
+source_review_finding_treatment: >
+  The single DR-002 MINOR concerns historical pre-freeze process wording only.
+  Current front matter, immutable freeze identity, and the Register disambiguate
+  state. It does not narrow any recommendation and does not require a new
+  frozen target.
+
+next_gate: Workflow v1 design gate
 ```
 
 ### DR-003
@@ -441,6 +633,7 @@ question: >
   observability, correction/review waves, unattended execution, stopping,
   and recovery?
 research_status: reviewed
+current_decision_status: accepted
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-003.md
 evidence_as_of: 2026-09-03
@@ -464,7 +657,300 @@ source_review_findings:
   blocker: 0
   major: 0
   minor: 3
-next_gate: DR-003 recommendation disposition gate
+
+decision_id: ADW-DR-002-003-DISPOSITION-001
+decision_target: "DR-003@sha256:8017e5fbe1ee7b2d7ad92ba76b89e69dc2b51c52e0d56c650a293e99e63b0d46"
+decided_on: 2026-09-03
+decision_scope: >
+  Accept DR-003 PR01 through PR12 only within their recorded scopes and
+  qualifications as tool-agnostic Workflow v1 constraints or later design
+  inputs. This disposition grants no autonomy, implementation, tooling, or
+  normative Workflow v1 authority.
+
+recommendation_dispositions:
+  - id: PR01
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 bounded-delegation constraint
+    accepted_scope: >
+      Require consequential or otherwise nontrivial delegation to carry
+      sufficient authority, objective, immutable inputs, allowed scope/actions,
+      constraints, evidence destination, validation, ceilings, stopping, and
+      escalation information, scaled to context and risk.
+    qualification: >
+      No fixed packet schema or universal nontrivial threshold follows; fields
+      may be combined or omitted when their semantic information is genuinely
+      unnecessary.
+    does_not_authorize: >
+      A task schema, packet format, tracker, mandatory full packet for trivial
+      work, or delegated authority beyond the recorded scope.
+    later_dependency: >
+      Task-contract representation and proportionality design.
+    proposed_owner_class: >
+      Later adopted task/delegation-contract owner.
+
+  - id: PR02
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 freshness and identity constraint
+    accepted_scope: >
+      Pin and reverify each authoritative identity or effective-configuration
+      dimension actually relied upon at state-dependent dispatch, join,
+      publication, review, acceptance, or resumption transitions.
+    qualification: >
+      Identity establishes the identified object or configuration claim only;
+      it does not establish authority, approval, correctness, availability,
+      retention, or trust.
+    does_not_authorize: >
+      Pinning every possible dimension, trusting a digest or actor name, or
+      selecting an attestation/configuration mechanism.
+    later_dependency: >
+      Identification of state-dependent transitions and later
+      enforcement/tooling evidence.
+    proposed_owner_class: >
+      Applicable live-state owner plus the later workflow/control-policy owner.
+
+  - id: PR03
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 conditional parallel-execution constraint
+    accepted_scope: >
+      Permit parallel execution only for independent/read-only work, isolated
+      outputs, proposal-only contributors under one authoritative writer, or
+      shared writes protected by enforceable version/conflict controls.
+    qualification: >
+      Independence depends on explicit read/write sets, side effects,
+      invariants, and dependencies. No universal safe concurrency number
+      exists.
+    does_not_authorize: >
+      A concurrency count, parallel-wave algorithm, recursive delegation, or
+      unconstrained shared mutation.
+    later_dependency: >
+      Task/environment-specific ceilings and coordination design.
+    proposed_owner_class: >
+      Later adopted execution-coordination owner.
+
+  - id: PR04
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 isolation and join constraint
+    accepted_scope: >
+      Require isolated output/side-effect domains as applicable, one owner for
+      each mutable authority and aggregation responsibility, complete result
+      accounting, exact identities, validation state, freshness checks, and
+      explicit partial/failure/conflict handling at joins.
+    qualification: >
+      Central, hierarchical, and distributed aggregation remain alternatives;
+      no topology is selected.
+    does_not_authorize: >
+      An aggregation architecture, scheduler, workspace mechanism, or silent
+      success when a required result is absent.
+    later_dependency: >
+      Join semantics, aggregation topology, and isolation implementation design.
+    proposed_owner_class: >
+      Existing applicable authoritative state owners; aggregation/join owner is
+      design-time unresolved.
+
+  - id: PR05
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 handoff and rehydration constraint
+    accepted_scope: >
+      Treat handoffs and summaries as navigation state; retain exact
+      authoritative pointers and material task state, and require rehydration
+      and critical-identity validation before loss-sensitive state-dependent
+      action.
+    qualification: >
+      No prose summary or compaction process is assumed lossless; more history
+      is not automatically safer.
+    does_not_authorize: >
+      Promotion of summaries to authority, full-history retention, a handoff
+      schema, or reliance on stale cached context.
+    later_dependency: >
+      Handoff representation, loss-sensitive field selection, and tooling
+      validation.
+    proposed_owner_class: >
+      Later task/delegation-context owner; referenced authoritative facts remain
+      with their existing owners.
+
+  - id: PR06
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 observability/evidence constraint
+    accepted_scope: >
+      Require enough protected, secret-safe evidence to reconstruct relied-upon
+      run state, authority, identities, side effects, progress, resource use,
+      failure/retry/cancellation, outputs, and validation.
+    qualification: >
+      This is an outcome obligation, not an exhaustive logging schema.
+      Retention, logging, sampling, instrumentation, integrity, and storage
+      remain unresolved.
+    does_not_authorize: >
+      Full-fidelity capture, sensitive payload retention, a log store, tracing
+      product, or universal retention period.
+    later_dependency: >
+      Evidence-minimum, access, redaction, retention, and instrumentation
+      design.
+    proposed_owner_class: >
+      Applicable accountable run/evidence owner; concrete owner is design-time
+      unresolved.
+
+  - id: PR07
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 candidate-correction and re-review constraint
+    accepted_scope: >
+      Give each corrected formal candidate a new immutable identity, record the
+      change and affected scope, rerun affected verification, and renew
+      applicable independent review when its target or a load-bearing
+      assumption changed.
+    qualification: >
+      Materiality is relational and contextual, not a line-count or numeric
+      threshold; unaffected scope may carry forward only when demonstrated.
+    does_not_authorize: >
+      Self-review, self-acceptance, a numeric materiality rule, or treating prior
+      review as applying automatically to changed content.
+    later_dependency: >
+      Impact-analysis and conditional re-review design.
+    proposed_owner_class: >
+      Existing Charter candidate/review semantics plus the applicable
+      review-record and later workflow-governance owner.
+
+  - id: PR08
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 necessary-evidence constraint for unattended eligibility
+    accepted_scope: >
+      Use bounded authority, freshness, isolation, least privilege, semantic
+      side-effect safety, enforceable ceilings, observability,
+      cancellation/containment, recovery, and accountable intervention as
+      necessary evidence categories before unattended operation may be
+      considered.
+    qualification: >
+      This is only a conservative necessary-evidence screen. It is not proof of
+      sufficient safety, automatic eligibility, or a universal threshold.
+      Consequential classes remain ineligible without task-specific evidence
+      and explicit authorization.
+    does_not_authorize: >
+      Unattended execution, AFK writes, privileged/destructive/external
+      mutation, a categorical eligibility rule, or numeric ceilings.
+    later_dependency: >
+      Task-specific risk authorization, Workflow v1 eligibility design, and
+      later mechanism/configuration evidence.
+    proposed_owner_class: >
+      Accountable authorization/risk-control owner; concrete authoritative
+      artifact is design-time unresolved.
+
+  - id: PR09
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 stop and containment constraint
+    accepted_scope: >
+      Require explicit stop/escalation triggers and treat cancellation as
+      request, acknowledgement, and verified containment across relevant
+      side-effect boundaries.
+    qualification: >
+      A cancellation request is not containment. Mechanism-specific kill,
+      revocation, queue, subprocess, and external-effect semantics must be
+      tested later.
+    does_not_authorize: >
+      Assuming synchronous cancellation, declaring success on request issuance,
+      or selecting a cancellation mechanism.
+    later_dependency: >
+      Mechanism-specific interruptibility, inspection, quarantine, and
+      reconciliation design.
+    proposed_owner_class: >
+      Later execution-control owner plus the accountable side-effect owner.
+
+  - id: PR10
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 operation-aware recovery constraint
+    accepted_scope: >
+      Classify operation semantics before retry and apply stable identifiers,
+      deduplication, version preconditions, checkpoints, isolated/atomic
+      publication, reconciliation, or authorized compensation as applicable.
+    qualification: >
+      Retry and compensation are conditional effects. Irreversible, externally
+      visible, nondeterministic, or ambiguously completed operations retain
+      residual risk and may require accountable intervention.
+    does_not_authorize: >
+      Arbitrary rollback, blind retry, a retry count, or an assertion that
+      compensation restores prior reality.
+    later_dependency: >
+      Domain-specific side-effect classification, recovery ownership, and
+      mechanism selection.
+    proposed_owner_class: >
+      Applicable state/side-effect owner plus the later execution-recovery
+      owner.
+
+  - id: PR11
+    disposition: ACCEPT WITH QUALIFICATION
+    classification: Workflow v1 security, identity, and provenance constraint
+    accepted_scope: >
+      Keep authentication, authorization, approval, identity, provenance,
+      review independence, and correctness distinct; enforce per-task least
+      privilege and secret-safe, expectation-checked evidence.
+    qualification: >
+      No identity, credential, signing, attestation, trust-root, retention, or
+      provenance implementation is selected. Identity or signature alone does
+      not prove authority, approval, correctness, or trust.
+    does_not_authorize: >
+      Credential forwarding, ambient privilege, a provider/system choice, or
+      trust based solely on names, digests, signatures, or traces.
+    later_dependency: >
+      Identity, credential, reviewer-authentication, trust-policy, redaction,
+      and tooling research.
+    proposed_owner_class: >
+      Existing Charter authority/security scope plus a later
+      identity/provenance control owner; concrete owner is design-time
+      unresolved.
+
+  - id: PR12
+    disposition: ACCEPT
+    classification: Research-to-design boundary constraint
+    accepted_scope: >
+      Carry accepted requirements forward as outcome and evidence obligations
+      while deferring sequencing, schemas, numeric limits, topology, products,
+      credentials, storage, tracking, and automation to their authorized gates.
+    qualification: >
+      None beyond the stated requirement/mechanism boundary.
+    does_not_authorize: >
+      Workflow v1 design, DR-005, tooling selection, implementation, or
+      validation of any future mechanism.
+    later_dependency: >
+      Separate Workflow v1 design disposition, followed by DR-005 only through
+      its explicit gate.
+    proposed_owner_class: >
+      Research Register owns current disposition; later normative owner classes
+      are design-time unresolved.
+
+source_review_finding_treatment:
+  - >
+    E02 author attribution should use Qiuyuan Ai and coauthors in later
+    downstream citation handling; substantive support remains intact.
+  - >
+    E05 downstream citation handling should preserve the corrected
+    title/version/publication provenance; substantive support remains intact.
+  - >
+    NIST SP 800-53 Release 5.2.0 downstream citation handling should preserve
+    August 27, 2025 as the issuance date; control attribution remains intact.
+
+next_gate: Workflow v1 design gate
+```
+
+These findings do not require changes to the frozen report or source-review record.
+
+### Prerequisite research join
+
+```yaml
+decision_id: ADW-DR-002-003-DISPOSITION-001
+decided_on: 2026-09-03
+join_verdict: PREREQUISITE RESEARCH JOIN PASS
+dr_002_target: "DR-002@sha256:5458020be85cde909705fc1fbbc489c98e43ce0b6c058f6fd5d67901dc1ecb03"
+dr_003_target: "DR-003@sha256:8017e5fbe1ee7b2d7ad92ba76b89e69dc2b51c52e0d56c650a293e99e63b0d46"
+compatibility:
+  clarification_and_bounded_delegation: compatible/complementary
+  decomposition_parallelism_and_join: compatible-with-design-time-boundary
+  review_correction_and_rereview: compatible/complementary
+  durability_observability_and_provenance: compatible-with-design-time-boundary
+  fresh_context_handoff_and_rehydration: compatible/complementary
+  proportionality_and_unattended_controls: compatible-with-design-time-boundary
+material_contradiction: none
+design_gate_condition: >
+  Workflow v1 design gate is eligible only after this disposition state is
+  durably persisted and a fresh live Research Register re-read confirms both
+  accepted dispositions and the join remains current.
 ```
 
 DR-004 is intentionally not registered. No tooling, tracker, task schema, or review schema is selected.
