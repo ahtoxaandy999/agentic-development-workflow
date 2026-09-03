@@ -40,7 +40,7 @@ branch_protection_status: unavailable-for-private-repository-under-current-plan
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
-next_gate: DR-001 independent source review
+next_gate: DR-001 recommendation-disposition gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -76,12 +76,12 @@ Artifact: [ADW-BOOTSTRAP-RESEARCH-001](ADW-BOOTSTRAP-RESEARCH-001.md).
 
 The source review accepted this note as research evidence. The adoption reference accepted only the scope stated above. The note's publication-time recommendation remains `proposed`; this register records the later current disposition.
 
-## Completed research awaiting independent source review
+## Source-reviewed research awaiting coordinator disposition
 
 ```yaml
 id: DR-001
 question: coordinator gates and artifact lifecycle before Workflow v1
-research_status: completed
+research_status: reviewed
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-001.md
 dependency: accepted Bootstrap Context Baseline v0
@@ -92,10 +92,19 @@ research_started_on: 2026-09-03
 evidence_as_of: 2026-09-03
 review_target: "DR-001@sha256:825204b8c45da36c4c7cd087d572e0b014352aee7a6fe1c54e0772aaec6acf0f"
 review_target_bytes: 66017
-next_gate: DR-001 independent source review
+source_review_ref: docs/research/ADW-DR-001-SOURCE-REVIEW-001.md
+source_review_record: "ADW-DR-001-SOURCE-REVIEW-001@sha256:fc710d1bdd3a1eba2c8fde4bd94ef7a5081ceb0a1cc0f5a0d74917173fd6deb4"
+source_review_record_bytes: 17105
+source_review_verdict: accepted-as-source-reviewed-evidence
+source_reviewed_on: 2026-09-03
+source_review_findings:
+  blocker: 0
+  major: 0
+  minor: 1
+next_gate: DR-001 recommendation-disposition gate
 ```
 
-The durable contract and completed evidence exist at [ADW-DR-001](ADW-DR-001.md). Evidence production is complete, and the exact draft report is frozen as `DR-001@sha256:825204b8c45da36c4c7cd087d572e0b014352aee7a6fe1c54e0772aaec6acf0f` (66017 bytes). DR-001 is awaiting independent source review. Its recommendations remain proposed and non-normative.
+The durable contract and source-reviewed evidence exist at [ADW-DR-001](ADW-DR-001.md). DR-001 has passed independent source review for evidence quality, and the verdict is tied to the exact frozen target `DR-001@sha256:825204b8c45da36c4c7cd087d572e0b014352aee7a6fe1c54e0772aaec6acf0f` (66017 bytes). The [durable review artifact](ADW-DR-001-SOURCE-REVIEW-001.md) records one non-blocking MINOR finding; it does not require a new frozen report target. DR-001 recommendations remain proposed and non-normative. The next gate is coordinator recommendation disposition.
 
 `docs/research/ADW-DR-001.md` owns the frozen publication-time evidence. This Research Register owns mutable research status, dependencies, the artifact pointer, current decision disposition, supersession, and the next gate.
 
