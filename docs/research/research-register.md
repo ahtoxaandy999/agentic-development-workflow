@@ -46,7 +46,7 @@ workflow_v1_design_review: docs/design/ADW-WF1-DESIGN-REVIEW-004.md
 workflow_v1_design_review_task_id: ADW-WF1-DESIGN-REVIEW-004
 workflow_v1_design_disposition: docs/design/ADW-WF1-DESIGN-DISPOSITION-001.md
 workflow_v1_design_disposition_task_id: ADW-WF1-DESIGN-DISPOSITION-001
-next_gate: DR-005 research gate
+next_gate: DR-005 research execution
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -969,8 +969,11 @@ question: tooling evaluation and selection
 research_status: planned
 current_decision_status: deferred
 dependency: initial tool-agnostic Workflow v1 design disposition and an explicit DR-005 research gate
-dependency_status: unsatisfied
+dependency_status: satisfied
 placement: after initial tool-agnostic Workflow v1 design
+research_gate_ref: docs/research/ADW-DR-005-GATE-001.md
+research_gate_task_id: ADW-DR-005-GATE-001
+research_gate_decision: authorized
 ```
 
 DR-005 remains deferred until after initial tool-agnostic Workflow v1 design. No App, MCP server, skill, hook, connector workflow, or automation is selected by this entry.
