@@ -46,7 +46,7 @@ workflow_v1_design_review: docs/design/ADW-WF1-DESIGN-REVIEW-004.md
 workflow_v1_design_review_task_id: ADW-WF1-DESIGN-REVIEW-004
 workflow_v1_design_disposition: docs/design/ADW-WF1-DESIGN-DISPOSITION-001.md
 workflow_v1_design_disposition_task_id: ADW-WF1-DESIGN-DISPOSITION-001
-next_gate: DR-005 tooling disposition gate
+next_gate: Workflow v1 tooling/enforcement design gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -961,13 +961,13 @@ design_gate_condition: >
 
 DR-004 is intentionally not registered. No tooling, tracker, task schema, or review schema is selected.
 
-## Source-reviewed research awaiting coordinator tooling disposition
+## Source-reviewed research with accepted coordinator tooling disposition
 
 ```yaml
 id: DR-005
 question: tooling evaluation and selection
 research_status: reviewed
-current_decision_status: deferred
+current_decision_status: accepted
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-005.md
 dependency: initial tool-agnostic Workflow v1 design disposition and an explicit DR-005 research gate
@@ -993,10 +993,28 @@ source_review_findings:
   major: 0
   minor: 0
 
-next_gate: DR-005 tooling disposition gate
+decision_id: ADW-DR-005-DISPOSITION-001
+decision_ref: docs/research/ADW-DR-005-DISPOSITION-001.md
+decision_record: "ADW-DR-005-DISPOSITION-001@sha256:14e9cd835add6b55c9227ffd06bc4c133e55647d157a36e0b1a27b3207e7ae63"
+decision_record_bytes: 57631
+decision: accept-scoped-dr-005-tooling-recommendations-for-design
+decided_on: 2026-09-04
+decision_scope: >
+  Accept the scoped DR-005 mechanism recommendations only as inputs to later
+  Workflow v1 tooling/enforcement design. Conditional, deferred, rejected and
+  unresolved-gap classifications remain controlled by
+  docs/research/ADW-DR-005-DISPOSITION-001.md. This decision selects no
+  installed tooling, grants no new write or AFK authority, and does not make
+  Workflow v1 normative.
+
+next_gate: Workflow v1 tooling/enforcement design gate
 ```
 
-The exact frozen DR-005 evidence passed independent source review with verdict `accepted-as-source-reviewed-evidence`, and zero findings were recorded. The evidence is now eligible for coordinator tooling disposition. Its recommendations remain proposed and non-normative; source review selects no tooling, and Workflow v1 remains unadopted. `docs/research/ADW-DR-005.md` owns the frozen publication-time evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality findings, and this Research Register owns mutable current state.
+The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
+
+Workflow v1 remains unadopted and unimplemented. Routine, parallel, automated, and unattended writes remain unauthorized. Branch protection remains a live effective-control prerequisite wherever relied upon. The next phase is authorization of tooling/enforcement design, not implementation.
+
+`docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
 ## Superseded
 
