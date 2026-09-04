@@ -46,7 +46,9 @@ workflow_v1_design_review: docs/design/ADW-WF1-DESIGN-REVIEW-004.md
 workflow_v1_design_review_task_id: ADW-WF1-DESIGN-REVIEW-004
 workflow_v1_design_disposition: docs/design/ADW-WF1-DESIGN-DISPOSITION-001.md
 workflow_v1_design_disposition_task_id: ADW-WF1-DESIGN-DISPOSITION-001
-next_gate: Workflow v1 tooling/enforcement design gate
+workflow_v1_tooling_design_gate: docs/design/ADW-WF1-TOOLING-DESIGN-GATE-001.md
+workflow_v1_tooling_design_gate_task_id: ADW-WF1-TOOLING-DESIGN-GATE-001
+next_gate: Workflow v1 tooling/enforcement design execution
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1007,12 +1009,12 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 tooling/enforcement design gate
+next_gate: Workflow v1 tooling/enforcement design execution
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
 
-Workflow v1 remains unadopted and unimplemented. Routine, parallel, automated, and unattended writes remain unauthorized. Branch protection remains a live effective-control prerequisite wherever relied upon. The next phase is authorization of tooling/enforcement design, not implementation.
+Workflow v1 remains unadopted and unimplemented. Routine, parallel, automated, and unattended writes remain unauthorized. Branch protection remains a live effective-control prerequisite wherever relied upon. The initial tooling/enforcement design task is authorized by [ADW-WF1-TOOLING-DESIGN-GATE-001](../design/ADW-WF1-TOOLING-DESIGN-GATE-001.md), subject to fresh authoritative-state verification before execution. Gate persistence does not execute the design or authorize implementation.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
