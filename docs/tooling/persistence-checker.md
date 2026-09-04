@@ -27,16 +27,21 @@ absolute `report_root`, must not exist, and is opened with exclusive creation.
 
 ## Strict case interface
 
-JSON objects reject duplicate keys. Every case object has exactly the listed
-keys; unknown and missing case keys make the case unevaluable. Raw GitHub REST
+JSON objects reject duplicate keys. All JSON inputs reject the non-standard
+constants `NaN`, `Infinity`, and `-Infinity`, and recursively reject every
+non-finite numeric value before semantic use. Every case object has exactly the
+listed keys; unknown and missing case keys make the case unevaluable. Raw GitHub REST
 objects are different: required fields are validated, while ordinary unrelated
 fields are retained in the exact payload bytes and accepted.
 
 Repository paths and report destinations are canonical relative POSIX paths:
 no absolute form, empty segment, `.`, `..`, backslash, traversal, or
-normalization alias. Filesystem roots are absolute canonical directories.
-Read roots may not overlap. Symlinks and duplicate filesystem aliases are
-rejected.
+normalization alias. Filesystem roots and the case path are validated in their
+original string form before path conversion. Except for the filesystem root
+`/`, dot or dot-dot segments, redundant separators, trailing separators, and
+every other normalization alias are rejected. Filesystem roots are absolute
+canonical directories. Read roots may not overlap. Symlinks and duplicate
+filesystem aliases are rejected.
 
 The top-level case object is:
 
@@ -143,8 +148,10 @@ inventory must agree. Reports state whether they evaluated `B + W` or
 
 Times use exact UTC-second form. Freshness requires
 `freshness_cutoff <= observation_time <= evaluation_time`; the checker never
-consults the current clock. Unavailable required authority evidence makes the
-result `UNEVALUABLE`.
+consults the current clock. An observation before the cutoff or after the
+evaluation instant is `UNEVALUABLE`, as is unavailable required authority
+evidence. Independently detected mismatches remain recorded as `FAIL`, while
+`UNEVALUABLE` retains aggregate precedence.
 
 `branch_response_file` designates the exact bytes returned by the GitHub REST
 branch endpoint. The checker parses the real response structure and requires:
@@ -156,18 +163,22 @@ branch endpoint. The checker parses the real response structure and requires:
 
 `tree_response_file` designates exact bytes from the GitHub recursive Git-tree
 endpoint. The checker requires top-level `sha`, `tree`, and `truncated`; each
-tree entry must provide `path`, `mode`, `type`, and `sha`. Directory entries
-use Git tree modes and remain first-class evidence; blob and submodule entries
+tree entry must provide `path`, `mode`, `type`, and `sha`. REST directory
+entries must use exactly `040000`; `40000` is rejected at the REST boundary.
+The checker continues to use internal canonical Git tree framing mode `40000`
+when recomputing tree object identities. Directory entries remain first-class evidence; blob and submodule entries
 become leaf `path`/`mode`/`blob` values. `truncated` must be exactly `false`.
 
 Every directory implied by a leaf or nested directory path must have its own
 raw tree entry. The checker recursively rebuilds each supplied subtree from
 its immediate leaf and directory children using canonical Git tree framing and
 ordering. Every supplied directory SHA must equal that computed subtree SHA,
-and the reconstructed root must equal the response's top-level `sha`. An extra
-empty directory is accepted only when its object identity is the canonical
-empty Git tree `4b825dc642cb6eb9a060e54bf8d69288fbee4904` and the root identity includes
-that entry. Missing, duplicated, or internally conflicting directory evidence
+and the reconstructed root must equal the response's top-level `sha`. An
+explicit empty Git-tree entry is detected but cannot be represented by v1's
+leaf-only inventories, so any operational case containing one is
+`UNEVALUABLE` under the stable
+`authority.raw_tree.empty_directories_unrepresentable` predicate. The schema is
+not expanded with another directory inventory. Missing, duplicated, or internally conflicting directory evidence
 makes the result `UNEVALUABLE` with a directory-consistency predicate.
 
 Extra REST fields such as URLs, sizes, commit metadata, or later unrelated
@@ -190,8 +201,12 @@ themselves non-operational.
 `truncated`, and `entries`; each entry has exactly `path`, `mode`, and `blob`.
 Allowed leaf modes are `100644`, `100755`, `120000`, and `160000`. Paths must
 be unique. The checker recomputes each complete Git tree and compares all
-entries. In preflight, target is proposed `W`; in readback, it is published
-`C`.
+entries. The reconstructed base leaf inventory is always bound to
+`base.observed_tree` in both phases. In preflight, target is proposed `W`; in
+readback, it is published `C`, and its leaf inventory is also bound to the
+observed candidate tree. Because a leaf inventory cannot encode an explicit
+empty Git tree, a resulting tree-binding conflict is fail-closed as
+`UNEVALUABLE`. Ordinary non-empty nested directories remain supported.
 
 `allowed_delta` contains sorted, unique arrays named `additions`, `deletions`,
 and `modifications`. The complete computed delta must equal them. Every
@@ -261,7 +276,9 @@ deterministic `UNEVALUABLE` report. Report serialization has a second bounded
 sanitization/fallback boundary so an ordinary `UnicodeEncodeError` cannot
 escape. Valid non-ASCII Unicode remains supported and is emitted as UTF-8.
 
-The sorted JSON report records checker/runtime/case identities, phase-specific
+The sorted strict JSON report is serialized with non-finite values forbidden;
+serialization failure remains inside a bounded, sanitized `UNEVALUABLE`
+fallback, and every report that is written is itself strict JSON. It records checker/runtime/case identities, phase-specific
 `W` or `C` semantics, task/scope, raw payload identities, expected and observed
 values, every predicate with reason and evidence reference, provenance claims,
 freshness boundaries, limitations, non-authority statements, and pending

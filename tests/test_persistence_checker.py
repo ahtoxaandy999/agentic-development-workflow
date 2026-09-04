@@ -412,7 +412,7 @@ class PersistenceCheckerTests(unittest.TestCase):
         self.assertEqual("UNEVALUABLE", predicate["result"])
         self.assertIn("directory SHA", predicate["reason"])
 
-    def test_raw_tree_canonical_empty_directory_can_pass(self):
+    def test_pcr001_preflight_explicit_empty_directory_is_unevaluable(self):
         entries = self.fx.case["inventories"]["base"]["entries"]
         root_sha, directories = oracle_tree_details(entries, ("empty",))
         self.assertEqual("4b825dc642cb6eb9a060e54bf8d69288fbee4904", directories["empty"])
@@ -420,12 +420,81 @@ class PersistenceCheckerTests(unittest.TestCase):
         self.fx.case["identities"]["base"]["observed_tree"] = root_sha
         branch_data = self.fx.branch_response_bytes()
         tree_data = self.fx.tree_response_bytes(("empty",))
-        report = self.assert_result("PASS", self.fx.execute_with_raws({
+        report = self.assert_result("UNEVALUABLE", self.fx.execute_with_raws({
             "github-branch-response": branch_data,
             "github-tree-response": tree_data,
         }))
-        self.assertIn("authority.raw_tree.directory_consistency",
-                      {item["predicate"] for item in report["predicates"]})
+        unable = {item["predicate"] for item in report["predicates"]
+                  if item["result"] == "UNEVALUABLE"}
+        self.assertIn("authority.raw_tree.empty_directories_unrepresentable", unable)
+        self.assertIn("inventory.base.tree_binding", unable)
+
+    def test_pcr001_readback_explicit_empty_directory_is_unevaluable(self):
+        self.fx.close()
+        self.fx = SyntheticCase("readback")
+        entries = self.fx.case["inventories"]["target"]["entries"]
+        root_sha, _ = oracle_tree_details(entries, ("empty",))
+        for field in ("expected_tree", "observed_tree"):
+            self.fx.case["identities"]["candidate"][field] = root_sha
+        branch_data = self.fx.branch_response_bytes()
+        tree_data = self.fx.tree_response_bytes(("empty",))
+        report = self.assert_result("UNEVALUABLE", self.fx.execute_with_raws({
+            "github-branch-response": branch_data,
+            "github-tree-response": tree_data,
+        }))
+        unable = {item["predicate"] for item in report["predicates"]
+                  if item["result"] == "UNEVALUABLE"}
+        self.assertIn("authority.raw_tree.empty_directories_unrepresentable", unable)
+        self.assertIn("inventory.candidate.tree_binding", unable)
+
+    def test_pcr001_base_leaf_inventory_binds_to_observed_tree_in_both_phases(self):
+        for phase in ("preflight", "readback"):
+            with self.subTest(phase=phase):
+                fx = SyntheticCase(phase)
+                try:
+                    root_sha, _ = oracle_tree_details(
+                        fx.case["inventories"]["base"]["entries"], ("empty",))
+                    for field in ("expected_tree", "observed_tree"):
+                        fx.case["identities"]["base"][field] = root_sha
+                    if phase == "preflight":
+                        report = self.assert_result("UNEVALUABLE", fx.execute_with_raws({
+                            "github-branch-response": fx.branch_response_bytes(),
+                            "github-tree-response": fx.tree_response_bytes(("empty",)),
+                        }))
+                    else:
+                        report = self.assert_result("UNEVALUABLE", fx.execute())
+                    predicate = next(item for item in report["predicates"]
+                                     if item["predicate"] == "inventory.base.tree_binding")
+                    self.assertEqual("UNEVALUABLE", predicate["result"])
+                finally:
+                    fx.close()
+
+    def test_pcr001_silent_empty_directory_deletion_cannot_pass(self):
+        entries = self.fx.case["inventories"]["base"]["entries"]
+        root_sha, _ = oracle_tree_details(entries, ("empty",))
+        for field in ("expected_tree", "observed_tree"):
+            self.fx.case["identities"]["base"][field] = root_sha
+        report = self.assert_result("UNEVALUABLE", self.fx.execute_with_raws({
+            "github-branch-response": self.fx.branch_response_bytes(),
+            "github-tree-response": self.fx.tree_response_bytes(("empty",)),
+        }))
+        self.assertEqual([], self.fx.case["allowed_delta"]["deletions"])
+        self.assertIn("authority.raw_tree.empty_directories_unrepresentable",
+                      {item["predicate"] for item in report["predicates"]
+                       if item["result"] == "UNEVALUABLE"})
+
+    def test_pcr001_ordinary_nonempty_nested_directories_pass_both_phases(self):
+        for phase in ("preflight", "readback"):
+            with self.subTest(phase=phase):
+                fx = SyntheticCase(phase)
+                try:
+                    report = self.assert_result("PASS", fx.execute())
+                    predicate = next(item for item in report["predicates"] if
+                                     item["predicate"] ==
+                                     "authority.raw_tree.empty_directories_unrepresentable")
+                    self.assertEqual("PASS", predicate["result"])
+                finally:
+                    fx.close()
 
     def test_raw_tree_missing_implied_directory_is_unevaluable(self):
         payload = json.loads(self.fx.tree_response_bytes().decode("utf-8"))
@@ -437,6 +506,25 @@ class PersistenceCheckerTests(unittest.TestCase):
         predicate = next(item for item in report["predicates"]
                          if item["predicate"] == "authority.raw_tree.directory_consistency")
         self.assertIn("missing", predicate["reason"])
+
+    def test_pcr005_raw_directory_mode_040000_passes(self):
+        payload = json.loads(self.fx.tree_response_bytes().decode("utf-8"))
+        directory_modes = [entry["mode"] for entry in payload["tree"]
+                           if entry["type"] == "tree"]
+        self.assertTrue(directory_modes)
+        self.assertEqual({"040000"}, set(directory_modes))
+        self.assert_result("PASS", self.fx.execute())
+
+    def test_pcr005_raw_directory_mode_40000_is_unevaluable(self):
+        payload = json.loads(self.fx.tree_response_bytes().decode("utf-8"))
+        for entry in payload["tree"]:
+            if entry["type"] == "tree":
+                entry["mode"] = "40000"
+        data = (json.dumps(payload, sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8")
+        report = self.assert_result("UNEVALUABLE",
+                                    self.fx.execute_with_raw("github-tree-response", data))
+        self.assertTrue(any("directory mode" in item["reason"] for item in report["predicates"]
+                            if item["result"] == "UNEVALUABLE"))
 
     def test_unpaired_surrogate_in_task_reference_is_reported_unevaluable(self):
         self.fx.case["task_reference"] = "\ud800"
@@ -601,6 +689,96 @@ class PersistenceCheckerTests(unittest.TestCase):
         self.assertFalse(written)
         self.assertIn("duplicate JSON key", diagnostic)
 
+    def test_pcr002_nonstandard_constants_in_case_are_rejected(self):
+        for constant in ("NaN", "Infinity", "-Infinity"):
+            with self.subTest(constant=constant):
+                fx = SyntheticCase()
+                try:
+                    raw = fx.case_path.read_bytes().replace(
+                        b'"task_reference": "SYNTHETIC-NON-OPERATIONAL-CASE-001"',
+                        ('"task_reference": %s' % constant).encode("ascii"),
+                        1,
+                    )
+                    fx.case_path.write_bytes(raw)
+                    code, report, written, diagnostic = CHECKER.execute(str(fx.case_path))
+                    self.assertEqual(2, code)
+                    self.assertIsNone(report)
+                    self.assertFalse(written)
+                    self.assertIn("non-standard JSON constant", diagnostic)
+                finally:
+                    fx.close()
+
+    def test_pcr002_nonstandard_constants_in_raw_branch_are_unevaluable(self):
+        for constant in ("NaN", "Infinity", "-Infinity"):
+            with self.subTest(constant=constant):
+                fx = SyntheticCase()
+                try:
+                    data = fx.branch_response_bytes().replace(
+                        b"{", ('{"nonfinite":%s,' % constant).encode("ascii"), 1)
+                    report = self.assert_result(
+                        "UNEVALUABLE", fx.execute_with_raw("github-branch-response", data))
+                    self.assertIn("non-standard JSON constant",
+                                  " ".join(item["reason"] for item in report["predicates"]))
+                    report_path = fx.reports / fx.case["paths"]["report_destination"]
+
+                    def reject(value):
+                        raise AssertionError("non-standard JSON constant written: %s" % value)
+
+                    json.loads(report_path.read_text("utf-8"), parse_constant=reject)
+                finally:
+                    fx.close()
+
+    def test_pcr002_nonstandard_constants_in_raw_tree_are_unevaluable(self):
+        for constant in ("NaN", "Infinity", "-Infinity"):
+            with self.subTest(constant=constant):
+                fx = SyntheticCase()
+                try:
+                    data = fx.tree_response_bytes().replace(
+                        b"{", ('{"nonfinite":%s,' % constant).encode("ascii"), 1)
+                    report = self.assert_result(
+                        "UNEVALUABLE", fx.execute_with_raw("github-tree-response", data))
+                    self.assertIn("non-standard JSON constant",
+                                  " ".join(item["reason"] for item in report["predicates"]))
+                    report_path = fx.reports / fx.case["paths"]["report_destination"]
+
+                    def reject(value):
+                        raise AssertionError("non-standard JSON constant written: %s" % value)
+
+                    json.loads(report_path.read_text("utf-8"), parse_constant=reject)
+                finally:
+                    fx.close()
+
+    def test_pcr002_nonfinite_report_values_use_strict_bounded_fallback(self):
+        original_report = CHECKER.Checker.report
+        for value in (float("nan"), float("inf"), float("-inf")):
+            with self.subTest(value=value):
+                fx = SyntheticCase()
+                try:
+                    def report_with_nonfinite(checker):
+                        report = original_report(checker)
+                        report["synthetic_nonfinite"] = value
+                        return report
+
+                    with mock.patch.object(CHECKER.Checker, "report", report_with_nonfinite):
+                        report = self.assert_result("UNEVALUABLE", fx.execute())
+                    self.assertEqual("<invalid-non-finite-number>", report["synthetic_nonfinite"])
+                    self.assertIn("report.serialization",
+                                  {item["predicate"] for item in report["predicates"]
+                                   if item["result"] == "UNEVALUABLE"})
+                    report_path = fx.reports / fx.case["paths"]["report_destination"]
+
+                    def reject(constant):
+                        raise AssertionError("non-standard JSON constant written: %s" % constant)
+
+                    loaded = json.loads(report_path.read_text("utf-8"), parse_constant=reject)
+                    self.assertEqual("UNEVALUABLE", loaded["overall_result"])
+                finally:
+                    fx.close()
+
+    def test_pcr002_numeric_overflow_is_recursively_rejected(self):
+        with self.assertRaisesRegex(CHECKER.InputError, "non-finite JSON number"):
+            CHECKER._json_bytes(b'{"nested":{"values":[1e999]}}\n', "synthetic JSON")
+
     def test_duplicate_inventory_path_is_unevaluable(self):
         duplicate = copy.deepcopy(self.fx.case["inventories"]["base"]["entries"][0])
         self.fx.case["inventories"]["base"]["entries"].append(duplicate)
@@ -662,10 +840,26 @@ class PersistenceCheckerTests(unittest.TestCase):
         self.assertTrue(any("truncated" in p["reason"] for p in report["predicates"]
                             if p["result"] == "UNEVALUABLE"))
 
-    def test_stale_observation_fails(self):
+    def test_stale_observation_is_unevaluable(self):
         self.fx.case["authority"]["observation_time"] = "2026-09-04T11:00:00Z"
-        report = self.assert_result("FAIL", self.fx.execute())
-        self.assertIn("authority.freshness", {p["predicate"] for p in report["predicates"] if p["result"] == "FAIL"})
+        report = self.assert_result("UNEVALUABLE", self.fx.execute())
+        self.assertIn("authority.freshness", {p["predicate"] for p in report["predicates"]
+                                               if p["result"] == "UNEVALUABLE"})
+
+    def test_future_observation_is_unevaluable(self):
+        self.fx.case["authority"]["observation_time"] = "2026-09-04T12:06:00Z"
+        report = self.assert_result("UNEVALUABLE", self.fx.execute())
+        self.assertIn("authority.freshness", {p["predicate"] for p in report["predicates"]
+                                               if p["result"] == "UNEVALUABLE"})
+
+    def test_stale_observation_retains_independent_failure_with_unevaluable_precedence(self):
+        self.fx.case["authority"]["observation_time"] = "2026-09-04T11:00:00Z"
+        self.fx.case["identities"]["working"]["expected_tree"] = "c" * 40
+        report = self.assert_result("UNEVALUABLE", self.fx.execute())
+        self.assertIn("authority.freshness", {p["predicate"] for p in report["predicates"]
+                                               if p["result"] == "UNEVALUABLE"})
+        self.assertIn("inventory.working.tree_binding",
+                      {p["predicate"] for p in report["predicates"] if p["result"] == "FAIL"})
 
     def test_unavailable_live_verification_is_unevaluable(self):
         self.fx.case["authority"]["available"] = False
@@ -697,6 +891,59 @@ class PersistenceCheckerTests(unittest.TestCase):
         report = self.assert_result("UNEVALUABLE", self.fx.execute())
         self.assertIn("paths.read_boundary",
                       {p["predicate"] for p in report["predicates"] if p["result"] == "UNEVALUABLE"})
+
+    def test_pcr004_case_path_normalization_aliases_are_rejected(self):
+        aliases = [
+            str(self.fx.root) + "/./case.json",
+            str(self.fx.root) + "//case.json",
+            str(self.fx.case_path) + "/",
+            str(self.fx.root) + "/inputs/../case.json",
+        ]
+        for alias in aliases:
+            with self.subTest(alias=alias):
+                code, report, written, diagnostic = CHECKER.execute(alias)
+                self.assertEqual(2, code)
+                self.assertIsNone(report)
+                self.assertFalse(written)
+                self.assertIn("absolute canonical path", diagnostic)
+
+    def test_pcr004_read_root_normalization_aliases_are_rejected(self):
+        aliases = [
+            str(self.fx.root) + "/.",
+            str(self.fx.root) + "//",
+            str(self.fx.root) + "/",
+            str(self.fx.root) + "/inputs/..",
+        ]
+        for alias in aliases:
+            with self.subTest(alias=alias):
+                fx = SyntheticCase()
+                try:
+                    fx.case["paths"]["read_roots"] = [alias.replace(str(self.fx.root), str(fx.root), 1)]
+                    report = self.assert_result("UNEVALUABLE", fx.execute())
+                    self.assertIn("paths.read_boundary",
+                                  {p["predicate"] for p in report["predicates"]
+                                   if p["result"] == "UNEVALUABLE"})
+                finally:
+                    fx.close()
+
+    def test_pcr004_report_root_normalization_aliases_are_rejected(self):
+        aliases = [
+            str(self.fx.reports) + "/.",
+            str(self.fx.reports) + "//",
+            str(self.fx.reports) + "/",
+            str(self.fx.root) + "/inputs/../reports",
+        ]
+        for alias in aliases:
+            with self.subTest(alias=alias):
+                fx = SyntheticCase()
+                try:
+                    fx.case["paths"]["report_root"] = alias.replace(str(self.fx.root), str(fx.root), 1)
+                    code, report, written, diagnostic = fx.execute_case_only()
+                    self.assertEqual(2, code)
+                    self.assertFalse(written)
+                    self.assertIn("absolute canonical path", diagnostic)
+                finally:
+                    fx.close()
 
     def test_existing_report_destination_is_unevaluable_without_overwrite(self):
         destination = self.fx.reports / "exists.json"

@@ -4,6 +4,7 @@
 import datetime as _datetime
 import hashlib
 import json
+import math
 import os
 import re
 import stat
@@ -45,7 +46,13 @@ def _object_no_duplicates(pairs):
     return result
 
 
+def _reject_json_constant(value):
+    raise InputError("non-standard JSON constant is forbidden: %s" % value)
+
+
 def _validate_unicode_scalars(value, label):
+    if isinstance(value, float) and not math.isfinite(value):
+        raise InputError("%s contains a non-finite JSON number" % label)
     if isinstance(value, str):
         if any(0xD800 <= ord(character) <= 0xDFFF for character in value):
             raise InputError("%s contains an unpaired UTF-16 surrogate" % label)
@@ -80,6 +87,16 @@ def _sanitize_unicode(value):
     return value
 
 
+def _sanitize_nonfinite(value):
+    if isinstance(value, float) and not math.isfinite(value):
+        return "<invalid-non-finite-number>"
+    if isinstance(value, list):
+        return [_sanitize_nonfinite(item) for item in value]
+    if isinstance(value, dict):
+        return {key: _sanitize_nonfinite(item) for key, item in value.items()}
+    return value
+
+
 def _bounded_diagnostic(error):
     text = _sanitize_unicode(str(error))
     try:
@@ -95,7 +112,11 @@ def _json_bytes(data, evidence, validate_scalars=True):
     except UnicodeDecodeError as exc:
         raise InputError("%s is not strict UTF-8: %s" % (evidence, exc))
     try:
-        value = json.loads(text, object_pairs_hook=_object_no_duplicates)
+        value = json.loads(
+            text,
+            object_pairs_hook=_object_no_duplicates,
+            parse_constant=_reject_json_constant,
+        )
     except DuplicateKey:
         raise
     except (json.JSONDecodeError, ValueError) as exc:
@@ -142,9 +163,19 @@ def _assert_no_symlink(path, label, require_directory=False):
     if not isinstance(path, str):
         raise InputError("%s must be a string path" % label)
     _validate_unicode_scalars(path, label)
-    path = Path(path)
-    if not path.is_absolute() or os.path.abspath(str(path)) != str(path):
+    if "\0" in path or not os.path.isabs(path):
         raise InputError("%s must be an absolute canonical path" % label)
+    root_form = os.path.abspath(os.sep)
+    if path != root_form:
+        parts = path.split(os.sep)
+        if (
+            path.endswith(os.sep)
+            or any(part in ("", ".", "..") for part in parts[1:])
+            or os.path.abspath(path) != path
+            or os.path.normpath(path) != path
+        ):
+            raise InputError("%s must be an absolute canonical path" % label)
+    path = Path(path)
     current = Path(path.anchor)
     for part in path.parts[1:]:
         current = current / part
@@ -549,7 +580,7 @@ class Checker:
                          "freshness_cutoff <= observation_time <= evaluation_time",
                          {"freshness_cutoff": auth["freshness_cutoff"],
                           "observation_time": auth["observation_time"],
-                          "evaluation_time": auth["evaluation_time"]})
+                          "evaluation_time": auth["evaluation_time"]}, inability=True)
         except InputError as exc:
             self.record("authority.time_format", "UNEVALUABLE", str(exc), "authority")
         self.require(auth["available"], "authority.available", "required live verification is unavailable",
@@ -600,6 +631,11 @@ class Checker:
         try:
             base_tree = _git_tree(self.base_entries)
             target_tree = _git_tree(self.target_entries)
+            self.require(base_tree == ids["base"]["observed_tree"],
+                         "inventory.base.tree_binding",
+                         "base leaf inventory conflicts with observed tree",
+                         "inventories.base+identities.base.observed_tree",
+                         ids["base"]["observed_tree"], base_tree, inability=True)
             if self.case["phase"] == "preflight":
                 self.require(target_tree == ids["working"]["expected_tree"],
                              "inventory.working.tree_binding",
@@ -607,10 +643,11 @@ class Checker:
                              "inventories.target+identities.working",
                              ids["working"]["expected_tree"], target_tree)
             else:
-                self.require(base_tree == ids["base"]["observed_tree"],
-                             "inventory.base.tree_binding",
-                             "base inventory conflicts with observed tree", "inventories.base",
-                             ids["base"]["observed_tree"], base_tree, inability=True)
+                self.require(target_tree == ids["candidate"]["observed_tree"],
+                             "inventory.candidate.tree_binding",
+                             "target inventory conflicts with observed candidate tree",
+                             "inventories.target+identities.candidate.observed_tree",
+                             ids["candidate"]["observed_tree"], target_tree, inability=True)
         except (InputError, KeyError, TypeError) as exc:
             self.record("inventory.tree_binding", "UNEVALUABLE", str(exc), "inventories")
         actual = {
@@ -717,7 +754,7 @@ class Checker:
             branch = _json_bytes(self.files[branch_id]["bytes"], "raw GitHub branch response")
             tree = _json_bytes(self.files[tree_id]["bytes"], "raw GitHub recursive-tree response")
             branch_values = self._raw_branch(branch)
-            tree_sha, payload_entries, directory_evidence = self._raw_tree(tree)
+            tree_sha, payload_entries, directory_evidence, empty_directories = self._raw_tree(tree)
             self.record("authority.raw_branch_schema", "PASS", "required GitHub REST fields parsed",
                         "raw branch response", None, byte_identity(self.files[branch_id]["bytes"]))
             self.record("authority.raw_tree_schema", "PASS", "required GitHub REST fields parsed",
@@ -726,6 +763,11 @@ class Checker:
                         "every supplied directory and the reconstructed root match canonical Git tree hashes",
                         "raw recursive-tree response", "all directory SHAs consistent",
                         directory_evidence)
+            self.require(not empty_directories,
+                         "authority.raw_tree.empty_directories_unrepresentable",
+                         "explicit empty Git-tree entries cannot be represented by the v1 leaf inventory",
+                         "raw recursive-tree response",
+                         [], empty_directories, inability=True)
             expected_branch_name = self.case["repository"]["ref"].removeprefix("refs/heads/")
             self.require(branch_values["name"] == expected_branch_name,
                          "authority.ref_consistency", "raw branch name conflicts with governed ref",
@@ -866,7 +908,7 @@ class Checker:
             if not isinstance(object_id, str) or not HEX40.match(object_id):
                 raise InputError("raw recursive-tree object sha is malformed")
             if entry_type == "tree":
-                if mode not in ("040000", "40000"):
+                if mode != "040000":
                     raise InputError("raw recursive-tree directory mode is malformed")
                 directories[path] = object_id
                 continue
@@ -928,7 +970,14 @@ class Checker:
         if root_sha != tree_sha:
             raise DirectoryConsistencyError("top-level tree SHA conflicts with reconstructed entries",
                                             "<root>", tree_sha, root_sha)
-        return tree_sha, result, computed
+        occupied_directories = set()
+        for path in list(result) + list(directories):
+            current = parent(path)
+            while current:
+                occupied_directories.add(current)
+                current = parent(current)
+        empty_directories = sorted(set(directories) - occupied_directories)
+        return tree_sha, result, computed, empty_directories
 
     def overall(self):
         results = [item["result"] for item in self.predicates]
@@ -993,19 +1042,17 @@ class Checker:
 
 
 def _load_case(case_path):
-    if not isinstance(case_path, str) or not os.path.isabs(case_path) or os.path.abspath(case_path) != case_path:
-        raise InputError("case path must be absolute and canonical")
     path = _assert_no_symlink(case_path, "case-file")
     data, _ = _read_regular(path, "case-file")
     case = _json_bytes(data, "case-file", validate_scalars=False)
     if not isinstance(case, dict):
         raise InputError("case-file top level must be an object")
-    unicode_error = None
+    value_error = None
     try:
         _validate_unicode_scalars(case, "case-file")
     except InputError as exc:
-        unicode_error = exc
-    return path, data, case, unicode_error
+        value_error = exc
+    return path, data, case, value_error
 
 
 def _report_target(case):
@@ -1054,15 +1101,13 @@ def execute(case_path):
     Returns (exit_code, report_or_none, report_written, diagnostic).
     """
     try:
-        path, case_bytes, case, unicode_error = _load_case(case_path)
+        path, case_bytes, case, value_error = _load_case(case_path)
     except Exception as exc:
         return 2, None, False, _bounded_diagnostic(exc)
     checker = Checker(path, case_bytes, case)
     try:
-        if unicode_error is not None:
-            checker.record("case.unicode_scalars", "UNEVALUABLE",
-                           "case-file contains an unpaired UTF-16 surrogate",
-                           "case-file")
+        if value_error is not None:
+            checker.record("case.json_values", "UNEVALUABLE", str(value_error), "case-file")
         elif checker.schema():
             checker.paths_and_files()
             checker.identities_and_time()
@@ -1085,14 +1130,16 @@ def execute(case_path):
         return 2, report, False, diagnostic
     report = _sanitize_unicode(checker.report())
     try:
-        report_bytes = (json.dumps(report, sort_keys=True, indent=2, ensure_ascii=False) + "\n").encode(
+        report_bytes = (json.dumps(report, sort_keys=True, indent=2, ensure_ascii=False,
+                                   allow_nan=False) + "\n").encode(
             "utf-8", "strict")
     except (UnicodeEncodeError, TypeError, ValueError) as exc:
         checker.record("report.serialization", "UNEVALUABLE",
                        "report serialization failed safely", "report")
-        report = _sanitize_unicode(checker.report())
+        report = _sanitize_nonfinite(_sanitize_unicode(checker.report()))
         try:
-            report_bytes = (json.dumps(report, sort_keys=True, indent=2, ensure_ascii=True) + "\n").encode(
+            report_bytes = (json.dumps(report, sort_keys=True, indent=2, ensure_ascii=True,
+                                       allow_nan=False) + "\n").encode(
                 "ascii", "strict")
         except (UnicodeEncodeError, TypeError, ValueError):
             return 2, report, False, "report serialization failed safely"
