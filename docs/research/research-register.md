@@ -46,7 +46,7 @@ workflow_v1_design_review: docs/design/ADW-WF1-DESIGN-REVIEW-004.md
 workflow_v1_design_review_task_id: ADW-WF1-DESIGN-REVIEW-004
 workflow_v1_design_disposition: docs/design/ADW-WF1-DESIGN-DISPOSITION-001.md
 workflow_v1_design_disposition_task_id: ADW-WF1-DESIGN-DISPOSITION-001
-next_gate: DR-005 independent source review
+next_gate: DR-005 tooling disposition gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -961,12 +961,12 @@ design_gate_condition: >
 
 DR-004 is intentionally not registered. No tooling, tracker, task schema, or review schema is selected.
 
-## Completed research awaiting independent source review
+## Source-reviewed research awaiting coordinator tooling disposition
 
 ```yaml
 id: DR-005
 question: tooling evaluation and selection
-research_status: completed
+research_status: reviewed
 current_decision_status: deferred
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-005.md
@@ -980,10 +980,23 @@ research_started_on: 2026-09-04
 evidence_as_of: 2026-09-04
 review_target: "DR-005@sha256:3c83c5b2ceea4ce0c545f2516287aa8c4ecc3f119e55de01597ac5a66a73163c"
 review_target_bytes: 149389
-next_gate: DR-005 independent source review
+review_target_blob: 615692060c7bf9d7372d5469550176f22caca9be
+review_target_commit: 38e31a09a1aa31f42b5b3fbc02e0fb662ebb1958
+
+source_review_ref: docs/research/ADW-DR-005-SOURCE-REVIEW-001.md
+source_review_record: "ADW-DR-005-SOURCE-REVIEW-001@sha256:e6557d10f8a2618fc9e79d40894e398405db4b253af5cdd54530c751a94357e9"
+source_review_record_bytes: 63238
+source_review_verdict: accepted-as-source-reviewed-evidence
+source_reviewed_on: 2026-09-04
+source_review_findings:
+  blocker: 0
+  major: 0
+  minor: 0
+
+next_gate: DR-005 tooling disposition gate
 ```
 
-DR-005 evidence production is complete. The exact report is frozen by SHA-256 and byte count and is awaiting independent source review. Its recommendations remain proposed and non-normative, and tooling selection remains undecided. `docs/research/ADW-DR-005.md` owns the frozen publication-time evidence; this Research Register owns mutable current research state.
+The exact frozen DR-005 evidence passed independent source review with verdict `accepted-as-source-reviewed-evidence`, and zero findings were recorded. The evidence is now eligible for coordinator tooling disposition. Its recommendations remain proposed and non-normative; source review selects no tooling, and Workflow v1 remains unadopted. `docs/research/ADW-DR-005.md` owns the frozen publication-time evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality findings, and this Research Register owns mutable current state.
 
 ## Superseded
 
