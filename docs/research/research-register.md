@@ -46,7 +46,7 @@ workflow_v1_design_review: docs/design/ADW-WF1-DESIGN-REVIEW-004.md
 workflow_v1_design_review_task_id: ADW-WF1-DESIGN-REVIEW-004
 workflow_v1_design_disposition: docs/design/ADW-WF1-DESIGN-DISPOSITION-001.md
 workflow_v1_design_disposition_task_id: ADW-WF1-DESIGN-DISPOSITION-001
-next_gate: DR-005 research execution
+next_gate: DR-005 independent source review
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -961,22 +961,29 @@ design_gate_condition: >
 
 DR-004 is intentionally not registered. No tooling, tracker, task schema, or review schema is selected.
 
-## Deferred research
+## Completed research awaiting independent source review
 
 ```yaml
 id: DR-005
 question: tooling evaluation and selection
-research_status: planned
+research_status: completed
 current_decision_status: deferred
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-005.md
 dependency: initial tool-agnostic Workflow v1 design disposition and an explicit DR-005 research gate
 dependency_status: satisfied
 placement: after initial tool-agnostic Workflow v1 design
 research_gate_ref: docs/research/ADW-DR-005-GATE-001.md
 research_gate_task_id: ADW-DR-005-GATE-001
 research_gate_decision: authorized
+research_started_on: 2026-09-04
+evidence_as_of: 2026-09-04
+review_target: "DR-005@sha256:3c83c5b2ceea4ce0c545f2516287aa8c4ecc3f119e55de01597ac5a66a73163c"
+review_target_bytes: 149389
+next_gate: DR-005 independent source review
 ```
 
-DR-005 remains deferred until after initial tool-agnostic Workflow v1 design. No App, MCP server, skill, hook, connector workflow, or automation is selected by this entry.
+DR-005 evidence production is complete. The exact report is frozen by SHA-256 and byte count and is awaiting independent source review. Its recommendations remain proposed and non-normative, and tooling selection remains undecided. `docs/research/ADW-DR-005.md` owns the frozen publication-time evidence; this Research Register owns mutable current research state.
 
 ## Superseded
 
