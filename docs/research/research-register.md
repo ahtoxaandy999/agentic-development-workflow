@@ -55,7 +55,10 @@ workflow_v1_tooling_design_review_task_id: ADW-WF1-TOOLING-DESIGN-REVIEW-001
 workflow_v1_tooling_design_disposition: docs/design/ADW-WF1-TOOLING-DESIGN-DISPOSITION-001.md
 workflow_v1_tooling_design_disposition_task_id: ADW-WF1-TOOLING-DESIGN-DISPOSITION-001
 workflow_v1_tooling_design_decision: accept-initial-tooling-enforcement-design
-next_gate: Workflow v1 tooling/enforcement implementation/materialization scoping gate
+workflow_v1_persistence_checker_gate: docs/design/ADW-WF1-PERSISTENCE-CHECKER-GATE-001.md
+workflow_v1_persistence_checker_gate_task_id: ADW-WF1-PERSISTENCE-CHECKER-GATE-001
+workflow_v1_persistence_checker_gate_decision: authorize-bounded-checker-development
+next_gate: Workflow v1 supervised persistence checker development
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1016,12 +1019,14 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 tooling/enforcement implementation/materialization scoping gate
+next_gate: Workflow v1 supervised persistence checker development
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
 
 Workflow v1 remains unadopted and unimplemented. Routine, parallel, automated, and unattended writes remain unauthorized. Branch protection remains a live effective-control prerequisite wherever relied upon. The initial tooling/enforcement design in [ADW-WF1-TOOLING-DESIGN-001](../design/ADW-WF1-TOOLING-DESIGN-001.md) is accepted as the scoped, non-normative initial tooling/enforcement design basis by [ADW-WF1-TOOLING-DESIGN-DISPOSITION-001](../design/ADW-WF1-TOOLING-DESIGN-DISPOSITION-001.md), for exact subject commit `dc881f2a01ad0e5bfe173bad7be19b66b7fea51d` and blob `2e0c640e8cab61b0bf165712c27e02ff9a455ec6`, following [ADW-WF1-TOOLING-DESIGN-REVIEW-001](../design/ADW-WF1-TOOLING-DESIGN-REVIEW-001.md). This design acceptance preserves the accepted semantic basis, the DR-005 disposition's selection boundaries and unresolved RG1-RG12 prerequisites; it grants no implementation, operational-use or expanded write/autonomy authority, normative Workflow v1 adoption, or new baseline acceptance.
+
+[ADW-WF1-PERSISTENCE-CHECKER-GATE-001](../design/ADW-WF1-PERSISTENCE-CHECKER-GATE-001.md) selects one manually invoked, deterministic, offline persistence checker as a narrow D3 exception for bounded development and synthetic producer tests. Its decision is `AUTHORIZE BOUNDED CHECKER DEVELOPMENT`; D3 otherwise remains deferred. No checker implementation or operational reliance exists or is authorized by this gate persistence.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
