@@ -102,6 +102,10 @@ workflow_v1_tooling_next_materialization_scoping: docs/design/ADW-WF1-TOOLING-NE
 workflow_v1_tooling_next_materialization_scoping_task_id: ADW-WF1-TOOLING-NEXT-MATERIALIZATION-SCOPING-001
 workflow_v1_tooling_next_materialization_scoping_decision: propose-bounded-next-materialization
 workflow_v1_tooling_next_materialization_proposed_artifact: docs/design/ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-001.md
+workflow_v1_producer_verification_evidence_reference_materialization_gate: docs/design/ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-MATERIALIZATION-GATE-001.md
+workflow_v1_producer_verification_evidence_reference_materialization_gate_task_id: ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-MATERIALIZATION-GATE-001
+workflow_v1_producer_verification_evidence_reference_materialization_gate_decision: authorize-one-non-operative-producer-verification-evidence-reference-materialization
+workflow_v1_producer_verification_evidence_reference_authorized_artifact: docs/design/ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
@@ -116,7 +120,7 @@ workflow_v1_persistence_checker_future_candidate_invocation_count: 1
 workflow_v1_persistence_checker_future_candidate_retry_status: none
 workflow_v1_persistence_checker_future_candidate_eligibility_slot_status: consumed-and-closed
 workflow_v1_persistence_checker_future_candidate_invocation_authority: exhausted-no-further-invocation
-next_gate: Workflow v1 producer-verification evidence reference materialization authorization gate
+next_gate: Workflow v1 producer-verification evidence reference materialization execution
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1077,7 +1081,7 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 producer-verification evidence reference materialization authorization gate
+next_gate: Workflow v1 producer-verification evidence reference materialization execution
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
@@ -1089,6 +1093,8 @@ Workflow v1 remains unadopted and unimplemented. Routine, parallel, automated, a
 Coordinator materialization gate [ADW-WF1-GATE-EVALUATION-REFERENCE-MATERIALIZATION-GATE-001](../design/ADW-WF1-GATE-EVALUATION-REFERENCE-MATERIALIZATION-GATE-001.md) produced the exact candidate at commit `d13ce8518c6c85636b96e2d0a0466134019a646b` and path `docs/design/ADW-WF1-GATE-EVALUATION-REFERENCE-001.md`; candidate blob `5c08148db6f0d96197b268c3567a15a4981aff81` is accepted as an explanatory design basis by decision `accept-gate-evaluation-reference-as-explanatory-design-basis`. This acceptance is scoped, non-operative and non-normative. The reference owns no mutable state and creates no implementation, operational-use, schema, checker, write, automation or AFK authority. RG1 through RG12 remain unresolved, and DI-1 and DI-2 are preserved. The current next gate is **Workflow v1 tooling/enforcement next materialization scoping gate**.
 
 Coordinator scoping in [ADW-WF1-TOOLING-NEXT-MATERIALIZATION-SCOPING-001](../design/ADW-WF1-TOOLING-NEXT-MATERIALIZATION-SCOPING-001.md) records decision `propose-bounded-next-materialization`. The sole proposed next slice is one non-operative producer-verification evidence reference at `docs/design/ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-001.md`, intended for identifiable later evidence producers and independent reviewers under a measurable utility hypothesis. This scoping persists no proposed reference, schema, validator, new checker authority, implementation or operational use; a `control.md` reference and executable automation remain unselected. RG1 through RG12 remain unresolved, and DI-1 and DI-2 are preserved. The current next gate is **Workflow v1 producer-verification evidence reference materialization authorization gate**.
+
+Coordinator gate [ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-MATERIALIZATION-GATE-001](../design/ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-MATERIALIZATION-GATE-001.md) records decision `authorize-one-non-operative-producer-verification-evidence-reference-materialization`. It authorizes only one future local annotated Markdown reference production after this gate persistence; the reference remains absent, unreviewed and unaccepted. It creates no actual manifest, schema, validator, checker authority, implementation, operational use, mutable-state owner or Workflow v1 adoption. RG1 through RG12 remain unresolved, and DI-1 and DI-2 are preserved. The current next gate is **Workflow v1 producer-verification evidence reference materialization execution**.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
