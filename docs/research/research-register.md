@@ -62,11 +62,11 @@ workflow_v1_persistence_checker_candidate: tools/persistence_checker.py
 workflow_v1_persistence_checker_candidate_tests: tests/test_persistence_checker.py
 workflow_v1_persistence_checker_candidate_usage: docs/tooling/persistence-checker.md
 workflow_v1_persistence_checker_candidate_task_id: ADW-WF1-PERSISTENCE-CHECKER-DEVELOP-CORR-004
-workflow_v1_persistence_checker_review: docs/design/ADW-WF1-PERSISTENCE-CHECKER-REVIEW-001.md
-workflow_v1_persistence_checker_review_task_id: ADW-WF1-PERSISTENCE-CHECKER-REVIEW-001
-workflow_v1_persistence_checker_review_verdict: request-corrected-checker-candidate
-workflow_v1_persistence_checker_review_subject_commit: c3a133174ec8187849870c83947dcfc5c7bab7f3
-next_gate: Workflow v1 supervised persistence checker corrected candidate independent review gate
+workflow_v1_persistence_checker_review: docs/design/ADW-WF1-PERSISTENCE-CHECKER-REVIEW-002.md
+workflow_v1_persistence_checker_review_task_id: ADW-WF1-PERSISTENCE-CHECKER-REVIEW-002
+workflow_v1_persistence_checker_review_verdict: request-another-corrected-checker-candidate
+workflow_v1_persistence_checker_review_subject_commit: 8b9feaed2fc3edd955e41a682dd7fc3b013535cc
+next_gate: Workflow v1 supervised persistence checker correction gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1027,14 +1027,14 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 supervised persistence checker corrected candidate independent review gate
+next_gate: Workflow v1 supervised persistence checker correction gate
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
 
 Workflow v1 remains unadopted and unimplemented. Routine, parallel, automated, and unattended writes remain unauthorized. Branch protection remains a live effective-control prerequisite wherever relied upon. The initial tooling/enforcement design in [ADW-WF1-TOOLING-DESIGN-001](../design/ADW-WF1-TOOLING-DESIGN-001.md) is accepted as the scoped, non-normative initial tooling/enforcement design basis by [ADW-WF1-TOOLING-DESIGN-DISPOSITION-001](../design/ADW-WF1-TOOLING-DESIGN-DISPOSITION-001.md), for exact subject commit `dc881f2a01ad0e5bfe173bad7be19b66b7fea51d` and blob `2e0c640e8cab61b0bf165712c27e02ff9a455ec6`, following [ADW-WF1-TOOLING-DESIGN-REVIEW-001](../design/ADW-WF1-TOOLING-DESIGN-REVIEW-001.md). This design acceptance preserves the accepted semantic basis, the DR-005 disposition's selection boundaries and unresolved RG1-RG12 prerequisites; it grants no implementation, operational-use or expanded write/autonomy authority, normative Workflow v1 adoption, or new baseline acceptance.
 
-[ADW-WF1-PERSISTENCE-CHECKER-GATE-001](../design/ADW-WF1-PERSISTENCE-CHECKER-GATE-001.md) selects one manually invoked, deterministic, offline persistence checker as a narrow D3 exception for bounded development and synthetic producer tests. Its decision is `AUTHORIZE BOUNDED CHECKER DEVELOPMENT`; D3 otherwise remains deferred. A corrected three-file checker candidate now exists at [tools/persistence_checker.py](../../tools/persistence_checker.py), with focused synthetic tests at [tests/test_persistence_checker.py](../../tests/test_persistence_checker.py) and a usage note at [docs/tooling/persistence-checker.md](../tooling/persistence-checker.md). Candidate persistence establishes identity only. Independent review in [ADW-WF1-PERSISTENCE-CHECKER-REVIEW-001](../design/ADW-WF1-PERSISTENCE-CHECKER-REVIEW-001.md) found 0 BLOCKER, 3 MAJOR and 2 MINOR findings against exact predecessor commit `c3a133174ec8187849870c83947dcfc5c7bab7f3` and returned `request-corrected-checker-candidate`; it does not review the corrected candidate. The corrected candidate remains unreviewed, unaccepted and unauthorized for operational reliance.
+[ADW-WF1-PERSISTENCE-CHECKER-GATE-001](../design/ADW-WF1-PERSISTENCE-CHECKER-GATE-001.md) selects one manually invoked, deterministic, offline persistence checker as a narrow D3 exception for bounded development and synthetic producer tests. Its decision is `AUTHORIZE BOUNDED CHECKER DEVELOPMENT`; D3 otherwise remains deferred. A corrected three-file checker candidate exists at [tools/persistence_checker.py](../../tools/persistence_checker.py), with focused synthetic tests at [tests/test_persistence_checker.py](../../tests/test_persistence_checker.py) and a usage note at [docs/tooling/persistence-checker.md](../tooling/persistence-checker.md). Candidate persistence establishes identity only. Independent review in [ADW-WF1-PERSISTENCE-CHECKER-REVIEW-002](../design/ADW-WF1-PERSISTENCE-CHECKER-REVIEW-002.md) confirmed that PCR-001 through PCR-005 from predecessor [ADW-WF1-PERSISTENCE-CHECKER-REVIEW-001](../design/ADW-WF1-PERSISTENCE-CHECKER-REVIEW-001.md) are resolved, but found 0 BLOCKER, 1 MAJOR and 0 MINOR findings against exact subject commit `8b9feaed2fc3edd955e41a682dd7fc3b013535cc`. REVIEW-002 returned `request-another-corrected-checker-candidate` because PCR-006 permits a valid empty base inventory to skip mandatory tree-binding and complete-delta evaluation. The current candidate remains unaccepted and unauthorized for operational reliance.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
