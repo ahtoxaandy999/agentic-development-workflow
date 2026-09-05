@@ -287,6 +287,9 @@ class Checker:
         self.roots = []
         self.base_entries = {}
         self.target_entries = {}
+        self.base_inventory_valid = False
+        self.target_inventory_valid = False
+        self.actual_delta = None
 
     def record(self, predicate, result, reason, evidence, expected=None, observed=None):
         self.predicates.append(
@@ -592,13 +595,15 @@ class Checker:
         if not _is_exact_keys(value, {"complete", "truncated", "entries"}):
             self.record("inventory.%s.schema" % name, "UNEVALUABLE",
                         "missing or unknown inventory fields", evidence)
-            return {}
+            return None
         if type(value["complete"]) is not bool or type(value["truncated"]) is not bool or not isinstance(value["entries"], list):
             self.record("inventory.%s.schema" % name, "UNEVALUABLE", "invalid inventory field types", evidence)
-            return {}
+            return None
         self.require(value["complete"] and not value["truncated"], "inventory.%s.complete" % name,
                      "inventory is incomplete or truncated", evidence, {"complete": True, "truncated": False},
                      {"complete": value["complete"], "truncated": value["truncated"]}, inability=True)
+        if not value["complete"] or value["truncated"]:
+            return None
         entries = {}
         bad = False
         for index, entry in enumerate(value["entries"]):
@@ -617,15 +622,20 @@ class Checker:
         if bad or len(entries) != len(value["entries"]):
             self.record("inventory.%s.entries" % name, "UNEVALUABLE",
                         "duplicate, unsafe, malformed, or incomplete entries", evidence)
+            return None
         else:
             self.record("inventory.%s.entries" % name, "PASS", "satisfied", evidence,
                         len(value["entries"]), len(entries))
         return entries
 
     def inventories_and_delta(self):
-        self.base_entries = self._inventory("base")
-        self.target_entries = self._inventory("target")
-        if not self.base_entries or not self.target_entries:
+        base_entries = self._inventory("base")
+        target_entries = self._inventory("target")
+        self.base_inventory_valid = base_entries is not None
+        self.target_inventory_valid = target_entries is not None
+        self.base_entries = base_entries if base_entries is not None else {}
+        self.target_entries = target_entries if target_entries is not None else {}
+        if base_entries is None or target_entries is None:
             return
         ids = self.case["identities"]
         try:
@@ -658,6 +668,7 @@ class Checker:
                 if self.base_entries[path] != self.target_entries[path]
             ),
         }
+        self.actual_delta = actual
         expected = {}
         delta_ok = True
         for name in ("additions", "deletions", "modifications"):
@@ -722,19 +733,68 @@ class Checker:
             self.require(reg_path in self.case["allowed_delta"]["modifications"], "register.delta",
                          "Register is not exactly an authorized modification", "register+allowed_delta",
                          "authorized modification", reg_path)
-            if reg_path in self.base_entries:
-                self.require(byte_identity(before_observed)["git_blob"] == self.base_entries[reg_path]["blob"],
-                             "register.before_blob", "Register-before bytes do not match base inventory",
-                             "register+inventories.base", self.base_entries[reg_path]["blob"],
-                             byte_identity(before_observed)["git_blob"])
-            if reg_path in self.target_entries:
-                self.require(byte_identity(after_observed)["git_blob"] == self.target_entries[reg_path]["blob"],
-                             "register.after_blob", "Register-after bytes do not match target inventory",
-                             "register+inventories.target", self.target_entries[reg_path]["blob"],
-                             byte_identity(after_observed)["git_blob"])
+            if self.base_inventory_valid:
+                base_register = self.base_entries.get(reg_path)
+                self.require(base_register is not None,
+                             "register.base_inventory_membership",
+                             "Register path is absent from the complete base inventory",
+                             "register+inventories.base", "present", reg_path in self.base_entries)
+                self.require(
+                    base_register is not None
+                    and byte_identity(before_observed)["git_blob"] == base_register["blob"],
+                    "register.before_blob",
+                    "Register-before bytes do not bind the base inventory entry",
+                    "register+inventories.base",
+                    base_register["blob"] if base_register is not None else "Register base entry",
+                    byte_identity(before_observed)["git_blob"],
+                )
+            else:
+                self.record("register.base_inventory_membership", "UNEVALUABLE",
+                            "base inventory is invalid or unavailable",
+                            "register+inventories.base", "present", None)
+                self.record("register.before_blob", "UNEVALUABLE",
+                            "base inventory is invalid or unavailable",
+                            "register+inventories.base", "Register base blob", None)
+            if self.target_inventory_valid:
+                target_register = self.target_entries.get(reg_path)
+                self.require(target_register is not None,
+                             "register.target_inventory_membership",
+                             "Register path is absent from the complete target inventory",
+                             "register+inventories.target", "present", reg_path in self.target_entries)
+                self.require(
+                    target_register is not None
+                    and byte_identity(after_observed)["git_blob"] == target_register["blob"],
+                    "register.after_blob",
+                    "Register-after bytes do not bind the target inventory entry",
+                    "register+inventories.target",
+                    target_register["blob"] if target_register is not None else "Register target entry",
+                    byte_identity(after_observed)["git_blob"],
+                )
                 self.require(bindings.get(reg_path) == reg["observed_after_file"], "register.after_binding",
                              "target Register binding is not the observed after file", "register+byte_files",
                              reg["observed_after_file"], bindings.get(reg_path), inability=True)
+            else:
+                self.record("register.target_inventory_membership", "UNEVALUABLE",
+                            "target inventory is invalid or unavailable",
+                            "register+inventories.target", "present", None)
+                self.record("register.after_blob", "UNEVALUABLE",
+                            "target inventory is invalid or unavailable",
+                            "register+inventories.target", "Register target blob", None)
+            if self.actual_delta is None:
+                self.record("register.delta_classification", "UNEVALUABLE",
+                            "complete inventory delta is unavailable",
+                            "register+inventories+allowed_delta",
+                            "modification", None)
+            else:
+                classifications = [
+                    name for name in ("additions", "deletions", "modifications")
+                    if reg_path in self.actual_delta[name]
+                ]
+                self.require(classifications == ["modifications"],
+                             "register.delta_classification",
+                             "computed delta does not classify the Register as a modification",
+                             "register+inventories+allowed_delta",
+                             ["modifications"], classifications)
         except (InputError, KeyError, TypeError) as exc:
             self.record("register.schema", "UNEVALUABLE", str(exc), "register")
 

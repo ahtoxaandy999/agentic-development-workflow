@@ -364,6 +364,22 @@ class PersistenceCheckerTests(unittest.TestCase):
         self.assertIsNone(diagnostic)
         return report
 
+    def configure_pcr006_empty_base(self, truthful_register_addition=False):
+        self.fx.case["inventories"]["base"]["entries"] = []
+        next(spec for spec in self.fx.case["byte_files"]
+             if spec["id"] == "stable")["bind_path"] = "src/unchanged.txt"
+        additions = ["artifacts/checker.md", "src/unchanged.txt"]
+        modifications = ["docs/research/research-register.md"]
+        if truthful_register_addition:
+            additions.append("docs/research/research-register.md")
+            modifications = []
+        self.fx.case["allowed_delta"] = {
+            "additions": sorted(additions),
+            "deletions": [],
+            "modifications": modifications,
+        }
+        self.fx.rebind_trees()
+
     def test_valid_preflight_pass(self):
         report = self.assert_result("PASS", self.fx.execute())
         self.assertEqual("preflight", report["phase"])
@@ -655,6 +671,126 @@ class PersistenceCheckerTests(unittest.TestCase):
         self.fx.rebind_trees()
         report = self.assert_result("FAIL", self.fx.execute())
         self.assertIn("delta.modifications", {p["predicate"] for p in report["predicates"] if p["result"] == "FAIL"})
+
+    def test_pcr006_inventory_parser_distinguishes_invalid_and_valid_empty(self):
+        valid_checker = CHECKER.Checker(
+            self.fx.case_path, self.fx.case_path.read_bytes(), self.fx.case)
+        self.fx.case["inventories"]["base"]["entries"] = []
+        self.assertEqual({}, valid_checker._inventory("base"))
+
+        invalid_case = copy.deepcopy(self.fx.case)
+        invalid_case["inventories"]["base"]["complete"] = False
+        invalid_checker = CHECKER.Checker(
+            self.fx.case_path, self.fx.case_path.read_bytes(), invalid_case)
+        self.assertIsNone(invalid_checker._inventory("base"))
+
+    def test_pcr006_empty_base_checks_canonical_empty_tree(self):
+        self.configure_pcr006_empty_base()
+        report = self.assert_result("FAIL", self.fx.execute())
+        predicate = next(item for item in report["predicates"]
+                         if item["predicate"] == "inventory.base.tree_binding")
+        self.assertEqual("PASS", predicate["result"])
+        self.assertEqual("4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+                         predicate["expected"])
+        self.assertEqual("4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+                         predicate["observed"])
+
+    def test_pcr006_empty_base_evaluates_complete_additions(self):
+        self.configure_pcr006_empty_base(truthful_register_addition=True)
+        report = self.assert_result("FAIL", self.fx.execute())
+        predicate = next(item for item in report["predicates"]
+                         if item["predicate"] == "delta.additions")
+        expected = [
+            "artifacts/checker.md",
+            "docs/research/research-register.md",
+            "src/unchanged.txt",
+        ]
+        self.assertEqual("PASS", predicate["result"])
+        self.assertEqual(expected, predicate["expected"])
+        self.assertEqual(expected, predicate["observed"])
+
+    def test_pcr006_review002_reproduction_false_modification_cannot_pass(self):
+        self.configure_pcr006_empty_base()
+        report = self.assert_result("FAIL", self.fx.execute())
+        failed = {item["predicate"] for item in report["predicates"]
+                  if item["result"] == "FAIL"}
+        self.assertIn("delta.additions", failed)
+        self.assertIn("delta.modifications", failed)
+        self.assertIn("register.base_inventory_membership", failed)
+        self.assertIn("register.delta_classification", failed)
+
+    def test_pcr006_truthful_register_addition_cannot_satisfy_modification_contract(self):
+        self.configure_pcr006_empty_base(truthful_register_addition=True)
+        report = self.assert_result("FAIL", self.fx.execute())
+        predicates = {item["predicate"]: item for item in report["predicates"]}
+        self.assertEqual("PASS", predicates["delta.additions"]["result"])
+        self.assertEqual("FAIL", predicates["register.delta"]["result"])
+        self.assertEqual("FAIL", predicates["register.delta_classification"]["result"])
+        self.assertEqual(["additions"],
+                         predicates["register.delta_classification"]["observed"])
+
+    def test_pcr006_missing_register_in_target_cannot_pass(self):
+        target = self.fx.case["inventories"]["target"]["entries"]
+        target[:] = [entry for entry in target
+                     if entry["path"] != "docs/research/research-register.md"]
+        self.fx.case["allowed_delta"] = {
+            "additions": ["artifacts/checker.md"],
+            "deletions": ["docs/research/research-register.md"],
+            "modifications": [],
+        }
+        self.fx.rebind_trees()
+        report = self.assert_result("UNEVALUABLE", self.fx.execute())
+        predicate = next(item for item in report["predicates"]
+                         if item["predicate"] == "register.target_inventory_membership")
+        self.assertEqual("FAIL", predicate["result"])
+
+    def test_pcr006_empty_target_evaluates_complete_deletions(self):
+        self.fx.case["inventories"]["target"]["entries"] = []
+        self.fx.case["allowed_delta"] = {
+            "additions": [],
+            "deletions": ["docs/research/research-register.md", "src/unchanged.txt"],
+            "modifications": [],
+        }
+        self.fx.rebind_trees()
+        report = self.assert_result("UNEVALUABLE", self.fx.execute())
+        predicates = {item["predicate"]: item for item in report["predicates"]}
+        self.assertEqual("PASS", predicates["inventory.working.tree_binding"]["result"])
+        self.assertEqual("4b825dc642cb6eb9a060e54bf8d69288fbee4904",
+                         predicates["inventory.working.tree_binding"]["observed"])
+        self.assertEqual("PASS", predicates["delta.deletions"]["result"])
+        self.assertEqual(["docs/research/research-register.md", "src/unchanged.txt"],
+                         predicates["delta.deletions"]["observed"])
+
+    def test_pcr006_invalid_inventory_is_unevaluable_without_crash(self):
+        self.fx.case["inventories"]["base"]["complete"] = False
+        report = self.assert_result("UNEVALUABLE", self.fx.execute())
+        self.assertIn("inventory.base.complete",
+                      {item["predicate"] for item in report["predicates"]
+                       if item["result"] == "UNEVALUABLE"})
+        self.assertFalse(any("Traceback" in str(value) for value in report.values()))
+
+    def test_pcr006_empty_inventory_cases_emit_mandatory_tree_and_delta_predicates(self):
+        self.configure_pcr006_empty_base()
+        report = self.assert_result("FAIL", self.fx.execute())
+        present = {item["predicate"] for item in report["predicates"]}
+        mandatory = {
+            "inventory.base.tree_binding",
+            "inventory.working.tree_binding",
+            "delta.additions",
+            "delta.deletions",
+            "delta.modifications",
+            "delta.unchanged_entries",
+        }
+        self.assertTrue(mandatory <= present)
+
+    def test_pcr006_ordinary_nonempty_preflight_and_readback_still_pass(self):
+        for phase in ("preflight", "readback"):
+            with self.subTest(phase=phase):
+                fx = SyntheticCase(phase)
+                try:
+                    self.assert_result("PASS", fx.execute())
+                finally:
+                    fx.close()
 
     def test_incomplete_unchanged_inventory_is_not_pass(self):
         self.fx.case["inventories"]["target"]["complete"] = False

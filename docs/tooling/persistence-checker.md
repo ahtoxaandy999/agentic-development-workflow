@@ -208,6 +208,13 @@ observed candidate tree. Because a leaf inventory cannot encode an explicit
 empty Git tree, a resulting tree-binding conflict is fail-closed as
 `UNEVALUABLE`. Ordinary non-empty nested directories remain supported.
 
+A valid complete inventory with zero leaf entries is evaluated, not skipped.
+Its canonical Git tree is
+`4b825dc642cb6eb9a060e54bf8d69288fbee4904`, and the checker still emits every
+mandatory base/target tree-binding and additions, deletions, modifications,
+and unchanged-entry predicate. Invalid, incomplete, or truncated inventory
+evidence remains `UNEVALUABLE` and is not used as a partial inventory.
+
 `allowed_delta` contains sorted, unique arrays named `additions`, `deletions`,
 and `modifications`. The complete computed delta must equal them. Every
 supposedly unchanged `mode`/`blob` pair must remain identical.
@@ -248,8 +255,12 @@ files with `bind_path: null`.
 
 Complete authorized and observed before bytes must match exactly, as must the
 after bytes. Their blobs bind to base and target inventory entries. The
-Register path must be an authorized modification, and its target binding must
-name `observed_after_file`.
+Register path must exist in both valid complete inventories, must be classified
+as a modification by the computed delta, and must not be an addition or
+deletion. Its before and after bytes must bind the respective base and target
+blobs, and its target binding must name `observed_after_file`. Therefore a
+fully empty ADW persistence case cannot `PASS` even though each empty inventory
+is itself valid and its canonical empty tree is evaluated.
 
 ## Results, fail-closed handling, and report
 
