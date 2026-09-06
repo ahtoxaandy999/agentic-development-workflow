@@ -159,6 +159,13 @@ workflow_v1_task_control_reference_disposition_task_id: ADW-WF1-TASK-CONTROL-REF
 workflow_v1_task_control_reference_disposition_decision: accept-task-control-reference-as-explanatory-design-basis
 workflow_v1_task_control_reference_disposition_subject_commit: db2c47d734d5806d2780c1407f61d2a1908aa103
 workflow_v1_task_control_reference_disposition_subject_blob: 1968993da7dded58d70d705ef3d23165667e94b4
+workflow_v1_producer_verification_evidence_reference_ru1_utility_assessment: docs/design/ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-RU1-UTILITY-ASSESSMENT-001.md
+workflow_v1_producer_verification_evidence_reference_ru1_utility_assessment_task_id: ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-RU1-UTILITY-ASSESSMENT-001
+workflow_v1_producer_verification_evidence_reference_ru1_utility_assessment_decision: conclude-ru1-useful-and-authorize-one-materially-different-ru2-selection-gate
+workflow_v1_producer_verification_evidence_reference_ru1_result: useful-with-moderate-ceremony
+workflow_v1_producer_verification_evidence_reference_ru1_status: completed
+workflow_v1_producer_verification_evidence_reference_ru1_subject_commit: db2c47d734d5806d2780c1407f61d2a1908aa103
+workflow_v1_producer_verification_evidence_reference_ru1_subject_blob: 1968993da7dded58d70d705ef3d23165667e94b4
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
@@ -173,7 +180,7 @@ workflow_v1_persistence_checker_future_candidate_invocation_count: 1
 workflow_v1_persistence_checker_future_candidate_retry_status: none
 workflow_v1_persistence_checker_future_candidate_eligibility_slot_status: consumed-and-closed
 workflow_v1_persistence_checker_future_candidate_invocation_authority: exhausted-no-further-invocation
-next_gate: Workflow v1 task-control reference RU-1 final utility assessment gate
+next_gate: Workflow v1 producer-verification evidence reference second representative-use selection gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1134,7 +1141,7 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 task-control reference RU-1 final utility assessment gate
+next_gate: Workflow v1 producer-verification evidence reference second representative-use selection gate
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
@@ -1170,6 +1177,8 @@ Exact candidate persistence established C identity only. C was byte-identical to
 Independent review in [ADW-WF1-TASK-CONTROL-REFERENCE-REVIEW-001](../design/ADW-WF1-TASK-CONTROL-REFERENCE-REVIEW-001.md) binds the exact subject commit `db2c47d734d5806d2780c1407f61d2a1908aa103`, path `docs/design/ADW-WF1-TASK-CONTROL-REFERENCE-001.md` and blob `1968993da7dded58d70d705ef3d23165667e94b4`. It returned verdict `accept-task-control-reference-candidate-for-disposition` with 0 BLOCKER / 0 MAJOR / 0 MINOR findings; required sections A–M PASS, lifecycle walkthroughs L1–L12 PASS, and adversarial scenarios 16/16 PASS and unambiguous. This review is recommendation only and grants no candidate acceptance, operational authority, Workflow v1 adoption, or RG resolution. RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved. The historical next gate was **Workflow v1 task-control reference independent review gate**; the current next gate is **Workflow v1 task-control reference disposition gate**.
 
 Coordinator disposition in [ADW-WF1-TASK-CONTROL-REFERENCE-DISPOSITION-001](../design/ADW-WF1-TASK-CONTROL-REFERENCE-DISPOSITION-001.md) accepts only the exact task-control reference candidate at commit `db2c47d734d5806d2780c1407f61d2a1908aa103`, path `docs/design/ADW-WF1-TASK-CONTROL-REFERENCE-001.md` and blob `1968993da7dded58d70d705ef3d23165667e94b4` by decision `accept-task-control-reference-as-explanatory-design-basis`. The reference remains explanatory, non-operative and non-normative; acceptance creates no task schema, operational template, mutable task instance, recorder, workflow engine, implementation, checker, write, automation, AFK or Workflow v1 authority. RU-1 remains unfinished, RU-2 remains unselected, RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved. The current next gate is **Workflow v1 task-control reference RU-1 final utility assessment gate**.
+
+Current RU-1 utility assessment in [ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-RU1-UTILITY-ASSESSMENT-001](../design/ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-RU1-UTILITY-ASSESSMENT-001.md) records decision `conclude-ru1-useful-and-authorize-one-materially-different-ru2-selection-gate` and result `useful-with-moderate-ceremony`: the evidence reference materially improved coverage and inspectability, while imposing non-trivial evidence-production and custody burden. RU-1 is complete; RU-2 remains unselected. The assessment grants no RU-2 execution, evidence-package persistence, schema, validator, checker, operational, write, automation, AFK or Workflow v1 authority. RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved. The current next gate is **Workflow v1 producer-verification evidence reference second representative-use selection gate**.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
