@@ -188,6 +188,11 @@ workflow_v1_serialized_persistence_plan_reference_candidate_blob: c5a51d1e32541c
 workflow_v1_serialized_persistence_plan_reference_candidate_sha256: 01292265b44ace530716249b2cb559bb9b9f8106651397e2f405474c3776f92c
 workflow_v1_serialized_persistence_plan_reference_candidate_bytes: 30355
 workflow_v1_serialized_persistence_plan_reference_candidate_task_id: ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-CANDIDATE-PERSIST-001
+workflow_v1_serialized_persistence_plan_reference_review: docs/design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-REVIEW-001.md
+workflow_v1_serialized_persistence_plan_reference_review_task_id: ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-REVIEW-001
+workflow_v1_serialized_persistence_plan_reference_review_blob: 795d16cef07c063e55fe832c3d800e135f758bb3
+workflow_v1_serialized_persistence_plan_reference_review_subject_commit: 610dd0935efdff338f483b75ff74c8b73ae97c54
+workflow_v1_serialized_persistence_plan_reference_review_verdict: accept-serialized-persistence-plan-reference-candidate-for-disposition
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
@@ -202,7 +207,7 @@ workflow_v1_persistence_checker_future_candidate_invocation_count: 1
 workflow_v1_persistence_checker_future_candidate_retry_status: none
 workflow_v1_persistence_checker_future_candidate_eligibility_slot_status: consumed-and-closed
 workflow_v1_persistence_checker_future_candidate_invocation_authority: exhausted-no-further-invocation
-next_gate: Workflow v1 serialized persistence plan reference independent review gate
+next_gate: Workflow v1 serialized persistence plan reference disposition gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1163,7 +1168,7 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 serialized persistence plan reference independent review gate
+next_gate: Workflow v1 serialized persistence plan reference disposition gate
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
@@ -1208,7 +1213,7 @@ Coordinator scoping in [ADW-WF1-TOOLING-NEXT-MATERIALIZATION-SCOPING-002](../des
 
 Coordinator authorization in [ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-MATERIALIZATION-GATE-001](../design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-MATERIALIZATION-GATE-001.md) records decision `authorize-one-non-operative-serialized-persistence-plan-reference-materialization`. It authorizes only one bounded materialization of the selected explanatory, non-operative serialized-persistence plan reference at `docs/design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-001.md`; it does not create that reference or execute the next gate. RU-1 remains completed and useful with moderate ceremony; RU-2 remains deferred and unselected, and its slot remains unused. All accepted dispositions, unresolved RG1 through RG12, DI-1 and DI-2, Workflow v1's non-normative, unadopted and unimplemented status, and current write and AFK restrictions remain unchanged. The historical next gate was **Workflow v1 serialized persistence plan reference materialization execution**.
 
-Exact candidate persistence established C identity through byte equality with W and remote readback. Independent review and coordinator disposition remain outstanding. The current next gate is **Workflow v1 serialized persistence plan reference independent review gate**.
+Exact candidate persistence established C identity through byte equality with W and remote readback. Independent review in [ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-REVIEW-001](../design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-REVIEW-001.md) binds the exact candidate at commit `610dd0935efdff338f483b75ff74c8b73ae97c54`, path `docs/design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-001.md` and blob `c5a51d1e32541c24069144258bcbbcf02e37a66a`; it recommends the exact candidate for coordinator disposition with 0 BLOCKER / 0 MAJOR / 0 MINOR findings. Candidate acceptance and operational authority remain outstanding. The current next gate is **Workflow v1 serialized persistence plan reference disposition gate**.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
