@@ -228,7 +228,7 @@ workflow_v1_protected_serialized_write_path_pilot_first_persistence_selection_ta
 workflow_v1_protected_serialized_write_path_pilot_first_persistence_selection_decision: select-configuration-assessment-persistence-as-first-protected-path-candidate
 workflow_v1_protected_serialized_write_path_pilot_first_persistence_selection_branch: adw/wf1-protected-write-path-pilot-001
 workflow_v1_protected_serialized_write_path_pilot_first_persistence_selection_base: 6c2bee211fa54405b3d68d19c7d487465e1c9a1c
-workflow_v1_protected_serialized_write_path_pilot_first_persistence_selection_status: selected-candidate-produced-review-pending
+workflow_v1_protected_serialized_write_path_pilot_first_persistence_selection_status: protected-publication-completed-assessment-pending
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
@@ -243,7 +243,7 @@ workflow_v1_persistence_checker_future_candidate_invocation_count: 1
 workflow_v1_persistence_checker_future_candidate_retry_status: none
 workflow_v1_persistence_checker_future_candidate_eligibility_slot_status: consumed-and-closed
 workflow_v1_persistence_checker_future_candidate_invocation_authority: exhausted-no-further-invocation
-next_gate: Workflow v1 protected serialized write-path enforcement pilot first protected candidate independent review gate
+next_gate: Workflow v1 protected serialized write-path enforcement pilot positive-path publication assessment gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1204,7 +1204,7 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 protected serialized write-path enforcement pilot first protected candidate independent review gate
+next_gate: Workflow v1 protected serialized write-path enforcement pilot positive-path publication assessment gate
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
@@ -1259,7 +1259,7 @@ Coordinator scoping in [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-SCOPING-00
 
 Coordinator configuration gate [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-GATE-001](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-GATE-001.md) records decision `authorize-one-protected-serialized-write-path-pilot-ruleset-configuration`. It authorizes one future supervised GitHub Settings operation to create the active repository branch ruleset `adw-protect-main-pilot` with the exact persisted configuration contract and no retry. At gate persistence no ruleset exists, `main` remains unprotected, and no configuration, enforcement test, recovery, repository write, routine, parallel, automated, unattended, AFK or Workflow v1 authority is created. RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved. The current next gate is **Workflow v1 protected serialized write-path enforcement pilot ruleset configuration execution**.
 
-Current protected-path candidate production records that the exact ruleset configuration passed coordinator readback. The [configuration assessment](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-ASSESSMENT-001.md) and [first protected persistence selection](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-FIRST-PROTECTED-PERSISTENCE-SELECTION-001.md) are now proposed in the exact candidate, which is pending fresh independent review. No coordinator disposition, merge, publication acceptance, negative enforcement validation, RG resolution, routine authority, or Workflow v1 adoption has occurred.
+Current protected-path publication state is represented for authority only when this corrected candidate reaches `main` through PR #2. The exact ruleset configuration assessment and first protected persistence selection are then durably published after fresh exact-identity review and coordinator disposition. Positive-path merge/publication identity and remote readback remain the immediate assessment subject. No negative enforcement validation, RG resolution, routine authority, or Workflow v1 adoption has occurred.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
