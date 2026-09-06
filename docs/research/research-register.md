@@ -179,6 +179,9 @@ workflow_v1_serialized_persistence_plan_reference_materialization_gate: docs/des
 workflow_v1_serialized_persistence_plan_reference_materialization_gate_task_id: ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-MATERIALIZATION-GATE-001
 workflow_v1_serialized_persistence_plan_reference_materialization_gate_decision: authorize-one-non-operative-serialized-persistence-plan-reference-materialization
 workflow_v1_serialized_persistence_plan_reference_selected_path: docs/design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-001.md
+workflow_v1_serialized_persistence_plan_reference_candidate_persistence_gate: docs/design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-CANDIDATE-PERSISTENCE-GATE-001.md
+workflow_v1_serialized_persistence_plan_reference_candidate_persistence_gate_task_id: ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-CANDIDATE-PERSISTENCE-GATE-001
+workflow_v1_serialized_persistence_plan_reference_candidate_persistence_gate_decision: authorize-exact-serialized-persistence-plan-reference-candidate-persistence
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
@@ -193,7 +196,7 @@ workflow_v1_persistence_checker_future_candidate_invocation_count: 1
 workflow_v1_persistence_checker_future_candidate_retry_status: none
 workflow_v1_persistence_checker_future_candidate_eligibility_slot_status: consumed-and-closed
 workflow_v1_persistence_checker_future_candidate_invocation_authority: exhausted-no-further-invocation
-next_gate: Workflow v1 serialized persistence plan reference materialization execution
+next_gate: Workflow v1 serialized persistence plan reference candidate persistence execution
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1154,7 +1157,7 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 serialized persistence plan reference materialization execution
+next_gate: Workflow v1 serialized persistence plan reference candidate persistence execution
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
@@ -1197,7 +1200,9 @@ Current RU-2 selection in [ADW-WF1-PRODUCER-VERIFICATION-EVIDENCE-REFERENCE-RU2-
 
 Coordinator scoping in [ADW-WF1-TOOLING-NEXT-MATERIALIZATION-SCOPING-002](../design/ADW-WF1-TOOLING-NEXT-MATERIALIZATION-SCOPING-002.md) records decision `propose-serialized-persistence-plan-reference-as-next-bounded-materialization`. The proposed next bounded materialization is one explanatory, non-operative serialized-persistence plan reference at `docs/design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-001.md`. This scoping decision is persisted; the proposed reference remains absent and requires a separate materialization authorization gate. RU-1 remains completed and useful with moderate ceremony; RU-2 remains deferred and unselected, and its slot remains unused. All accepted dispositions, unresolved RG1 through RG12, DI-1 and DI-2, Workflow v1's non-normative, unadopted and unimplemented status, and current write and AFK restrictions remain unchanged. The historical next gate was **Workflow v1 serialized persistence plan reference materialization authorization gate**.
 
-Coordinator authorization in [ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-MATERIALIZATION-GATE-001](../design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-MATERIALIZATION-GATE-001.md) records decision `authorize-one-non-operative-serialized-persistence-plan-reference-materialization`. It authorizes only one bounded materialization of the selected explanatory, non-operative serialized-persistence plan reference at `docs/design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-001.md`; it does not create that reference or execute the next gate. RU-1 remains completed and useful with moderate ceremony; RU-2 remains deferred and unselected, and its slot remains unused. All accepted dispositions, unresolved RG1 through RG12, DI-1 and DI-2, Workflow v1's non-normative, unadopted and unimplemented status, and current write and AFK restrictions remain unchanged. The current next gate is **Workflow v1 serialized persistence plan reference materialization execution**.
+Coordinator authorization in [ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-MATERIALIZATION-GATE-001](../design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-MATERIALIZATION-GATE-001.md) records decision `authorize-one-non-operative-serialized-persistence-plan-reference-materialization`. It authorizes only one bounded materialization of the selected explanatory, non-operative serialized-persistence plan reference at `docs/design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-001.md`; it does not create that reference or execute the next gate. RU-1 remains completed and useful with moderate ceremony; RU-2 remains deferred and unselected, and its slot remains unused. All accepted dispositions, unresolved RG1 through RG12, DI-1 and DI-2, Workflow v1's non-normative, unadopted and unimplemented status, and current write and AFK restrictions remain unchanged. The historical next gate was **Workflow v1 serialized persistence plan reference materialization execution**.
+
+Coordinator candidate-persistence gate [ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-CANDIDATE-PERSISTENCE-GATE-001](../design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-CANDIDATE-PERSISTENCE-GATE-001.md) records decision `authorize-exact-serialized-persistence-plan-reference-candidate-persistence`. It authorizes exact W for later candidate persistence, but no candidate has yet been published. The current next gate is **Workflow v1 serialized persistence plan reference candidate persistence execution**.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
