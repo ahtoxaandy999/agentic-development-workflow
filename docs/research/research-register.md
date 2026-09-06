@@ -149,6 +149,11 @@ workflow_v1_task_control_reference_candidate_blob: 1968993da7dded58d70d705ef3d23
 workflow_v1_task_control_reference_candidate_sha256: f1a0ec857c7efe914a3c3cd5f3d8049763d8339b8c96cee0544e94126f577288
 workflow_v1_task_control_reference_candidate_bytes: 31350
 workflow_v1_task_control_reference_candidate_task_id: ADW-WF1-TASK-CONTROL-REFERENCE-CANDIDATE-PERSIST-001
+workflow_v1_task_control_reference_review: docs/design/ADW-WF1-TASK-CONTROL-REFERENCE-REVIEW-001.md
+workflow_v1_task_control_reference_review_task_id: ADW-WF1-TASK-CONTROL-REFERENCE-REVIEW-001
+workflow_v1_task_control_reference_review_verdict: accept-task-control-reference-candidate-for-disposition
+workflow_v1_task_control_reference_review_subject_commit: db2c47d734d5806d2780c1407f61d2a1908aa103
+workflow_v1_task_control_reference_review_subject_blob: 1968993da7dded58d70d705ef3d23165667e94b4
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
@@ -163,7 +168,7 @@ workflow_v1_persistence_checker_future_candidate_invocation_count: 1
 workflow_v1_persistence_checker_future_candidate_retry_status: none
 workflow_v1_persistence_checker_future_candidate_eligibility_slot_status: consumed-and-closed
 workflow_v1_persistence_checker_future_candidate_invocation_authority: exhausted-no-further-invocation
-next_gate: Workflow v1 task-control reference independent review gate
+next_gate: Workflow v1 task-control reference disposition gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1124,7 +1129,7 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 task-control reference independent review gate
+next_gate: Workflow v1 task-control reference disposition gate
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
@@ -1155,7 +1160,9 @@ Coordinator assessment in [ADW-WF1-TASK-CONTROL-REFERENCE-RU1-PRODUCER-VERIFICAT
 
 Persisted coordinator gate [ADW-WF1-TASK-CONTROL-REFERENCE-CANDIDATE-PERSISTENCE-GATE-001](../design/ADW-WF1-TASK-CONTROL-REFERENCE-CANDIDATE-PERSISTENCE-GATE-001.md) historically authorized only the separately dispatched, byte-for-byte candidate-persistence operation. At gate persistence, no candidate, independent review, acceptance or operational authority existed. The local evidence manifest, raw payloads and utility observations remained unpersisted. RG1 through RG12 remained unresolved, DI-1 and DI-2 remained preserved, and all existing write/autonomy restrictions remained preserved. The historical next gate was **Workflow v1 task-control reference candidate persistence execution**.
 
-Exact candidate persistence established C identity only. C is byte-identical to the producer-verified W, and the candidate commit identity is supplied by the resulting publication commit. Independent review and coordinator disposition remain outstanding. RU-1 remains open and RU-2 remains unselected. The reference remains explanatory, non-operative, non-normative and draft. RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved. No operational or expanded write authority exists.
+Exact candidate persistence established C identity only. C was byte-identical to the producer-verified W, and the candidate commit identity was supplied by the resulting publication commit. At candidate persistence, independent review and coordinator disposition remained outstanding. RU-1 remained open and RU-2 remained unselected. The reference remained explanatory, non-operative, non-normative and draft. RG1 through RG12 remained unresolved, and DI-1 and DI-2 remained preserved. No operational or expanded write authority existed.
+
+Independent review in [ADW-WF1-TASK-CONTROL-REFERENCE-REVIEW-001](../design/ADW-WF1-TASK-CONTROL-REFERENCE-REVIEW-001.md) binds the exact subject commit `db2c47d734d5806d2780c1407f61d2a1908aa103`, path `docs/design/ADW-WF1-TASK-CONTROL-REFERENCE-001.md` and blob `1968993da7dded58d70d705ef3d23165667e94b4`. It returned verdict `accept-task-control-reference-candidate-for-disposition` with 0 BLOCKER / 0 MAJOR / 0 MINOR findings; required sections A–M PASS, lifecycle walkthroughs L1–L12 PASS, and adversarial scenarios 16/16 PASS and unambiguous. This review is recommendation only and grants no candidate acceptance, operational authority, Workflow v1 adoption, or RG resolution. RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved. The historical next gate was **Workflow v1 task-control reference independent review gate**; the current next gate is **Workflow v1 task-control reference disposition gate**.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
