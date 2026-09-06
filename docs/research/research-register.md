@@ -210,6 +210,12 @@ workflow_v1_protected_serialized_write_path_pilot_scoping: docs/design/ADW-WF1-P
 workflow_v1_protected_serialized_write_path_pilot_scoping_task_id: ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-SCOPING-002
 workflow_v1_protected_serialized_write_path_pilot_scoping_decision: propose-protected-serialized-write-path-pilot
 workflow_v1_protected_serialized_write_path_pilot_selected_mechanism: github-repository-branch-ruleset
+workflow_v1_protected_serialized_write_path_pilot_configuration_gate: docs/design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-GATE-001.md
+workflow_v1_protected_serialized_write_path_pilot_configuration_gate_task_id: ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-GATE-001
+workflow_v1_protected_serialized_write_path_pilot_configuration_gate_decision: authorize-one-protected-serialized-write-path-pilot-ruleset-configuration
+workflow_v1_protected_serialized_write_path_pilot_ruleset_name: adw-protect-main-pilot
+workflow_v1_protected_serialized_write_path_pilot_authorized_configuration_count: 1
+workflow_v1_protected_serialized_write_path_pilot_configuration_retry_authority: none
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
@@ -224,7 +230,7 @@ workflow_v1_persistence_checker_future_candidate_invocation_count: 1
 workflow_v1_persistence_checker_future_candidate_retry_status: none
 workflow_v1_persistence_checker_future_candidate_eligibility_slot_status: consumed-and-closed
 workflow_v1_persistence_checker_future_candidate_invocation_authority: exhausted-no-further-invocation
-next_gate: Workflow v1 protected serialized write-path enforcement pilot configuration authorization gate
+next_gate: Workflow v1 protected serialized write-path enforcement pilot ruleset configuration execution
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1185,7 +1191,7 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 protected serialized write-path enforcement pilot configuration authorization gate
+next_gate: Workflow v1 protected serialized write-path enforcement pilot ruleset configuration execution
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
@@ -1237,6 +1243,8 @@ Coordinator scoping in [ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-REPRESENTA
 Current SPP-RU-1 selection in [ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-RU1-SELECTION-001](../design/ADW-WF1-SERIALIZED-PERSISTENCE-PLAN-REFERENCE-RU1-SELECTION-001.md) records decision `defer-spp-ru1-selection-for-lack-of-natural-qualifying-task`: no natural, independently justified, not-yet-executed exact-base persistence task is currently available, so `SPP-RU-1` is `deferred-unselected` and its slot remains unused. The reference expansion loop exits and redirects to **Workflow v1 protected serialized write-path enforcement pilot scoping gate**; all existing authority and adoption boundaries remain unchanged.
 
 Coordinator scoping in [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-SCOPING-002](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-SCOPING-002.md) records decision `propose-protected-serialized-write-path-pilot`. Public repository visibility makes the repository-level GitHub branch-ruleset capability available, but no ruleset or classic branch protection is configured and `main` remains unprotected. The selected pilot mechanism is one repository-level branch ruleset requiring pull-request publication to `main`, blocking force pushes and deletion, with no standing bypass actor, required status check, Actions, hooks or unattended automation. This scoping persistence grants no configuration, test, write-path, operational, routine, parallel, automated, unattended, AFK or Workflow v1 authority; RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved. The current next gate is **Workflow v1 protected serialized write-path enforcement pilot configuration authorization gate**.
+
+Coordinator configuration gate [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-GATE-001](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-GATE-001.md) records decision `authorize-one-protected-serialized-write-path-pilot-ruleset-configuration`. It authorizes one future supervised GitHub Settings operation to create the active repository branch ruleset `adw-protect-main-pilot` with the exact persisted configuration contract and no retry. At gate persistence no ruleset exists, `main` remains unprotected, and no configuration, enforcement test, recovery, repository write, routine, parallel, automated, unattended, AFK or Workflow v1 authority is created. RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved. The current next gate is **Workflow v1 protected serialized write-path enforcement pilot ruleset configuration execution**.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
