@@ -36,7 +36,7 @@ accepted_sha: 13b05e075ec04aa91494cd18f7d29f7249028cb5
 acceptance_decision_ref: ADW-BOOTSTRAP-ACCEPT-001
 acceptance_record: GitHub Issue #1
 branch_protection_path: PATH B
-branch_protection_status: active-ruleset-positive-and-negative-validation-pass-final-disposition-pending
+branch_protection_status: active-ruleset-pilot-accepted-bounded-supervised-use-not-yet-authorized
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
@@ -300,6 +300,29 @@ workflow_v1_protected_serialized_write_path_pilot_negative_validation_evidence_m
 workflow_v1_protected_serialized_write_path_pilot_negative_validation_evidence_payload_count: 89
 workflow_v1_protected_serialized_write_path_pilot_negative_validation_prior_failed_episode_status: preserved-unevaluable
 workflow_v1_protected_serialized_write_path_pilot_first_persistence_selection_status: positive-and-negative-validation-assessed-final-disposition-pending
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_review: docs/design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-NEGATIVE-VALIDATION-ASSESSMENT-CANDIDATE-REVIEW-001.md
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_review_task_id: ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-NEGATIVE-VALIDATION-ASSESSMENT-CANDIDATE-REVIEW-001
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_review_record_blob: 13ba746dbc95127506a8fe9480b4e4f407bf4534
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_review_record_sha256: 5ae48c9c95db8b64bc3a3d3670ede9129915ce3116b66981071dd72c5c7d0dbd
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_review_record_bytes: 11620
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_review_subject_candidate: 54aa317f8f9168f2bf721c74d94638c93c5dee93
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_review_verdict: accept-negative-validation-assessment-candidate-for-coordinator-disposition
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_review_findings: 0-blocker-0-major-0-minor
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_disposition: docs/design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-NEGATIVE-VALIDATION-ASSESSMENT-CANDIDATE-DISPOSITION-001.md
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_disposition_task_id: ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-NEGATIVE-VALIDATION-ASSESSMENT-CANDIDATE-DISPOSITION-001
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_disposition_record_blob: c0a79e52ab62679c5813a6d7b4b2569813de5f66
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_disposition_record_sha256: fd51bd3e6dc643f3a3a737dd4e610563b57ec5f6e4c964ab6453f455c1d15a28
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_disposition_record_bytes: 7351
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_disposition_subject_candidate: 54aa317f8f9168f2bf721c74d94638c93c5dee93
+workflow_v1_protected_serialized_write_path_pilot_negative_validation_assessment_candidate_disposition_decision: accept-negative-validation-assessment-candidate-and-authorize-exact-protected-publication
+workflow_v1_protected_serialized_write_path_pilot_final_disposition: docs/design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-FINAL-DISPOSITION-001.md
+workflow_v1_protected_serialized_write_path_pilot_final_disposition_task_id: ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-FINAL-DISPOSITION-001
+workflow_v1_protected_serialized_write_path_pilot_final_disposition_decision: accept-protected-serialized-write-path-pilot-as-validated-bounded-enforcement-basis
+workflow_v1_protected_serialized_write_path_pilot_final_disposition_subject_publication_commit: e5ebca200e0131868ce21367954e61498b0ba2a2
+workflow_v1_protected_serialized_write_path_pilot_final_disposition_ruleset_id: 22392483
+workflow_v1_protected_serialized_write_path_pilot_positive_evidence_publication_commit: 03ad4ae1525851dd9afb3c15e754f5452889b63b
+workflow_v1_protected_serialized_write_path_pilot_negative_assessment_publication_commit: e5ebca200e0131868ce21367954e61498b0ba2a2
+workflow_v1_protected_serialized_write_path_pilot_result: accepted-validated-bounded-enforcement-basis
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
@@ -314,7 +337,7 @@ workflow_v1_persistence_checker_future_candidate_invocation_count: 1
 workflow_v1_persistence_checker_future_candidate_retry_status: none
 workflow_v1_persistence_checker_future_candidate_eligibility_slot_status: consumed-and-closed
 workflow_v1_persistence_checker_future_candidate_invocation_authority: exhausted-no-further-invocation
-next_gate: Workflow v1 protected serialized write-path enforcement pilot final disposition gate
+next_gate: Workflow v1 supervised protected serialized write-path operational-use scoping gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1275,7 +1298,7 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 protected serialized write-path enforcement pilot final disposition gate
+next_gate: Workflow v1 supervised protected serialized write-path operational-use scoping gate
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
@@ -1330,7 +1353,7 @@ Coordinator scoping in [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-SCOPING-00
 
 Coordinator configuration gate [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-GATE-001](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-GATE-001.md) records decision `authorize-one-protected-serialized-write-path-pilot-ruleset-configuration`. It authorizes one future supervised GitHub Settings operation to create the active repository branch ruleset `adw-protect-main-pilot` with the exact persisted configuration contract and no retry. At gate persistence no ruleset exists, `main` remains unprotected, and no configuration, enforcement test, recovery, repository write, routine, parallel, automated, unattended, AFK or Workflow v1 authority is created. RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved. The current next gate is **Workflow v1 protected serialized write-path enforcement pilot ruleset configuration execution**.
 
-The current protected-path evidence records that the positive PR publication passed and the renewed negative validation passed all three cases: invocation counts `1/1/1`, child exits `1/1/1`, and retries `0`; recovery was not used. The earlier `UNEVALUABLE` episode remains preserved. Final coordinator pilot disposition remains outstanding, RG1 through RG12 remain unresolved, and Workflow v1 remains non-normative and unadopted.
+Final disposition in [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-FINAL-DISPOSITION-001](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-FINAL-DISPOSITION-001.md) records decision `accept-protected-serialized-write-path-pilot-as-validated-bounded-enforcement-basis`. Ruleset `22392483` remains active. The positive protected publication and all three renewed negative cases passed. The accepted result is bounded to the tested repository, credential, ruleset and state. RG1 through RG12 remain unresolved, DI-1 and DI-2 remain preserved, and Workflow v1 remains non-normative, unadopted and unimplemented. No routine, parallel, automated, unattended or AFK authority exists. The current next gate is **Workflow v1 supervised protected serialized write-path operational-use scoping gate**.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
