@@ -5,14 +5,15 @@ This repository is the versioned, cross-project control plane for the Agentic De
 # Authority and read order
 
 1. Read [PROJECT-CHARTER.md](PROJECT-CHARTER.md) for mission, scope, roles, authority, and the bootstrap safety floor.
-2. Read [docs/policies/research-evidence.md](docs/policies/research-evidence.md) before producing or promoting research.
-3. Read [docs/research/research-register.md](docs/research/research-register.md) for current research state and the next gate.
+2. Read [WORKFLOW-V1.md](WORKFLOW-V1.md) for the sole normative Workflow v1 contract and its effective condition.
+3. Read [docs/policies/research-evidence.md](docs/policies/research-evidence.md) before producing or promoting research.
+4. Read [docs/research/research-register.md](docs/research/research-register.md) for current research state and the next gate.
 
 Current repository artifacts outrank chat, memory, summaries, and handoffs. Those sources are navigation aids only. Research reports are evidence; they do not modify normative policy unless an explicit adoption decision names the target artifact and adoption scope. Repository use additionally requires an accepted baseline SHA.
 
 # Current maturity
 
-The repository is at bootstrap maturity. Workflow v1 is not adopted. Do not infer workflow phases, task state, tool choices, or implementation authority from planned or research material. The Research Register owns the current work and next gate.
+Workflow v1 is adopted through [WORKFLOW-V1.md](WORKFLOW-V1.md), subject to its protected-publication and verified-readback effective condition. The Research Register remains the sole owner of current work and the next gate. This instruction/navigation surface is not a second normative Workflow v1 owner. Adoption grants no tool choice, substantive execution, routine, parallel, automated, unattended or AFK authority, and accepts no new baseline. Bootstrap Context Baseline v0 remains the only accepted baseline. Do not infer task state or implementation authority from planned or research material.
 
 # Agent boundaries
 

@@ -4,7 +4,7 @@ This repository is the durable, versioned control plane for a cross-project Agen
 
 ## Current maturity
 
-The repository is at **bootstrap** maturity. The bootstrap establishes only the context and governance floor needed for later research and adoption. Workflow v1 is not adopted, and this repository does not yet define workflow phases, task mechanics, parallel execution, AFK operation, or a tooling stack.
+The repository is at **v1** maturity through [Workflow v1](WORKFLOW-V1.md), the sole normative owner of the adopted semantic contract, subject to its protected-publication and verified-readback effective condition. Adoption does not claim full tooling implementation or grant execution authority. Bootstrap Context Baseline v0 remains the only accepted baseline.
 
 A file being active or a normative decision being adopted does not make a repository commit an accepted baseline. Candidate review and coordinator acceptance remain separate, exact-SHA gates.
 
@@ -30,13 +30,14 @@ This separation lets coordinators and bounded agents find the current owner of a
 
 Separately authorized supervised writes follow the [protected publication path](docs/design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001.md): a bounded candidate branch, draft PR, exact-candidate independent review, coordinator acceptance and separately authorized merge. The [Research Register](docs/research/research-register.md) remains the sole owner of the mutable current gate.
 
-Using this mechanism does not authorize a substantive repository change. Direct-main, routine, parallel, automated, unattended and AFK writes remain unauthorized. Workflow v1 remains unadopted.
+Using this mechanism does not authorize a substantive repository change. Direct-main, routine, parallel, automated, unattended and AFK writes remain unauthorized. Workflow v1 adoption is subject to the effective condition in its normative owner and does not expand these permissions.
 
 ## Authority map
 
 | Artifact | Role |
 |---|---|
 | [Project Charter](PROJECT-CHARTER.md) | Normative owner of mission, scope, roles, authority, and the bootstrap safety floor |
+| [Workflow v1](WORKFLOW-V1.md) | Sole normative owner of Workflow v1 semantics and the conditional adoption decision |
 | [Research Evidence Policy](docs/policies/research-evidence.md) | Normative owner of research quality, review, adoption separation, freshness, and supersession |
 | [Research Register](docs/research/research-register.md) | Sole repository owner of mutable research state, current decision disposition, dependencies, and the current next gate |
 | [Bootstrap research note](docs/research/ADW-BOOTSTRAP-RESEARCH-001.md) | Source-reviewed publication-time evidence snapshot and reasoning |
