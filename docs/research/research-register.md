@@ -36,7 +36,7 @@ accepted_sha: 13b05e075ec04aa91494cd18f7d29f7249028cb5
 acceptance_decision_ref: ADW-BOOTSTRAP-ACCEPT-001
 acceptance_record: GitHub Issue #1
 branch_protection_path: PATH B
-branch_protection_status: active-ruleset-pilot-accepted-bounded-supervised-use-not-yet-authorized
+branch_protection_status: active-ruleset-protected-path-default-for-separately-authorized-supervised-publications
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
@@ -323,6 +323,12 @@ workflow_v1_protected_serialized_write_path_pilot_final_disposition_ruleset_id: 
 workflow_v1_protected_serialized_write_path_pilot_positive_evidence_publication_commit: 03ad4ae1525851dd9afb3c15e754f5452889b63b
 workflow_v1_protected_serialized_write_path_pilot_negative_assessment_publication_commit: e5ebca200e0131868ce21367954e61498b0ba2a2
 workflow_v1_protected_serialized_write_path_pilot_result: accepted-validated-bounded-enforcement-basis
+workflow_v1_protected_serialized_write_path_operational_use_decision: docs/design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001.md
+workflow_v1_protected_serialized_write_path_operational_use_task_id: ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-DECISION-CANDIDATE-PRODUCE-001
+workflow_v1_protected_serialized_write_path_operational_use_subject_main: 5abf774919ecafb1c3a051206d603a7f9f1f516d
+workflow_v1_protected_serialized_write_path_operational_use_ruleset_id: 22392483
+workflow_v1_protected_serialized_write_path_operational_use_decision_value: authorize-protected-serialized-write-path-as-default-for-separately-authorized-supervised-publications
+workflow_v1_protected_serialized_write_path_operational_use_status: default-for-separately-authorized-supervised-publications
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
@@ -337,7 +343,7 @@ workflow_v1_persistence_checker_future_candidate_invocation_count: 1
 workflow_v1_persistence_checker_future_candidate_retry_status: none
 workflow_v1_persistence_checker_future_candidate_eligibility_slot_status: consumed-and-closed
 workflow_v1_persistence_checker_future_candidate_invocation_authority: exhausted-no-further-invocation
-next_gate: Workflow v1 supervised protected serialized write-path operational-use scoping gate
+next_gate: Workflow v1 supervised end-to-end workflow dry-run scoping gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
@@ -1298,7 +1304,7 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 supervised protected serialized write-path operational-use scoping gate
+next_gate: Workflow v1 supervised end-to-end workflow dry-run scoping gate
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
@@ -1354,6 +1360,8 @@ Coordinator scoping in [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-SCOPING-00
 Coordinator configuration gate [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-GATE-001](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-CONFIGURATION-GATE-001.md) records decision `authorize-one-protected-serialized-write-path-pilot-ruleset-configuration`. It authorizes one future supervised GitHub Settings operation to create the active repository branch ruleset `adw-protect-main-pilot` with the exact persisted configuration contract and no retry. At gate persistence no ruleset exists, `main` remains unprotected, and no configuration, enforcement test, recovery, repository write, routine, parallel, automated, unattended, AFK or Workflow v1 authority is created. RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved. The current next gate is **Workflow v1 protected serialized write-path enforcement pilot ruleset configuration execution**.
 
 Final disposition in [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-FINAL-DISPOSITION-001](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-FINAL-DISPOSITION-001.md) records decision `accept-protected-serialized-write-path-pilot-as-validated-bounded-enforcement-basis`. Ruleset `22392483` remains active. The positive protected publication and all three renewed negative cases passed. The accepted result is bounded to the tested repository, credential, ruleset and state. RG1 through RG12 remain unresolved, DI-1 and DI-2 remain preserved, and Workflow v1 remains non-normative, unadopted and unimplemented. No routine, parallel, automated, unattended or AFK authority exists. The current next gate is **Workflow v1 supervised protected serialized write-path operational-use scoping gate**.
+
+Operational-use decision [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001.md), task `ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-DECISION-CANDIDATE-PRODUCE-001`, records `authorize-protected-serialized-write-path-as-default-for-separately-authorized-supervised-publications` for exact subject `main` `5abf774919ecafb1c3a051206d603a7f9f1f516d` and active ruleset `22392483`. Protected write-path operational-use status is `default-for-separately-authorized-supervised-publications`; branch-protection status is `active-ruleset-protected-path-default-for-separately-authorized-supervised-publications`. For each separately authorized supervised repository write, the default path is protected candidate branch to draft PR to exact-candidate independent review to coordinator acceptance to separately authorized ready/merge. A substantive write contract may include candidate creation, one non-force branch push and one draft PR without a separate mechanical-persistence artifact. Independent review remains fresh and bound to the exact candidate SHA; no review record is inserted into an already reviewed candidate and no recursive review loop is created. A failed transport requires fresh recovery authority, with no durable repository failure record unless repository state or material evidence is affected. Direct-main writes, parallel writers, automated writes, unattended or AFK operation, Workflow v1 adoption, RG resolution and broader execution authority remain unauthorized; RG1 through RG12 remain unresolved and DI-1 and DI-2 remain preserved. Availability of this mechanism does not grant execution authority. The current next gate is **Workflow v1 supervised end-to-end workflow dry-run scoping gate**.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
