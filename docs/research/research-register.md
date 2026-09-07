@@ -36,7 +36,7 @@ accepted_sha: 13b05e075ec04aa91494cd18f7d29f7249028cb5
 acceptance_decision_ref: ADW-BOOTSTRAP-ACCEPT-001
 acceptance_record: GitHub Issue #1
 branch_protection_path: PATH B
-branch_protection_status: active-ruleset-pilot-accepted-bounded-supervised-use-not-yet-authorized
+branch_protection_status: active-ruleset-protected-path-default-for-separately-authorized-supervised-publications
 review_control: temporary-manual-sha-freeze
 review_control_status: completed
 control_decision_ref: ADW-BOOTSTRAP-PROTECTION-DEC-001
@@ -329,7 +329,6 @@ workflow_v1_protected_serialized_write_path_operational_use_subject_main: 5abf77
 workflow_v1_protected_serialized_write_path_operational_use_ruleset_id: 22392483
 workflow_v1_protected_serialized_write_path_operational_use_decision_value: authorize-protected-serialized-write-path-as-default-for-separately-authorized-supervised-publications
 workflow_v1_protected_serialized_write_path_operational_use_status: default-for-separately-authorized-supervised-publications
-workflow_v1_protected_serialized_write_path_branch_protection_status: active-ruleset-protected-path-default-for-separately-authorized-supervised-publications
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
