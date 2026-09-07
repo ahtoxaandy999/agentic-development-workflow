@@ -26,6 +26,12 @@ This separation lets coordinators and bounded agents find the current owner of a
 3. Read the [Research Register](docs/research/research-register.md) for current research state, adoption disposition, dependencies, and the next gate.
 4. Consult the [bootstrap research note](docs/research/ADW-BOOTSTRAP-RESEARCH-001.md) only when its publication-time evidence and reasoning are needed. The note is evidence, not policy.
 
+## Protected supervised publication
+
+Separately authorized supervised writes follow the [protected publication path](docs/design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001.md): a bounded candidate branch, draft PR, exact-candidate independent review, coordinator acceptance and separately authorized merge. The [Research Register](docs/research/research-register.md) remains the sole owner of the mutable current gate.
+
+Using this mechanism does not authorize a substantive repository change. Direct-main, routine, parallel, automated, unattended and AFK writes remain unauthorized. Workflow v1 remains unadopted.
+
 ## Authority map
 
 | Artifact | Role |
