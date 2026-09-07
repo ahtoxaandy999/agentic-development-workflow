@@ -334,7 +334,18 @@ workflow_v1_supervised_end_to_end_dry_run_scoping_task_id: ADW-WF1-SUPERVISED-EN
 workflow_v1_supervised_end_to_end_dry_run_scoping_subject_main: 1b236924b2874a7ea008dfe1d1098cda9fa36588
 workflow_v1_supervised_end_to_end_dry_run_scoping_decision: authorize-one-supervised-end-to-end-workflow-dry-run
 workflow_v1_supervised_end_to_end_dry_run_selected_outcome: readme-protected-supervised-publication-navigation
-workflow_v1_supervised_end_to_end_dry_run_status: candidate-review-and-acceptance-required-before-publication
+workflow_v1_supervised_end_to_end_dry_run_status: completed-published-and-verified
+workflow_v1_supervised_end_to_end_dry_run_candidate_commit: 10548a7b86b6612b5652660c44c0a2dd00abae73
+workflow_v1_supervised_end_to_end_dry_run_review_record_sha256: b838101dec0b5ddf8a1b803ce7d5b1e6405017b6a14f89df3d39783d738ab68c
+workflow_v1_supervised_end_to_end_dry_run_coordinator_acceptance_record_sha256: 8ddd9f467c6011e94407ddc0fb661b158ab77ba71557327b4ebc255bd5146866
+workflow_v1_supervised_end_to_end_dry_run_publication_pr: 7
+workflow_v1_supervised_end_to_end_dry_run_publication_commit: 0aff60e9a64b51e64397b0a975fe2efe51b95bdb
+workflow_v1_supervised_end_to_end_dry_run_publication_tree: aad244ff8906de01a5248fabebd843128ef82ba5
+workflow_v1_adoption_readiness_assessment: docs/design/ADW-WF1-ADOPTION-READINESS-ASSESSMENT-001.md
+workflow_v1_adoption_readiness_assessment_task_id: ADW-WF1-ADOPTION-READINESS-ASSESSMENT-001
+workflow_v1_adoption_readiness_assessment_subject_main: 0aff60e9a64b51e64397b0a975fe2efe51b95bdb
+workflow_v1_adoption_readiness_assessment_decision: authorize-one-adoption-readiness-reconciliation-candidate
+workflow_v1_adoption_readiness_assessment_result: ready-for-normative-adoption-contract-after-state-reconciliation
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition: docs/design/ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001.md
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_task_id: ADW-WF1-PERSISTENCE-CHECKER-FUTURE-CANDIDATE-LIMITED-USE-DISPOSITION-001
 workflow_v1_persistence_checker_future_candidate_limited_use_disposition_decision: accept-exact-future-candidate-pass-episode-as-completed-bounded-secondary-evidence-only
@@ -349,14 +360,14 @@ workflow_v1_persistence_checker_future_candidate_invocation_count: 1
 workflow_v1_persistence_checker_future_candidate_retry_status: none
 workflow_v1_persistence_checker_future_candidate_eligibility_slot_status: consumed-and-closed
 workflow_v1_persistence_checker_future_candidate_invocation_authority: exhausted-no-further-invocation
-next_gate: Workflow v1 adoption readiness assessment gate
+next_gate: Workflow v1 normative adoption contract gate
 ```
 
 Bootstrap Context Baseline v0 is accepted permanently at commit `13b05e075ec04aa91494cd18f7d29f7249028cb5` by decision `ADW-BOOTSTRAP-ACCEPT-001`, recorded in [GitHub Issue #1](https://github.com/ahtoxaandy999/agentic-development-workflow/issues/1). Later commits are post-baseline state and do not replace the accepted baseline.
 
 Under protection decision `ADW-BOOTSTRAP-PROTECTION-DEC-001`, the temporary manual SHA-freeze served the independent bootstrap candidate review, which passed with no findings. That review control is now completed; it does not imply that `main` remains frozen after baseline acceptance, and it did not and does not replace branch protection.
 
-The repository is public, and `main` is covered by active ruleset `22392483`. One exact positive-path protected publication has passed assessment; negative enforcement validation and RG1 through RG4 remain incomplete. This current protection grants no routine, parallel, automated, unattended, AFK, or multi-writer authority.
+The repository is public, and `main` is covered by active ruleset `22392483`. The protected pilot completed positive publication and renewed negative enforcement validation and is accepted only as a validated bounded enforcement basis. RG1 through RG12 remain unresolved outside the tested bounded scope. No routine, parallel, automated, unattended, AFK or multi-writer authority exists.
 
 Workflow v1 remains unadopted.
 
@@ -1310,7 +1321,7 @@ decision_scope: >
   installed tooling, grants no new write or AFK authority, and does not make
   Workflow v1 normative.
 
-next_gate: Workflow v1 adoption readiness assessment gate
+next_gate: Workflow v1 normative adoption contract gate
 ```
 
 The source-reviewed DR-005 recommendations received coordinator disposition. The scoped recommendation set is accepted only as input to later Workflow v1 tooling/enforcement design. [ADW-DR-005-DISPOSITION-001](ADW-DR-005-DISPOSITION-001.md) owns the detailed S/C/D/X/RG/DI classifications; this Research Register does not duplicate that matrix.
@@ -1369,7 +1380,7 @@ Final disposition in [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-PILOT-FINAL-DISPOS
 
 Operational-use decision [ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001](../design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001.md), task `ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-DECISION-CANDIDATE-PRODUCE-001`, records `authorize-protected-serialized-write-path-as-default-for-separately-authorized-supervised-publications` for exact subject `main` `5abf774919ecafb1c3a051206d603a7f9f1f516d` and active ruleset `22392483`. Protected write-path operational-use status is `default-for-separately-authorized-supervised-publications`; branch-protection status is `active-ruleset-protected-path-default-for-separately-authorized-supervised-publications`. For each separately authorized supervised repository write, the default path is protected candidate branch to draft PR to exact-candidate independent review to coordinator acceptance to separately authorized ready/merge. A substantive write contract may include candidate creation, one non-force branch push and one draft PR without a separate mechanical-persistence artifact. Independent review remains fresh and bound to the exact candidate SHA; no review record is inserted into an already reviewed candidate and no recursive review loop is created. A failed transport requires fresh recovery authority, with no durable repository failure record unless repository state or material evidence is affected. Direct-main writes, parallel writers, automated writes, unattended or AFK operation, Workflow v1 adoption, RG resolution and broader execution authority remain unauthorized; RG1 through RG12 remain unresolved and DI-1 and DI-2 remain preserved. Availability of this mechanism does not grant execution authority. The current next gate is **Workflow v1 supervised end-to-end workflow dry-run scoping gate**.
 
-Current dry-run decision [ADW-WF1-SUPERVISED-END-TO-END-DRY-RUN-SCOPING-001](../design/ADW-WF1-SUPERVISED-END-TO-END-DRY-RUN-SCOPING-001.md) records `authorize-one-supervised-end-to-end-workflow-dry-run` and selects the README's protected supervised publication navigation section. The exact candidate requires fresh independent review, coordinator acceptance and separately authorized protected merge; the candidate's adoption-readiness next-gate transition is prospective and becomes authoritative only after those steps. Live `main` retains the scoping gate during candidate production. This bounded decision creates no broader substantive, direct-main, routine, parallel, automated, unattended or AFK write authority. Workflow v1 remains non-normative, unadopted and unimplemented; RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved.
+The supervised end-to-end dry run scoped by [ADW-WF1-SUPERVISED-END-TO-END-DRY-RUN-SCOPING-001](../design/ADW-WF1-SUPERVISED-END-TO-END-DRY-RUN-SCOPING-001.md) is completed, published and verified. Exact candidate `10548a7b86b6612b5652660c44c0a2dd00abae73` received independent review result `accept-supervised-end-to-end-dry-run-candidate-for-coordinator-acceptance`, with 0 BLOCKER / 0 MAJOR / 0 MINOR findings and review record SHA-256 `b838101dec0b5ddf8a1b803ce7d5b1e6405017b6a14f89df3d39783d738ab68c`. Coordinator acceptance record SHA-256 `8ddd9f467c6011e94407ddc0fb661b158ab77ba71557327b4ebc255bd5146866` accepted only that exact candidate for protected publication. Separately authorized publication through [PR #7](https://github.com/ahtoxaandy999/agentic-development-workflow/pull/7) produced commit `0aff60e9a64b51e64397b0a975fe2efe51b95bdb` and tree `aad244ff8906de01a5248fabebd843128ef82ba5`; exact remote readback verified the successful selected README protected supervised publication navigation outcome. The review and coordinator acceptance records remain external evidence under Command Center custody. This bounded outcome creates no broader substantive, direct-main, routine, parallel, automated, unattended, AFK or multi-writer authority. Workflow v1 remains non-normative, unadopted and unimplemented; RG1 through RG12 remain unresolved, and DI-1 and DI-2 remain preserved.
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
