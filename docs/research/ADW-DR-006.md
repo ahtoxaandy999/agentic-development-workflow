@@ -4,21 +4,24 @@ artifact_status: draft
 authority: evidence
 research_status_at_publication: completed
 recommendation_status_at_publication: proposed
-evidence_as_of: 2026-09-14
+evidence_as_of: 2026-09-15
 owner: agentic-development-research
 question: >-
-  Does current Symphony and Codex App Server evidence now justify reopening the
-  DR-005 deferral of Symphony/custom harness infrastructure for a bounded
-  executor -> independent reviewer -> correction orchestration proof of concept,
-  while preserving Workflow v1 authority, review independence, exact-candidate
-  identity, human acceptance, and current automation restrictions?
+  Does current Symphony and Codex App Server evidence justify advancing D13
+  toward reconsideration by preparing the accepted ownership/adapter and
+  conformance prerequisites for a bounded executor -> independent reviewer ->
+  correction orchestration proof of concept, while preserving Workflow v1
+  authority, review independence, exact-candidate identity, human acceptance,
+  and current automation restrictions?
 scope: >-
   Targeted successor research for the Symphony/App Server portion of DR-005.
   Compare model-driven native thread orchestration with a thin deterministic
-  App Server coordinator; inspect the current OpenAI Symphony specification and
-  reference implementation; map useful primitives and incompatibilities to ADW
-  Workflow v1. No implementation, installation, tooling adoption, unattended
-  execution, normative amendment, acceptance, merge, or new baseline.
+  App Server coordinator; inspect the current OpenAI Symphony specification,
+  reference implementation, and current stable App Server/subagent surfaces;
+  map useful primitives and incompatibilities to ADW Workflow v1. No
+  implementation, installation, tooling adoption, D13 disposition change,
+  unattended execution, normative amendment, acceptance, merge, or new
+  baseline.
 repository_state:
   repository: ahtoxaandy999/agentic-development-workflow
   research_basis_main: 4e6af3db42950e9b7e5415b89f09b5d325fd78a6
@@ -27,27 +30,29 @@ repository_state:
   prior_tooling_disposition: docs/research/ADW-DR-005-DISPOSITION-001.md
   observation_scope: publication-time evidence snapshot; current mutable state remains with its repository owners
 supersedes: >-
-  DR-005 Symphony/App Server capability evidence and the factual premise used
-  to defer D13 only where this note supplies fresher evidence. It does not
-  supersede DR-005 as a whole, ADW-DR-005-DISPOSITION-001, X3, Workflow v1, or
-  any current repository authority.
+  DR-005 Symphony/App Server capability evidence only where this note supplies
+  fresher evidence. It does not supersede DR-005 as a whole,
+  ADW-DR-005-DISPOSITION-001, D13's accepted reconsideration condition, X3,
+  Workflow v1, or any current repository authority.
 ---
 
 # ADW-DR-006 — Symphony and Codex App Server orchestration reassessment
 
 ## 1. Executive answer
 
-**REPOSITORY FACT.** DR-005, frozen on 2026-09-04, recommended deferring `D13 — Symphony/custom harness infrastructure` because no proven dispatch volume or recovery need justified another controller. The accepted DR-005 disposition confirmed that deferral and required an accepted adapter/ownership design plus conformance evidence before reconsideration. It separately confirmed `X3`: unmodified Symphony or harness retry/stale-input/cleanup defaults must not be asserted as ADW conformance. [R01] [R02]
+**REPOSITORY FACT.** DR-005, frozen on 2026-09-04, recommended deferring `D13 — Symphony/custom harness infrastructure` because no proven dispatch volume or recovery need justified another controller. The accepted DR-005 disposition confirmed that deferral and says to reconsider D13 only with an accepted adapter/ownership design and conformance evidence. It separately confirmed `X3`: unmodified Symphony or harness retry/stale-input/cleanup defaults must not be asserted as ADW conformance. [R01] [R02]
 
 **DOCUMENTED FACT.** OpenAI's 2026-04-27 Symphony publication describes the motivating problem as human attention and context switching across multiple interactive Codex sessions. It states that Symphony's first implementation was a Codex session in `tmux` polling Linear and spawning subagents, that this approach worked but was not particularly reliable, and that the later design used Codex App Server as the programmatic execution surface. The current Symphony repository remains a reference/specification rather than a maintained standalone product commitment. [O01] [O02] [O03]
 
-**DOCUMENTED FACT.** Current Codex App Server documentation exposes an explicit JSON-RPC lifecycle including `thread/start`, `thread/resume`, `thread/fork`, `thread/read`, `turn/start`, `turn/steer`, `turn/interrupt`, and final `turn/completed` notifications. `turn/completed` carries a final status of `completed`, `interrupted`, or `failed`. `turn/start` supports a per-turn `outputSchema`, and thread resume preserves a stored executor conversation without requiring the client to infer completion from prose. [O04]
+**DOCUMENTED FACT.** Current Codex App Server documentation exposes an explicit JSON-RPC lifecycle including stable `thread/start`, `thread/resume`, `thread/fork`, `thread/read`, `turn/start`, `turn/steer`, `turn/interrupt`, and final `turn/completed` notifications. `turn/start` supports per-turn model/effort/cwd/sandbox overrides and `outputSchema`. The same documentation distinguishes stable from experimental methods through `experimentalApi`; omitting the capability or setting it to false keeps the client on the stable surface. [O04]
 
 **DOCUMENTED FACT.** At pinned Symphony commit `e0ccc83720a42a600a53b61c5f8d3e518bebe1db`, the Elixir reference implementation has a single orchestrator state, per-work-item workspace management, Codex App Server client, explicit turn event handling, retry/reconciliation logic, blocked-state handling, local and SSH worker support, and tracker adapters for Linear, GitHub Issues, Jira Cloud, Asana, and GitLab. The README still warns that the Elixir implementation is prototype software for evaluation and recommends implementing a hardened version from `SPEC.md`. [O02] [O03] [O05]-[O10]
 
-**INFERENCE.** The factual premise behind D13 has materially changed in one important respect: there is now a concrete recurring orchestration problem to solve, namely manual routing between bounded executors and fresh independent reviewers, plus correction and re-review, and the current first-party App Server surface provides substantially stronger lifecycle primitives than a model-only coordinator. This satisfies the *research trigger to reconsider D13*. It does not by itself satisfy the separate adoption, safety, recovery, or conformance gates required to deploy a controller.
+**INFERENCE.** The factual premise behind D13 has materially changed in one respect: there is now a concrete recurring orchestration problem to solve, namely manual routing between bounded executors and fresh independent reviewers, plus correction and re-review, and the current first-party App Server surface provides substantially stronger lifecycle primitives than a model-only coordinator. This is sufficient evidence to justify preparing the missing D13 reconsideration prerequisites and a later explicit reconsideration gate. It is **not** sufficient to declare the accepted D13 reconsideration condition satisfied because the required accepted ownership/adapter design and conformance evidence do not yet exist.
 
-**RECOMMENDATION — GO FOR A BOUNDED ARCHITECTURE POC, NOT DEPLOYMENT.** Reopen D13 only far enough to authorize later evaluation of a minimal Symphony-informed coordinator over Codex App Server. Keep X3 fully intact: do not deploy Symphony unmodified and do not treat Symphony defaults as Workflow v1 semantics. The target should be a thin deterministic coordination layer whose first bounded use case is:
+**RECOMMENDATION — GO FOR A PREPARATORY OWNERSHIP/ADAPTER/CONFORMANCE GATE, NOT POC AUTHORIZATION.** Keep D13 `DEFER`. Preserve X3 fully. Prepare the minimum ownership/adapter design and define/obtain the conformance evidence required by the accepted D13 disposition. Only after those prerequisites are satisfied, or an explicit coordinator disposition supersedes that condition, should D13 be considered for `CONDITIONALLY SELECT FOR ONE BOUNDED POC`.
+
+The leading technical hypothesis for that later PoC remains:
 
 ```text
 already-authorized bounded task
@@ -63,7 +68,7 @@ already-authorized bounded task
 
 ## 2. Boundary with DR-005 and Workflow v1
 
-This note is a targeted evidence successor, not a silent policy change.
+This note is a targeted evidence successor, not a silent policy or disposition change.
 
 The following DR-005 conclusions remain valid:
 
@@ -75,7 +80,7 @@ The following DR-005 conclusions remain valid:
 - unmodified Symphony defaults are not ADW conformance;
 - human/coordinator acceptance remains a separate gate.
 
-The only recommendation reopened is the *timing of D13 evaluation*. DR-005 said to reconsider D13 after demonstrated dispatch/recovery need plus accepted ownership/adapter design and conformance evidence. The current problem supplies demonstrated need for a narrower orchestration use case, so a bounded proof of concept is now justified as evidence production. The ownership and conformance prerequisites are still unresolved and therefore block operational adoption. [R01] [R02]
+D13 itself is **not reopened by this research artifact**. DR-005 says to reconsider D13 only after demonstrated need plus the accepted adapter/ownership design and conformance-evidence condition. The current problem supplies stronger evidence of need and narrows the proposed use case, but the other accepted prerequisites remain unresolved. This note therefore recommends preparing those missing inputs, not moving the disposition boundary by implication. [R01] [R02]
 
 `PROJECT-CHARTER.md` and `WORKFLOW-V1.md` remain authoritative. A future coordinator must consume those semantics; it must not become a second normative workflow owner. [R03] [R04]
 
@@ -126,7 +131,11 @@ parent Codex agent
 → route correction
 ```
 
-**INFERENCE — strengths.** This is the smallest implementation and is suitable as a low-cost comparison baseline. It preserves the Codex UI and requires little custom code.
+**INFERENCE — strengths.** This is the smallest implementation surface and is suitable as the lowest implementation-surface comparison baseline. It preserves the Codex UI and requires little custom code.
+
+**DOCUMENTED FACT.** Current Codex subagent documentation says each subagent performs its own model and tool work and therefore subagent workflows consume more tokens than comparable single-agent runs. It also documents per-agent model/reasoning selection, with `gpt-5.6-terra` intended for lighter/read-heavy work and `gpt-5.6-luna` for clear, repeatable, high-volume work. [O11]
+
+**INFERENCE — cost boundary.** Native thread/subagent orchestration is not established as the lowest usage-cost path. Usage cost must be measured on representative tasks and must include failed attempts, verification, review, correction, and re-review rather than only the first turn.
 
 **INFERENCE — limitation.** The parent model still decides when a phase completed, which result field matters, whether a reviewer should start, and whether a correction should route. Those transitions are therefore partly model-reasoned rather than represented by an explicit external state machine.
 
@@ -144,11 +153,11 @@ deterministic coordinator
 → stop before acceptance
 ```
 
-**DOCUMENTED FACT.** App Server supports starting, resuming, reading, listing/forking threads, explicit turn lifecycle notifications, per-turn model/sandbox/cwd overrides, and per-turn `outputSchema`. [O04]
+**DOCUMENTED FACT.** App Server supports starting, resuming, reading, listing/forking threads, explicit turn lifecycle notifications, per-turn model/sandbox/cwd overrides, and per-turn `outputSchema`. It also emits `thread/tokenUsage/updated` and `model/rerouted`, which can support later empirical routing telemetry without making telemetry a workflow-state owner. [O04]
 
 **INFERENCE — advantage.** These primitives allow the controller to represent orchestration state directly rather than infer it from a producer's prose. This is a better fit for ADW's separation between reasoning and deterministic control.
 
-**RECOMMENDATION.** Use native thread orchestration as the PoC comparison baseline. Treat a thin App Server coordinator as the leading architecture candidate when the requirement is a reliable executor/reviewer/correction pipeline.
+**RECOMMENDATION.** Use native thread orchestration as the lowest implementation-surface comparison baseline. Treat a thin App Server coordinator as the leading architecture candidate when the requirement is a reliable executor/reviewer/correction pipeline.
 
 ## 5. Recommended Symphony-informed architecture
 
@@ -209,9 +218,11 @@ The target architecture should be smaller than Symphony and should preserve exis
 | Workspace manager | isolated workspace/worktree identity and lifecycle | task truth or review verdict |
 | App Server client | protocol transport, thread/turn calls and events | workflow decisions |
 | Executor | bounded implementation/recovery reasoning within granted scope | independent review or acceptance |
-| Reviewer | independent evaluation of an exact immutable candidate | candidate mutation or acceptance |
+| Reviewer | independent evaluation of an exact immutable candidate | candidate mutation, GitHub external mutation by default, or acceptance |
 | Project-owned scripts/tools | deterministic project-specific verification/publication mechanics where already owned | workflow policy |
 | Human/coordinator | consequential authorization, disposition, acceptance | hidden executor state |
+
+Reviewer-to-GitHub publication and model-routing policy are later design inputs, not adopted parts of this targeted research candidate. Any reviewer GitHub mutation requires a separately designed external-side-effect boundary; read-only filesystem scope alone does not constrain remote GitHub effects.
 
 ## 6. Thread and reviewer model
 
@@ -223,17 +234,17 @@ The target architecture should be smaller than Symphony and should preserve exis
 
 ### Reviewer freshness
 
-**DOCUMENTED FACT.** `thread/fork` copies source history into a new thread. [O04]
+**DOCUMENTED FACT.** `thread/fork` creates a new thread by copying stored source history. App Server also exposes `review/start`; `delivery: "detached"` creates a new review thread by forking from the source thread. [O04]
 
-**INFERENCE.** Forking the executor is therefore inappropriate when ADW claims independent fresh-context review because it intentionally inherits producer history.
+**INFERENCE.** Forking the executor, including detached `review/start`, is not evidence of producer-independent fresh context because it intentionally inherits producer history.
 
-**RECOMMENDATION.** Start each formal reviewer as a new thread with only the review contract, exact base/candidate identities, authoritative requirements, producer-reported verification evidence, and the minimum necessary context. A materially corrected candidate gets a new fresh reviewer thread unless an adopted later rule permits demonstrated unaffected scope to carry forward.
+**RECOMMENDATION.** Start each formal ADW reviewer with a new `thread/start`, not `thread/fork` or detached `review/start`, unless a later evidence-backed rule establishes that a forked review satisfies the required independence. Give the reviewer only the review contract, exact base/candidate identities, authoritative requirements, project-owned or machine-generated verification evidence, and the minimum necessary context. Producer claims may be supplemental but are not trusted as load-bearing verification without independent revalidation. A materially corrected candidate gets a new fresh reviewer thread unless an adopted later rule permits demonstrated unaffected scope to carry forward.
 
 ### Structured review result
 
 **DOCUMENTED FACT.** `turn/start` supports `outputSchema` for the current turn. [O04]
 
-**RECOMMENDATION.** A PoC should require a machine-readable review envelope, for example:
+**RECOMMENDATION.** A future PoC should require a machine-readable review envelope, for example:
 
 ```json
 {
@@ -245,6 +256,12 @@ The target architecture should be smaller than Symphony and should preserve exis
 ```
 
 The schema is transport-level structure only. The meaning of verdicts and required independence remains owned by the applicable workflow/review policy.
+
+### Stable App Server surface
+
+**DOCUMENTED FACT.** App Server rejects experimental methods/fields unless the client opts into `capabilities.experimentalApi`. Stable `thread/start`, `thread/resume`, `thread/fork`, `thread/read`, standard turn lifecycle, and `outputSchema` are available without requiring experimental process/history methods. [O04]
+
+**RECOMMENDATION.** A future PoC should initialize without `experimentalApi` by default. Experimental methods may be added only when a separately justified requirement cannot be met on the stable surface.
 
 ## 7. State model
 
@@ -285,19 +302,20 @@ A future runtime journal may cache identifiers such as task id, executor thread 
 
 ## 8. Failure and recovery requirements
 
-A PoC must test the failure cases that are load-bearing for later adoption.
+A future PoC must test the failure cases that are load-bearing for later adoption.
 
 1. **Quiet/poll timeout while worker remains active.** Timeout alone must not establish failure or authorize a replacement writer. Reconcile live thread/process state first.
 2. **Executor exits without a candidate.** Distinguish blocker, failure, and normal incomplete continuation. Do not fabricate candidate state.
 3. **Verification failure.** Remain in the executor/correction domain; do not dispatch reviewer as though a valid candidate exists.
 4. **Partial publication.** Reconcile Git/local/remote exact identities before retry. No blind commit/push rerun.
 5. **Moving candidate branch.** Reviewer is bound to immutable base/candidate SHAs, never a moving branch head.
-6. **Reviewer failure.** A failed reviewer produces no verdict. Starting a replacement reviewer is safe only after confirming it has no write authority and the reviewed candidate is unchanged.
+6. **Reviewer failure.** A failed reviewer produces no verdict. Starting a replacement reviewer is safe only after confirming it has no candidate-write authority and the reviewed candidate is unchanged.
 7. **Correction after review.** A corrected candidate receives a new immutable identity and fresh affected verification/review according to the applicable policy.
 8. **Coordinator restart.** Reconcile journal/cache, App Server stored thread state, workspace/Git state, remote candidate identity, and any external effects before continuing.
 9. **Duplicate writer attempt.** Fail closed when an executor/write claim already exists for the task/worktree.
 10. **Ambiguous authority or changed normative input.** Stop before further mutation and return to the accountable owner.
 11. **Acceptance or merge attempt by an agent.** Deny unless a separate later human-controlled gate explicitly grants the exact effect. This research grants none.
+12. **External review publication.** A read-only reviewer workspace must not be treated as a GitHub-side-effect boundary. Any future reviewer-to-GitHub publisher must separately handle stale-head checks, idempotency, partial-write recovery, deduplication, and authorization.
 
 These requirements preserve DR-003 PR07, PR09, and PR10 and the DR-005 X3/X6/X7 boundaries rather than replacing them. [R01] [R02]
 
@@ -319,9 +337,9 @@ These requirements preserve DR-003 PR07, PR09, and PR10 and the DR-005 X3/X6/X7 
 
 OpenAI explicitly presents Symphony as a minimal reference implementation and encourages environment-specific implementations rather than treating it as a maintained standalone product. [O01] [O03]
 
-## 10. Minimal proof-of-concept scope
+## 10. Potential bounded proof-of-concept scope after D13 prerequisites
 
-**RECOMMENDATION — later gate only.** The smallest useful PoC should validate architecture, not deliver autonomous development.
+**RECOMMENDATION — not currently authorized.** The following is a candidate PoC shape only after the accepted D13 reconsideration condition is satisfied or explicitly superseded by a later coordinator disposition. It validates architecture rather than autonomous development.
 
 ### Objective
 
@@ -333,14 +351,15 @@ Demonstrate that a deterministic controller can coordinate one bounded synthetic
 2. receive explicit `turn/completed` status;
 3. retain and later resume the executor thread id;
 4. establish an immutable synthetic/disposable candidate identity;
-5. start a fresh reviewer thread without executor history;
+5. start a fresh reviewer with `thread/start` and no executor history;
 6. require structured review output;
 7. route one correction to the executor;
 8. establish a new candidate identity;
 9. start a fresh reviewer for the corrected candidate;
 10. stop at `READY_FOR_HUMAN_ACCEPTANCE`;
 11. demonstrate restart/reconciliation from recorded runtime evidence;
-12. demonstrate duplicate-writer rejection.
+12. demonstrate duplicate-writer rejection;
+13. use the stable App Server surface by default, with `experimentalApi` omitted/false unless separately justified.
 
 ### Explicit non-goals
 
@@ -351,11 +370,13 @@ Demonstrate that a deterministic controller can coordinate one bounded synthetic
 - no automatic PR ready/merge/acceptance;
 - no AFK or unattended authorization;
 - no new normative Workflow v1 semantics;
-- no general scheduler, queue, database, dashboard, SSH worker pool, or multi-project service.
+- no general scheduler, queue, database, dashboard, SSH worker pool, or multi-project service;
+- no automatic reviewer GitHub Issue creation;
+- no global model-routing policy.
 
 ### Success bar
 
-A PoC is evidence only if it demonstrates the exact role and identity transitions above, including at least one controlled failure/recovery path. A successful happy path alone does not justify adoption.
+A future PoC is evidence only if it demonstrates the exact role and identity transitions above, including at least one controlled failure/recovery path. A successful happy path alone does not justify adoption.
 
 ## 11. Decision matrix
 
@@ -364,32 +385,49 @@ A PoC is evidence only if it demonstrates the exact role and identity transition
 | Deploy Symphony unchanged? | **NO-GO.** X3 remains controlling. |
 | Copy Symphony's architecture selectively? | **GO WITH CHANGES.** Single coordinator state, workspace isolation, App Server transport, reconciliation, and observability are useful patterns. |
 | Make a repo-owned Skill the full coordinator? | **NO as the leading design.** A Skill may supply procedural guidance, but deterministic lifecycle state should not depend solely on model reasoning. |
-| Use native Codex threads as a comparison baseline? | **YES.** Lowest-cost baseline for the PoC. |
+| Use native Codex threads as a comparison baseline? | **YES.** Lowest implementation-surface baseline; not proven lowest usage cost. |
 | Prefer App Server for a reliable executor/reviewer pipeline? | **YES, as the current architecture hypothesis.** It provides direct lifecycle and structured-output primitives needed by a deterministic coordinator. |
-| Adopt App Server coordinator now? | **NO.** Requires a bounded PoC, independent evidence review, ownership design, and separate coordinator disposition/adoption gate. |
+| Adopt App Server coordinator now? | **NO.** D13 remains deferred and the accepted reconsideration prerequisites are not yet satisfied. |
 | Automate human acceptance or merge? | **NO.** Out of scope and unauthorized. |
-| Reopen DR-005 D13? | **YES, narrowly for PoC evaluation.** This is a recommendation, not a disposition change. |
+| Reopen DR-005 D13 now? | **NO.** Current evidence supports preparing the missing accepted prerequisites and a later explicit reconsideration gate; D13 remains `DEFER`. |
 
 ## 12. Remaining evidence gaps
 
-The following gaps block operational adoption:
+### Gaps that block D13 reconsideration / PoC authorization under the current accepted disposition
 
-1. No target-environment PoC has exercised current App Server behavior under ADW constraints.
-2. No independent source review has yet validated this note.
-3. No accepted owner exists for runtime orchestration state or a recovery journal.
-4. Exclusive writer fencing beyond workspace separation is not yet designed or tested.
-5. App Server process/thread retention across the intended local lifecycle has not been operationally validated in the target environment.
-6. Cancellation/containment across child processes and external side effects remains unverified.
-7. Project-specific candidate publication and verification integration has not been mapped for a generic cross-project controller.
-8. No model/reasoning routing policy is adopted for executor versus reviewer roles.
-9. No cost/usage comparison exists between native thread orchestration and App Server coordination.
-10. No evidence supports routine, parallel, unattended, or AFK write authority.
+1. No corrected candidate has yet passed fresh independent source review.
+2. No accepted owner exists for runtime orchestration state or a recovery journal.
+3. No accepted minimal adapter/ownership design exists for the proposed controller boundary.
+4. The form and sufficiency of the required D13 conformance evidence have not been established and satisfied. A test plan alone must not be silently substituted for an accepted evidence prerequisite.
+5. Exclusive writer fencing beyond workspace separation is not yet designed or tested.
 
-None of these gaps blocks recording this research. Gaps 1, 3, 4, 5, 6, and 7 block operational adoption.
+### Additional gaps that block operational adoption even after a future PoC is authorized
+
+6. No target-environment PoC has exercised current App Server behavior under ADW constraints.
+7. App Server process/thread retention across the intended local lifecycle has not been operationally validated in the target environment.
+8. Cancellation/containment across child processes and external side effects remains unverified.
+9. Project-specific candidate publication and verification integration has not been mapped for a generic cross-project controller.
+10. No model/reasoning routing policy is adopted for executor versus reviewer roles, and no representative usage comparison exists between native thread orchestration and App Server coordination.
+11. Reviewer-to-GitHub mutation ownership, stale-head protection, deduplication, and partial-write recovery are not designed or authorized.
+12. No evidence supports routine, parallel, unattended, or AFK write authority.
+
+None of these gaps blocks recording this research. They prevent this evidence artifact from acting as a PoC or operational-use authorization.
 
 ## 13. Proposed next gate
 
-**RECOMMENDATION.** Independent source review should first verify this exact research candidate against current primary sources and the pinned ADW basis. If source review passes, the coordinator may separately decide whether to change the current D13 disposition from `DEFER` to a narrowly scoped `CONDITIONALLY SELECT FOR ONE BOUNDED POC` while preserving X3 and every existing automation/acceptance restriction.
+**RECOMMENDATION.** Fresh independent source review should verify this corrected research candidate against current primary sources and the pinned ADW basis.
+
+If that source review passes, the next coordinator decision should be a **bounded D13 prerequisite-scoping/design gate**, not PoC execution. That gate should identify:
+
+- the authoritative owner of runtime orchestration state;
+- the minimal adapter boundary between Workflow v1/project policy and App Server transport;
+- the exact meaning and evidence required to satisfy the accepted D13 conformance prerequisite;
+- the one-writer and external-side-effect boundaries;
+- the evidence needed before any later `CONDITIONALLY SELECT FOR ONE BOUNDED POC` disposition can be considered.
+
+Only after those accepted prerequisites are satisfied, or after an explicit superseding disposition changes them, should the coordinator decide whether D13 advances from `DEFER` to a bounded PoC selection.
+
+Reviewer-to-GitHub publication and adaptive model routing are valid later design topics surfaced by independent review, but they must not be silently incorporated as current D13 authority. They can be evaluated in the later architecture/design stage after the core ownership boundary is established.
 
 No implementation or policy change should occur merely because this research candidate or its pull request exists.
 
@@ -398,7 +436,7 @@ No implementation or policy change should occur merely because this research can
 ### Current ADW authority and prior evidence
 
 - **R01 — DR-005 evidence.** `docs/research/ADW-DR-005.md`, frozen target commit `38e31a09a1aa31f42b5b3fbc02e0fb662ebb1958`; evidence date 2026-09-04. The Symphony/custom-harness assessment is D13 and X3 within that report.
-- **R02 — DR-005 accepted tooling disposition.** `docs/research/ADW-DR-005-DISPOSITION-001.md`; confirms D13 `DEFER` and X3 rejection of unmodified Symphony as ADW conformance.
+- **R02 — DR-005 accepted tooling disposition.** `docs/research/ADW-DR-005-DISPOSITION-001.md`; confirms D13 `DEFER`, the accepted reconsideration condition, and X3 rejection of unmodified Symphony as ADW conformance.
 - **R03 — Project Charter.** `PROJECT-CHARTER.md` at research basis main `4e6af3db42950e9b7e5415b89f09b5d325fd78a6`.
 - **R04 — Workflow v1.** `WORKFLOW-V1.md` at research basis main `4e6af3db42950e9b7e5415b89f09b5d325fd78a6`.
 
@@ -407,16 +445,17 @@ No implementation or policy change should occur merely because this research can
 - **O01 — OpenAI, "An open-source spec for Codex orchestration: Symphony."** Published 2026-04-27; reread 2026-09-14. <https://openai.com/index/open-source-codex-orchestration-symphony/>
 - **O02 — OpenAI Symphony specification.** Canonical repository, pinned commit `e0ccc83720a42a600a53b61c5f8d3e518bebe1db`; reread 2026-09-14. <https://github.com/openai/symphony/blob/e0ccc83720a42a600a53b61c5f8d3e518bebe1db/SPEC.md>
 - **O03 — OpenAI Symphony Elixir README.** Pinned commit `e0ccc83720a42a600a53b61c5f8d3e518bebe1db`; prototype/evaluation warning, architecture and supported adapters. <https://github.com/openai/symphony/blob/e0ccc83720a42a600a53b61c5f8d3e518bebe1db/elixir/README.md>
-- **O04 — OpenAI Codex App Server documentation.** Rolling official documentation reread 2026-09-14. Documents initialization, thread start/resume/fork/read, turn lifecycle, final statuses, sandbox/cwd/model overrides, and `outputSchema`. <https://learn.chatgpt.com/docs/app-server>
+- **O04 — OpenAI Codex App Server documentation.** Rolling official documentation reread 2026-09-15. Documents stable/experimental API gating, thread start/resume/fork/read, review/start fork semantics, turn lifecycle, per-turn model/effort/cwd/sandbox overrides, `outputSchema`, `thread/tokenUsage/updated`, and `model/rerouted`. <https://learn.chatgpt.com/docs/app-server>
 - **O05 — Symphony runtime supervisor.** <https://github.com/openai/symphony/blob/e0ccc83720a42a600a53b61c5f8d3e518bebe1db/elixir/lib/symphony_elixir/agent_runtime_supervisor.ex>
 - **O06 — Symphony workspace manager.** <https://github.com/openai/symphony/blob/e0ccc83720a42a600a53b61c5f8d3e518bebe1db/elixir/lib/symphony_elixir/workspace.ex>
 - **O07 — Symphony AgentRunner.** <https://github.com/openai/symphony/blob/e0ccc83720a42a600a53b61c5f8d3e518bebe1db/elixir/lib/symphony_elixir/agent_runner.ex>
 - **O08 — Symphony Orchestrator.** <https://github.com/openai/symphony/blob/e0ccc83720a42a600a53b61c5f8d3e518bebe1db/elixir/lib/symphony_elixir/orchestrator.ex>
 - **O09 — Symphony App Server client.** <https://github.com/openai/symphony/blob/e0ccc83720a42a600a53b61c5f8d3e518bebe1db/elixir/lib/symphony_elixir/codex/app_server.ex>
 - **O10 — Symphony WorkflowStore.** <https://github.com/openai/symphony/blob/e0ccc83720a42a600a53b61c5f8d3e518bebe1db/elixir/lib/symphony_elixir/workflow_store.ex>
+- **O11 — OpenAI Codex Subagents documentation.** Rolling official documentation reread 2026-09-15. Documents that each subagent performs its own model/tool work, that subagent workflows consume more tokens than comparable single-agent runs, and that model/reasoning may be selected per agent; it recommends Terra for lighter/read-heavy workers and Luna for clear, repeatable/high-volume work. <https://learn.chatgpt.com/docs/agent-configuration/subagents>
 
 ## 15. Publication boundary
 
-This file is evidence only. Its recommendation status at publication is `proposed`. It does not modify `WORKFLOW-V1.md`, `PROJECT-CHARTER.md`, `ADW-DR-005-DISPOSITION-001`, the current Research Register, tool configuration, branch protection, installed Codex behavior, or any project-specific workflow.
+This file is evidence only. Its recommendation status at publication is `proposed`. It does not modify `WORKFLOW-V1.md`, `PROJECT-CHARTER.md`, `ADW-DR-005-DISPOSITION-001`, D13, X3, the current Research Register, tool configuration, branch protection, installed Codex behavior, or any project-specific workflow.
 
-The Research Register remains the sole mutable owner of current research/decision state. This candidate intentionally does not self-update that state before independent source review and coordinator disposition. A merge of this evidence candidate must not be interpreted as source review, D13 disposition change, implementation authorization, automation authority, or baseline acceptance.
+The Research Register remains the sole mutable owner of current research/decision state. This candidate intentionally does not self-update that state before independent source review and coordinator disposition. A merge of this evidence candidate must not be interpreted as source review, D13 disposition change, implementation authorization, automation authority, PoC authorization, or baseline acceptance.
