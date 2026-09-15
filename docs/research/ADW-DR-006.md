@@ -19,7 +19,7 @@ scope: >-
   App Server coordinator; inspect the current OpenAI Symphony specification,
   reference implementation, and current stable App Server/subagent surfaces;
   map useful primitives and incompatibilities to ADW Workflow v1. No
-  implementation, installation, tooling adoption, D13 disposition change,
+  implementation, installation, tooling adoption, D5 or D13 disposition change,
   unattended execution, normative amendment, acceptance, merge, or new
   baseline.
 repository_state:
@@ -32,8 +32,8 @@ repository_state:
 supersedes: >-
   DR-005 Symphony/App Server capability evidence only where this note supplies
   fresher evidence. It does not supersede DR-005 as a whole,
-  ADW-DR-005-DISPOSITION-001, D13's accepted reconsideration condition, X3,
-  Workflow v1, or any current repository authority.
+  ADW-DR-005-DISPOSITION-001, D5 or D13 accepted deferral/reconsideration
+  boundaries, X3, Workflow v1, or any current repository authority.
 ---
 
 # ADW-DR-006 — Symphony and Codex App Server orchestration reassessment
@@ -41,6 +41,8 @@ supersedes: >-
 ## 1. Executive answer
 
 **REPOSITORY FACT.** DR-005, frozen on 2026-09-04, recommended deferring `D13 — Symphony/custom harness infrastructure` because no proven dispatch volume or recovery need justified another controller. The accepted DR-005 disposition confirmed that deferral and says to reconsider D13 only with an accepted adapter/ownership design and conformance evidence. It separately confirmed `X3`: unmodified Symphony or harness retry/stale-input/cleanup defaults must not be asserted as ADW conformance. [R01] [R02]
+
+**REPOSITORY FACT.** The same accepted DR-005 disposition separately keeps `D5 — Codex SDK/app-server client` at `CONFIRM DEFER`. D5 may be reconsidered only for a concrete event/integration need that native facilities cannot meet; satisfying D13 prerequisites does not by itself select or authorize the D5 mechanism. [R02]
 
 **DOCUMENTED FACT.** OpenAI's 2026-04-27 Symphony publication describes the motivating problem as human attention and context switching across multiple interactive Codex sessions. It states that Symphony's first implementation was a Codex session in `tmux` polling Linear and spawning subagents, that this approach worked but was not particularly reliable, and that the later design used Codex App Server as the programmatic execution surface. The current Symphony repository remains a reference/specification rather than a maintained standalone product commitment. [O01] [O02] [O03]
 
@@ -50,7 +52,7 @@ supersedes: >-
 
 **INFERENCE.** The factual premise behind D13 has materially changed in one respect: there is now a concrete recurring orchestration problem to solve, namely manual routing between bounded executors and fresh independent reviewers, plus correction and re-review, and the current first-party App Server surface provides substantially stronger lifecycle primitives than a model-only coordinator. This is sufficient evidence to justify preparing the missing D13 reconsideration prerequisites and a later explicit reconsideration gate. It is **not** sufficient to declare the accepted D13 reconsideration condition satisfied because the required accepted ownership/adapter design and conformance evidence do not yet exist.
 
-**RECOMMENDATION — GO FOR A PREPARATORY OWNERSHIP/ADAPTER/CONFORMANCE GATE, NOT POC AUTHORIZATION.** Keep D13 `DEFER`. Preserve X3 fully. Prepare the minimum ownership/adapter design and define/obtain the conformance evidence required by the accepted D13 disposition. Only after those prerequisites are satisfied, or an explicit coordinator disposition supersedes that condition, should D13 be considered for `CONDITIONALLY SELECT FOR ONE BOUNDED POC`.
+**RECOMMENDATION — GO FOR A PREPARATORY OWNERSHIP/ADAPTER/CONFORMANCE GATE, NOT POC AUTHORIZATION.** Keep D13 `DEFER`. Keep D5 `CONFIRM DEFER`. Preserve X3 fully. Prepare the minimum ownership/adapter design and define/obtain the conformance evidence required by the accepted D13 disposition. Only after those D13 prerequisites are satisfied, or an explicit coordinator disposition supersedes that condition, should D13 be considered for `CONDITIONALLY SELECT FOR ONE BOUNDED POC`. If that later PoC uses a Codex App Server client, it also requires a separate applicable D5 reconsideration/selection, or one explicit superseding disposition whose scope names both D5 and D13.
 
 The leading technical hypothesis for that later PoC remains:
 
@@ -64,7 +66,7 @@ already-authorized bounded task
 → stop at READY FOR HUMAN ACCEPTANCE
 ```
 
-**RECOMMENDATION — NO-GO FOR CURRENT AUTOMATION AUTHORITY.** This research grants no routine, parallel-write, automated-write, unattended, AFK, acceptance, merge, branch-cleanup, tracker-migration, or new mutable-state authority. Any implementation or operational trial requires its own later gate.
+**RECOMMENDATION — NO-GO FOR CURRENT AUTOMATION AUTHORITY.** This research grants no routine, parallel-write, automated-write, unattended, AFK, acceptance, merge, branch-cleanup, tracker-migration, D5/D13 mechanism selection, or new mutable-state authority. Any implementation or operational trial requires its own later gate.
 
 ## 2. Boundary with DR-005 and Workflow v1
 
@@ -81,6 +83,8 @@ The following DR-005 conclusions remain valid:
 - human/coordinator acceptance remains a separate gate.
 
 D13 itself is **not reopened by this research artifact**. DR-005 says to reconsider D13 only after demonstrated need plus the accepted adapter/ownership design and conformance-evidence condition. The current problem supplies stronger evidence of need and narrows the proposed use case, but the other accepted prerequisites remain unresolved. This note therefore recommends preparing those missing inputs, not moving the disposition boundary by implication. [R01] [R02]
+
+D5 is also **not reopened by this research artifact**. DR-005 separately keeps the Codex SDK/app-server client mechanism deferred until a concrete event/integration need is established that native facilities cannot meet. A future D13 reconsideration cannot silently absorb or supersede D5. If a bounded PoC is later defined specifically around an App Server client, that mechanism needs its own applicable explicit D5 reconsideration/selection, or an explicit superseding disposition whose scope covers both D5 and D13. [R02]
 
 `PROJECT-CHARTER.md` and `WORKFLOW-V1.md` remain authoritative. A future coordinator must consume those semantics; it must not become a second normative workflow owner. [R03] [R04]
 
@@ -157,7 +161,7 @@ deterministic coordinator
 
 **INFERENCE — advantage.** These primitives allow the controller to represent orchestration state directly rather than infer it from a producer's prose. This is a better fit for ADW's separation between reasoning and deterministic control.
 
-**RECOMMENDATION.** Use native thread orchestration as the lowest implementation-surface comparison baseline. Treat a thin App Server coordinator as the leading architecture candidate when the requirement is a reliable executor/reviewer/correction pipeline.
+**RECOMMENDATION.** Use native thread orchestration as the lowest implementation-surface comparison baseline. Treat a thin App Server coordinator as the leading architecture candidate when the requirement is a reliable executor/reviewer/correction pipeline. This remains an architecture hypothesis only; selecting an App Server client later must respect the separate D5 boundary. [R02]
 
 ## 5. Recommended Symphony-informed architecture
 
@@ -216,7 +220,7 @@ The target architecture should be smaller than Symphony and should preserve exis
 | Workflow v1 / project policy | normative phase, authority, review and acceptance semantics | runtime process state |
 | Runtime coordinator | ephemeral/persisted orchestration execution state, role dispatch, lifecycle reconciliation | product intent, normative semantics, acceptance, merge authority |
 | Workspace manager | isolated workspace/worktree identity and lifecycle | task truth or review verdict |
-| App Server client | protocol transport, thread/turn calls and events | workflow decisions |
+| App Server client | protocol transport, thread/turn calls and events | workflow decisions or its own mechanism authorization |
 | Executor | bounded implementation/recovery reasoning within granted scope | independent review or acceptance |
 | Reviewer | independent evaluation of an exact immutable candidate | candidate mutation, GitHub external mutation by default, or acceptance |
 | Project-owned scripts/tools | deterministic project-specific verification/publication mechanics where already owned | workflow policy |
@@ -337,9 +341,9 @@ These requirements preserve DR-003 PR07, PR09, and PR10 and the DR-005 X3/X6/X7 
 
 OpenAI explicitly presents Symphony as a minimal reference implementation and encourages environment-specific implementations rather than treating it as a maintained standalone product. [O01] [O03]
 
-## 10. Potential bounded proof-of-concept scope after D13 prerequisites
+## 10. Potential bounded proof-of-concept scope after applicable D13 and D5 gates
 
-**RECOMMENDATION — not currently authorized.** The following is a candidate PoC shape only after the accepted D13 reconsideration condition is satisfied or explicitly superseded by a later coordinator disposition. It validates architecture rather than autonomous development.
+**RECOMMENDATION — not currently authorized.** The following is a candidate PoC shape only after the accepted D13 reconsideration condition is satisfied or explicitly superseded by a later coordinator disposition. Because this particular architecture hypothesis instantiates a Codex App Server client, PoC authorization also requires an applicable explicit D5 reconsideration/selection, or one explicit superseding disposition whose scope names both D5 and D13. D13 satisfaction alone is not App Server mechanism authority. [R02]
 
 ### Objective
 
@@ -387,29 +391,32 @@ A future PoC is evidence only if it demonstrates the exact role and identity tra
 | Make a repo-owned Skill the full coordinator? | **NO as the leading design.** A Skill may supply procedural guidance, but deterministic lifecycle state should not depend solely on model reasoning. |
 | Use native Codex threads as a comparison baseline? | **YES.** Lowest implementation-surface baseline; not proven lowest usage cost. |
 | Prefer App Server for a reliable executor/reviewer pipeline? | **YES, as the current architecture hypothesis.** It provides direct lifecycle and structured-output primitives needed by a deterministic coordinator. |
-| Adopt App Server coordinator now? | **NO.** D13 remains deferred and the accepted reconsideration prerequisites are not yet satisfied. |
+| Adopt App Server coordinator now? | **NO.** D13 remains deferred, D5 remains deferred, and the applicable accepted reconsideration/selection boundaries are not yet satisfied. |
+| Does satisfying D13 alone authorize an App Server client? | **NO.** D5 is a separate accepted `CONFIRM DEFER` mechanism boundary. |
 | Automate human acceptance or merge? | **NO.** Out of scope and unauthorized. |
 | Reopen DR-005 D13 now? | **NO.** Current evidence supports preparing the missing accepted prerequisites and a later explicit reconsideration gate; D13 remains `DEFER`. |
+| Reopen DR-005 D5 now? | **NO.** This artifact preserves D5 `CONFIRM DEFER`; any later App Server mechanism selection needs its own applicable explicit decision. |
 
 ## 12. Remaining evidence gaps
 
-### Gaps that block D13 reconsideration / PoC authorization under the current accepted disposition
+### Gaps that block D13 reconsideration and/or App Server PoC authorization under the current accepted dispositions
 
 1. No corrected candidate has yet passed fresh independent source review.
 2. No accepted owner exists for runtime orchestration state or a recovery journal.
 3. No accepted minimal adapter/ownership design exists for the proposed controller boundary.
 4. The form and sufficiency of the required D13 conformance evidence have not been established and satisfied. A test plan alone must not be silently substituted for an accepted evidence prerequisite.
 5. Exclusive writer fencing beyond workspace separation is not yet designed or tested.
+6. D5 remains `CONFIRM DEFER`; an App Server-client PoC needs a separate applicable D5 reconsideration/selection, or an explicit superseding disposition whose scope covers both D5 and D13. D13 satisfaction alone cannot close this mechanism-selection gap. [R02]
 
 ### Additional gaps that block operational adoption even after a future PoC is authorized
 
-6. No target-environment PoC has exercised current App Server behavior under ADW constraints.
-7. App Server process/thread retention across the intended local lifecycle has not been operationally validated in the target environment.
-8. Cancellation/containment across child processes and external side effects remains unverified.
-9. Project-specific candidate publication and verification integration has not been mapped for a generic cross-project controller.
-10. No model/reasoning routing policy is adopted for executor versus reviewer roles, and no representative usage comparison exists between native thread orchestration and App Server coordination.
-11. Reviewer-to-GitHub mutation ownership, stale-head protection, deduplication, and partial-write recovery are not designed or authorized.
-12. No evidence supports routine, parallel, unattended, or AFK write authority.
+7. No target-environment PoC has exercised current App Server behavior under ADW constraints.
+8. App Server process/thread retention across the intended local lifecycle has not been operationally validated in the target environment.
+9. Cancellation/containment across child processes and external side effects remains unverified.
+10. Project-specific candidate publication and verification integration has not been mapped for a generic cross-project controller.
+11. No model/reasoning routing policy is adopted for executor versus reviewer roles, and no representative usage comparison exists between native thread orchestration and App Server coordination.
+12. Reviewer-to-GitHub mutation ownership, stale-head protection, deduplication, and partial-write recovery are not designed or authorized.
+13. No evidence supports routine, parallel, unattended, or AFK write authority.
 
 None of these gaps blocks recording this research. They prevent this evidence artifact from acting as a PoC or operational-use authorization.
 
@@ -423,11 +430,13 @@ If that source review passes, the next coordinator decision should be a **bounde
 - the minimal adapter boundary between Workflow v1/project policy and App Server transport;
 - the exact meaning and evidence required to satisfy the accepted D13 conformance prerequisite;
 - the one-writer and external-side-effect boundaries;
-- the evidence needed before any later `CONDITIONALLY SELECT FOR ONE BOUNDED POC` disposition can be considered.
+- the evidence needed before any later `CONDITIONALLY SELECT FOR ONE BOUNDED POC` D13 disposition can be considered.
 
-Only after those accepted prerequisites are satisfied, or after an explicit superseding disposition changes them, should the coordinator decide whether D13 advances from `DEFER` to a bounded PoC selection.
+After the D13 prerequisites are satisfied and D13 is explicitly reconsidered, an App Server-based PoC still requires an applicable **D5 reconsideration/selection** because D5 independently owns the deferred Codex SDK/app-server client mechanism choice. Alternatively, a later explicit superseding disposition may cover both D5 and D13, but it must name both scopes. This artifact does not perform either decision. [R02]
 
-Reviewer-to-GitHub publication and adaptive model routing are valid later design topics surfaced by independent review, but they must not be silently incorporated as current D13 authority. They can be evaluated in the later architecture/design stage after the core ownership boundary is established.
+Only after the applicable D13 and D5 boundaries are satisfied should the coordinator consider authorizing the specific App Server-based bounded PoC described here.
+
+Reviewer-to-GitHub publication and adaptive model routing are valid later design topics surfaced by independent review, but they must not be silently incorporated as current D5 or D13 authority. They can be evaluated in the later architecture/design stage after the core ownership boundary is established.
 
 No implementation or policy change should occur merely because this research candidate or its pull request exists.
 
@@ -436,7 +445,7 @@ No implementation or policy change should occur merely because this research can
 ### Current ADW authority and prior evidence
 
 - **R01 — DR-005 evidence.** `docs/research/ADW-DR-005.md`, frozen target commit `38e31a09a1aa31f42b5b3fbc02e0fb662ebb1958`; evidence date 2026-09-04. The Symphony/custom-harness assessment is D13 and X3 within that report.
-- **R02 — DR-005 accepted tooling disposition.** `docs/research/ADW-DR-005-DISPOSITION-001.md`; confirms D13 `DEFER`, the accepted reconsideration condition, and X3 rejection of unmodified Symphony as ADW conformance.
+- **R02 — DR-005 accepted tooling disposition.** `docs/research/ADW-DR-005-DISPOSITION-001.md`; confirms D5 `CONFIRM DEFER`, D13 `DEFER`, their separate reconsideration boundaries, and X3 rejection of unmodified Symphony as ADW conformance.
 - **R03 — Project Charter.** `PROJECT-CHARTER.md` at research basis main `4e6af3db42950e9b7e5415b89f09b5d325fd78a6`.
 - **R04 — Workflow v1.** `WORKFLOW-V1.md` at research basis main `4e6af3db42950e9b7e5415b89f09b5d325fd78a6`.
 
@@ -456,6 +465,6 @@ No implementation or policy change should occur merely because this research can
 
 ## 15. Publication boundary
 
-This file is evidence only. Its recommendation status at publication is `proposed`. It does not modify `WORKFLOW-V1.md`, `PROJECT-CHARTER.md`, `ADW-DR-005-DISPOSITION-001`, D13, X3, the current Research Register, tool configuration, branch protection, installed Codex behavior, or any project-specific workflow.
+This file is evidence only. Its recommendation status at publication is `proposed`. It does not modify `WORKFLOW-V1.md`, `PROJECT-CHARTER.md`, `ADW-DR-005-DISPOSITION-001`, D5, D13, X3, the current Research Register, tool configuration, branch protection, installed Codex behavior, or any project-specific workflow.
 
-The Research Register remains the sole mutable owner of current research/decision state. This candidate intentionally does not self-update that state before independent source review and coordinator disposition. A merge of this evidence candidate must not be interpreted as source review, D13 disposition change, implementation authorization, automation authority, PoC authorization, or baseline acceptance.
+The Research Register remains the sole mutable owner of current research/decision state. This candidate intentionally does not self-update that state before independent source review and coordinator disposition. A merge of this evidence candidate must not be interpreted as source review, D5 or D13 disposition change, App Server mechanism selection, implementation authorization, automation authority, PoC authorization, or baseline acceptance.
