@@ -1392,6 +1392,45 @@ The supervised end-to-end dry run scoped by [ADW-WF1-SUPERVISED-END-TO-END-DRY-R
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
+## Source-reviewed research awaiting coordinator disposition
+
+```yaml
+id: DR-006
+question: Symphony and Codex App Server orchestration reassessment
+research_status: reviewed
+current_decision_status: proposed
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-006.md
+evidence_as_of: 2026-09-15
+
+review_target: "DR-006@sha256:ba75abf5be3dcdfc6610193353d7bd388e42eeee57983fe292c080a1ee7d2cb3"
+review_target_bytes: 36848
+review_target_blob: c29547c1174831140f97ad8c1f7aa1c9af8f16a6
+review_target_commit: b244385d5a84d6db66b34b897182e138f3e325ba
+
+source_review_ref: docs/research/ADW-DR-006-SOURCE-REVIEW-001.md
+source_review_blob: 65ce80777fdbf5858106b2d8400cf8e031a0ee2d
+source_review_record: "ADW-DR-006-SOURCE-REVIEW-001@sha256:8981877fa36fadff2d117eb97611bc7564cacf4d4ba242652c4b958888bb53e1"
+source_review_record_bytes: 6356
+source_review_verdict: accepted-as-source-reviewed-evidence
+source_reviewed_on: 2026-09-15
+
+source_review_findings:
+  blocker: 0
+  major: 0
+  minor: 0
+d5_status: CONFIRM DEFER
+d13_status: CONFIRM DEFER
+x3_status: CONFIRM REJECT
+authority_boundary: >
+  Source review establishes evidence quality only. D5, D13 and X3 remain controlled by docs/research/ADW-DR-005-DISPOSITION-001.md.
+  This transition creates no PoC, App Server selection, reviewer-to-GitHub write, adaptive model-routing, automated, unattended, AFK, acceptance, merge or baseline authority and does not amend Workflow v1.
+repository_wide_current_gate_unchanged: true
+next_gate: DR-006 coordinator disposition
+```
+
+The exact DR-006 subject is accepted only as source-reviewed evidence. D5 remains `CONFIRM DEFER`; D13 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The repository-wide current gate is unchanged. The DR-006-specific next gate is `DR-006 coordinator disposition`.
+
 ## Superseded
 
 None.
