@@ -1392,6 +1392,62 @@ The supervised end-to-end dry run scoped by [ADW-WF1-SUPERVISED-END-TO-END-DRY-R
 
 `docs/research/ADW-DR-005.md` owns the frozen publication-time research evidence, `docs/research/ADW-DR-005-SOURCE-REVIEW-001.md` owns the independent evidence-quality review, `docs/research/ADW-DR-005-DISPOSITION-001.md` owns detailed coordinator recommendation dispositions, and this Research Register owns mutable DR-005 research status, current decision status, pointers, and the current next gate.
 
+## Source-reviewed research with accepted coordinator disposition
+
+```yaml
+id: DR-006
+question: Symphony and Codex App Server orchestration reassessment
+research_status: reviewed
+current_decision_status: accepted
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-006.md
+evidence_as_of: 2026-09-15
+
+review_target: "DR-006@sha256:ba75abf5be3dcdfc6610193353d7bd388e42eeee57983fe292c080a1ee7d2cb3"
+review_target_bytes: 36848
+review_target_blob: c29547c1174831140f97ad8c1f7aa1c9af8f16a6
+review_target_commit: b244385d5a84d6db66b34b897182e138f3e325ba
+
+source_review_ref: docs/research/ADW-DR-006-SOURCE-REVIEW-001.md
+source_review_blob: 65ce80777fdbf5858106b2d8400cf8e031a0ee2d
+source_review_record: "ADW-DR-006-SOURCE-REVIEW-001@sha256:8981877fa36fadff2d117eb97611bc7564cacf4d4ba242652c4b958888bb53e1"
+source_review_record_bytes: 6356
+source_review_verdict: accepted-as-source-reviewed-evidence
+source_reviewed_on: 2026-09-15
+
+source_review_findings:
+  blocker: 0
+  major: 0
+  minor: 0
+
+decision_id: ADW-DR-006-DISPOSITION-001
+decision_ref: docs/research/ADW-DR-006-DISPOSITION-001.md
+decision_record: "ADW-DR-006-DISPOSITION-001@sha256:fd677b7b49fd0f50cbecb3ec5ce6dd9fe15a5ba49086f10a48705132bce27322"
+decision_record_bytes: 8059
+decision: accept-dr-006-evidence-and-authorize-bounded-d13-prerequisite-design
+decided_on: 2026-09-15
+decision_scope: >
+  Accept DR-006 as source-reviewed evidence for prerequisite design. D13 remains
+  CONFIRM DEFER; D5 remains CONFIRM DEFER; X3 remains CONFIRM REJECT. Exactly
+  one bounded D13 prerequisite-scoping/design gate is authorized to design and
+  propose only. No PoC execution or mechanism selection is authorized.
+
+d5_status: CONFIRM DEFER
+d13_status: CONFIRM DEFER
+x3_status: CONFIRM REJECT
+authority_boundary: >
+  The accepted disposition preserves docs/research/ADW-DR-005-DISPOSITION-001.md
+  as the owner of the D5, D13 and X3 boundaries. The authorized D13
+  prerequisite-scoping/design gate may design and propose only. It creates no
+  PoC, App Server selection, implementation, automation, reviewer-to-GitHub
+  mutation, unattended, AFK, acceptance, merge, baseline or Workflow v1
+  amendment authority.
+repository_wide_current_gate_unchanged: true
+next_gate: D13 prerequisite-scoping/design gate
+```
+
+The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; D13 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. Exactly one bounded D13 prerequisite-scoping/design gate is authorized to design and propose only; no PoC or mechanism selection is authorized. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 prerequisite-scoping/design gate`.
+
 ## Superseded
 
 None.
