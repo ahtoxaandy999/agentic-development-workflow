@@ -86,3 +86,7 @@ For the next review, the effective proposed design is:
 Before any D3 limited trial, packaging or installation, an accepted composite design must be normalized back into the primary skill-design artifact/package source. That normalization creates a new immutable subject and requires exact affected verification/review of equivalence before reliance.
 
 No further producer correction is authorized before fresh independent affected review. Any later mutation creates a new review subject.
+
+## Frozen candidate binding
+
+The immutable commit SHA, tree and this blob identity are supplied by the containing PR candidate. They are not self-recorded here to avoid recursive mutation. The fresh reviewer must bind its verdict to the exact terminal candidate observed at point of reliance.
