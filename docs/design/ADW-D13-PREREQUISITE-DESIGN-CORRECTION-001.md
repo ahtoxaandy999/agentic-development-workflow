@@ -31,7 +31,7 @@ It does not authorize implementation, conformance execution, mechanism selection
 
 ## Replacement Section 5.4
 
-## 5.4 Exhaustive restart/reconciliation projection
+### 5.4 Exhaustive restart/reconciliation projection
 
 Every controller restart first enters `RECONCILING` as an **internal evaluation phase only**. `RECONCILING` is not itself a projection result. The controller must evaluate this tuple:
 
@@ -55,7 +55,7 @@ The evaluation must terminate in exactly one of these result classes:
 
 No implementation may choose between these result classes by preference. A recognized fact such as “candidate C1 already exists” may be retained as evaluation evidence, but the final restart projection still resolves to exactly one result class above.
 
-### Universal guards
+#### Universal guards
 
 The following rules apply before phase-specific projection:
 
@@ -69,7 +69,7 @@ The following rules apply before phase-specific projection:
 * If an awaiting-candidate phase already has an exact candidate/readiness bundle but the fresh semantic permission required for reviewer dispatch is absent, the candidate/readiness completion is retained as exact evidence and the final restart projection is `BLOCKED`; readiness never implies dispatch permission.
 * If a pre-crash `BLOCKED` episode becomes recoverable, the controller may re-enter `RECONCILING` only as an internal evaluation step using the durably retained predecessor phase/operation identity. That evaluation must immediately terminate in one of the five result classes. If the predecessor continuation target cannot be uniquely reconstructed, result is `BLOCKED`.
 
-### Phase-specific projection
+#### Phase-specific projection
 
 | Pre-crash phase | Deterministic projection |
 | --- | --- |
