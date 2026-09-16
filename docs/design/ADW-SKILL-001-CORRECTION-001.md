@@ -92,3 +92,5 @@ No further producer correction is authorized before fresh independent affected r
 The immutable commit SHA, tree and this blob identity are supplied by the containing PR candidate. They are not self-recorded here to avoid recursive mutation. The fresh reviewer must bind its verdict to the exact terminal candidate observed at point of reliance.
 
 This file is final for the next review subject; producer context must not mutate it before that review.
+
+No semantic or metadata change is authorized before the next independent review.
