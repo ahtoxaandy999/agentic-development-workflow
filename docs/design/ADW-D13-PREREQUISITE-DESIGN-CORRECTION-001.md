@@ -91,6 +91,6 @@ A fresh independent reviewer must review the complete composite candidate and ex
 
 Before any coordinator-accepted design is protected-published, the accepted composite semantics must be normalized back into `docs/design/ADW-D13-PREREQUISITE-DESIGN-001.md`; that normalization creates a new immutable publication candidate and requires exact affected verification/review of equivalence before publication.
 
-## Freeze boundary
+## Review subject status
 
-This correction record and the primary design blob it names jointly define the proposed candidate semantics for independent review. No later producer-context assessment is review evidence for this composite candidate unless it is performed in a genuinely independent fresh reviewer context and bound to the exact terminal candidate SHA.
+This correction record and the primary design blob it names jointly define the proposed candidate semantics for independent review. Producer-context assessments after this correction are correction input only and do not satisfy the independent-review gate.
