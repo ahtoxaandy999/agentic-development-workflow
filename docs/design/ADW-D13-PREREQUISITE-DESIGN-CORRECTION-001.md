@@ -98,3 +98,5 @@ This correction record and the primary design blob it names jointly define the p
 ## Frozen candidate binding
 
 The immutable Git commit SHA, tree, and this blob identity are supplied by the containing candidate commit/PR and are not self-recorded in this artifact. Any later file mutation creates a new candidate subject and makes a prior review stale.
+
+No further producer mutation of this composite review subject is authorized before fresh independent review.
