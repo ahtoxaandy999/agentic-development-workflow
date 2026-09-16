@@ -1,251 +1,210 @@
-# Независимый adversarial review ADW-D13-PREREQUISITE-DESIGN-001
+---
+id: ADW-D13-PREREQUISITE-DESIGN-REVIEW-001
+artifact_status: active
+authority: evidence
+review_type: independent-design-review
+review_scope_status: predecessor-only
+reviewed_on: 2026-09-16
+owner: agentic-development-independent-review
+review_target_kind: external-exact-bytes
+review_target_bytes: 65733
+review_target_sha256: eb06edc9b27c2c3a01210e8340f85a89723594f719b5c380fd75b76cd04fc9f8
+review_target_git_blob_if_materialized_verbatim: 320214335252f8dcca7194b3ae442ff0e18e4c83
+live_basis_commit: 796fef15a7ba3b78b57c1f06f5911c6a3f85dad5
+live_basis_tree: 9c582a9cd004030bc7d0f10a58e6c77243997097
+verdict: requires-correction
+finding_counts:
+  blocker: 2
+  major: 3
+  minor: 0
+  note: 2
+source_review_record_sha256: 8df8cc56e20fe8599d0e8fd750a0c10f18677d6d900dbcba39336990af7792ad
+source_review_record_bytes: 37888
+source_review_verbatim_persistence_commit: d64c2aebfd202e2ca58ea63930ed874a130df07a
+source_review_verbatim_blob: b4891a60c9e2837b9966bbbdd618653f913168ba
+supersedes: null
+---
 
-## Live-state и точный предмет review
+# ADW-D13-PREREQUISITE-DESIGN-REVIEW-001
 
-**Live-state verification: PASS. STALE DESIGN BASIS не сработал.**
+## Review status
 
-На момент проверки `main` репозитория `ahtoxaandy999/agentic-development-workflow` указывает ровно на commit `796fef15a7ba3b78b57c1f06f5911c6a3f85dad5`, а его tree равен `9c582a9cd004030bc7d0f10a58e6c77243997097`. Это тот же merge commit PR #10, который указан в proposal как live basis. fileciteturn2file0
+**REQUIRES CORRECTION**
 
-Research Register на этом exact `main` фиксирует DR-006 как `research_status: reviewed`, `current_decision_status: accepted`, решение `accept-dr-006-evidence-and-authorize-bounded-d13-prerequisite-design`, а также `D5: CONFIRM DEFER`, `D13: CONFIRM DEFER`, `X3: CONFIRM REJECT`. DR-006-specific next gate остается `D13 prerequisite-scoping/design gate`; авторизация ограничена `design and propose only`, без PoC и выбора механизма. fileciteturn8file0 fileciteturn8file1
+This record preserves the independent adversarial review of the predecessor, pre-correction `ADW-D13-PREREQUISITE-DESIGN-001` subject identified above.
 
-Контролирующий disposition `docs/research/ADW-DR-006-DISPOSITION-001.md` на live `main` имеет ожидаемый Git blob `85610d35b126bc49f68d814b5f47c7fcc41a2530`. Он прямо запрещает считать design, test plan, scenario matrix, evidence specification или acceptance bar уже выполненным D13 conformance prerequisite и сохраняет отдельность D5, D13 и X3. fileciteturn11file0
+It does **not** review or approve the corrected repository candidate now present at `docs/design/ADW-D13-PREREQUISITE-DESIGN-001.md`. Material correction created a new review subject, so a fresh independent affected review is still required.
 
-Применимый `AGENTS.md` подтвержден на blob `18d9b694de020f93c90a69940b21b2800c4a9297`. Он требует считать live repository state более авторитетным, чем snapshot/chat/handoff, не смешивать evidence, policy, mutable state и acceptance и останавливаться на authority conflict или stale/unverifiable state. fileciteturn3file0 Репозиторий также подтверждает Charter как владельца authority hierarchy и запрета на duplicate task owner, а `WORKFLOW-V1.md` как единственного normative owner Workflow v1. fileciteturn4file0 fileciteturn5file0
+The original independent review text was persisted verbatim at commit `d64c2aebfd202e2ca58ea63930ed874a130df07a`, blob `b4891a60c9e2837b9966bbbdd618653f913168ba`. This normalized record replaces chat-local citation tokens with durable repository identities while preserving the verdict, findings, failure modes, and required corrections.
 
-**Точный proposal subject review:** прикрепленный `ADW-D13-PREREQUISITE-DESIGN-001`, `artifact_status: proposed`, `normative_effect: none`, basis commit/tree совпадают с live basis. fileciteturn0file0 Локально по exact bytes прикрепленного `/mnt/data/Pasted text.txt` я получил:
+## Controlling basis
 
-`bytes = 65,733`  
-`SHA-256 = eb06edc9b27c2c3a01210e8340f85a89723594f719b5c380fd75b76cd04fc9f8`
+The review verified live repository state at:
 
-Локально вычисляемый Git-style blob SHA-1 этих bytes равен `320214335252f8dcca7194b3ae442ff0e18e4c83`, но это **не** remote Git object identity. Proposal не присутствует в проверенном repository state как опубликованный объект, и пользователь не предоставил authoritative expected proposal digest/blob. Поэтому review можно надежно привязать к exact attachment bytes и его SHA-256, но нельзя утверждать, что он привязан к уже существующему repository blob или immutable candidate SHA. Поиск exact ID в текущем репозитории также не обнаружил persisted copy. Это соответствует текущей стадии proposal, а не является stale-basis проблемой.
+- `main`: `796fef15a7ba3b78b57c1f06f5911c6a3f85dad5`
+- tree: `9c582a9cd004030bc7d0f10a58e6c77243997097`
 
-**Overall verdict: `REQUIRES_CORRECTION`.**
+Applicable authority:
 
-Finding counts:
+- [`AGENTS.md`](../../AGENTS.md)
+- [`PROJECT-CHARTER.md`](../../PROJECT-CHARTER.md)
+- [`WORKFLOW-V1.md`](../../WORKFLOW-V1.md)
+- [`docs/research/research-register.md`](../research/research-register.md)
+- [`docs/research/ADW-DR-005-DISPOSITION-001.md`](../research/ADW-DR-005-DISPOSITION-001.md)
+- [`docs/research/ADW-DR-006.md`](../research/ADW-DR-006.md)
+- [`docs/research/ADW-DR-006-SOURCE-REVIEW-001.md`](../research/ADW-DR-006-SOURCE-REVIEW-001.md)
+- [`docs/research/ADW-DR-006-DISPOSITION-001.md`](../research/ADW-DR-006-DISPOSITION-001.md)
+- [`docs/design/ADW-WF1-TASK-CONTROL-REFERENCE-001.md`](ADW-WF1-TASK-CONTROL-REFERENCE-001.md)
+- [`docs/design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001.md`](ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001.md)
 
-| Severity | Count |
-|---|---:|
-| BLOCKER | 2 |
-| MAJOR | 3 |
-| MINOR | 0 |
-| NOTE | 2 |
+The controlling DR-006 disposition preserved:
 
-Главный вывод: архитектурное направление в целом правильное, transport-neutral и существенно лучше, чем прямое наследование Symphony semantics. Но exact proposal пока не определяет достаточно сильный semantic writer fence, а Stage 2 conformance contract допускает опасное смешение simulated controller evidence с фактическим D13 conformance evidence. Дополнительно остаются три material ambiguities в semantic-state ownership, restart state machine и operation-specific effect contract. Эти пробелы непосредственно затрагивают условия, которые DR-005 и DR-006 сделали prerequisites для reconsideration D13. fileciteturn10file0 fileciteturn10file1 fileciteturn11file0
+- D5: `CONFIRM DEFER`
+- D13: `CONFIRM DEFER`
+- X3: `CONFIRM REJECT`
+- exactly one bounded D13 prerequisite design/propose gate
+- no PoC, mechanism-selection, implementation, conformance-execution, reviewer-to-GitHub, unattended/AFK, ready, merge, or Workflow v1 amendment authority.
 
-## Findings
+## Finding summary
 
-| ID | Severity | Exact section / clause | Finding |
+| ID | Severity | Predecessor design area | Finding |
 |---|---|---|---|
-| F-01 | **BLOCKER** | §14.1 Stage 2; §14.2; §15; §16 | Fixture/test-double evidence не отделено от actual D13 conformance prerequisite |
-| F-02 | **BLOCKER** | §8.1-8.4; §6.2; §6.4; §13.2 | Active writer claim пока является сильным record/invariant, но не определенным semantic fence |
-| F-03 | **MAJOR** | §4.1 row `Execution-control semantic state`; §4.5; §6.1-6.2 | Не определен точный boundary между designated Workflow execution-state owner и runtime controller |
-| F-04 | **MAJOR** | §5.2-5.3; §4.5; §11-12 | Runtime state machine не замкнут для restart/reconciliation и нескольких failure paths |
-| F-05 | **MAJOR** | §6.4; §10; §11.4; §13.2 | Effect contract задает общие требования, но не дает достаточных operation-specific semantics для всех разрешаемых consequential effects |
+| F-01 | BLOCKER | Conformance Stage 2 / evidence contract | Fixture/test-double evidence was not sufficiently separated from actual D13 conformance evidence. |
+| F-02 | BLOCKER | Writer exclusivity / claim model | The active writer claim was bookkeeping/invariant, not an enforceable semantic fence against stale/concurrent writers. |
+| F-03 | MAJOR | Authority model / controller boundary | The exact designated Workflow execution-state owner and recorder boundary was ambiguous. |
+| F-04 | MAJOR | Runtime restart/reconciliation | Restart projection was not deterministic for every active/awaiting runtime phase. |
+| F-05 | MAJOR | Consequential side effects | Effect semantics were too generic for objective operation-aware conformance and safe retry/reconciliation. |
 
-**F-01, BLOCKER: Stage 2 может превратить simulation в D13 conformance.**
+## F-01 — conformance taxonomy was insufficient
 
-Proposal §14.1 говорит, что Stage 2 "may use deterministic transport/effect test doubles or another non-operational fixture", после чего §16 определяет условия, когда "D13 conformance prerequisite is satisfied". §15 перечисляет сценарии, которые должны быть "actually exercised", но не устанавливает, какие из них должны проходить против реальных persistence/process/Git/transport/effect semantics, а какие можно удовлетворить полностью моделированным объектом. fileciteturn0file0
+### Failure mode
 
-Это конфликтует с load-bearing distinction из DR-006 disposition: design, test plan, scenario matrix и evidence specification сами по себе D13 conformance не удовлетворяют; требуется **actual accepted conformance evidence**. fileciteturn11file0 DR-005, в свою очередь, разрешает reconsideration D13 только после accepted adapter/ownership design **и conformance evidence preserving DI-1/DI-2**, а DI-2 включает freshness, operation-aware retry, containment, recovery history и terminal guards. fileciteturn10file0 fileciteturn10file1 Workflow v1 требует перед retry классифицировать реальную operation semantics, устанавливать prior effects и блокировать blind retry при ambiguous completion. fileciteturn21file0
+A completely green suite against fake transport, fake journal, fake process liveness, fake Git, and fake side effects could have been presented as satisfying the D13 conformance prerequisite even though actual fencing, crash durability, containment, Git/ref semantics, and transport lifecycle behavior had never been exercised.
 
-**Concrete failure mode:** coordinator получает полностью зеленый suite против deterministic fake transport, fake journal, fake process liveness, fake Git и fake side-effect port. Suite показывает "duplicate writer rejected", "process contained", "journal restored", "ambiguous effect reconciled". Proposal §16 позволяет назвать такой package удовлетворившим D13 prerequisite, хотя ни atomic fencing, ни actual crash durability, ни OS process containment, ни Git/ref semantics, ни transport resume/cancel semantics не были проверены.
+### Required correction
 
-**Smallest sufficient correction:** разделить conformance claims минимум на:
+The design had to distinguish at minimum:
 
-`abstract-controller conformance`  
-`transport conformance`  
-`target-environment conformance`
+1. `abstract-controller conformance`;
+2. `transport conformance`;
+3. `target-environment conformance`.
 
-и прямо записать, что deterministic doubles могут давать только ограниченную evidence claim внутри abstract-controller layer. Fixture-only package **не может один** удовлетворить accepted D13 conformance prerequisite. Для prerequisite должно быть указано, какая минимальная часть требует exact runnable controller realization и real substrate behavior, даже если transport-specific и production-target behavior остаются более поздними gates.
+Deterministic doubles may support only claims whose truth is confined to controller logic. Fixture-only evidence must never by itself satisfy the accepted D13 conformance prerequisite. Real substrate behavior is required where durability, writer fencing, process containment, Git semantics, or operation-aware reconciliation is claimed.
 
-**F-02, BLOCKER: writer claim не определен как настоящий fence.**
+## F-02 — writer claim was not an enforceable fence
 
-Proposal хорошо устанавливает invariant "at most one active write claim", claim ID, generation, denial duplicate dispatch, запрет timeout release и необходимость containment predecessor перед replacement. fileciteturn0file0 Но отсутствует semantic rule, которая делает claim **атомарно уникальным и непреодолимым stale writer-ом**.
+### Failure mode
 
-Не определено:
+Controller A could retain a stale writer capable of effects while Controller B reconstructed state and issued a new generation. If write-capable boundaries did not validate the current generation, both writers could mutate concurrently even though the journal reported one active claim.
 
-- кто является единственным authoritative owner текущего claim;
-- какая операция атомарно переводит `no current claim -> claim generation N`;
-- как два controller instances после split-brain/restart не получают оба "valid" claim;
-- должен ли каждый mutation path проверять текущую generation непосредственно перед effect;
-- что происходит со stale holder generation `N` после выдачи `N+1`;
-- через какой enforcement point stale writer физически или логически лишается возможности продолжить mutation.
+### Required correction
 
-Это особенно существенно потому, что существующий protected-write decision прямо говорит, что worktree isolation не решает fencing, а candidate-branch writer exclusivity в уже принятом operating path все еще является procedural limitation. fileciteturn19file0 Workflow v1 требует exactly one mutable owner и explicit/atomic ownership transfer на semantic boundary. fileciteturn6file0
+The design had to define a technology-neutral semantic fencing contract:
 
-**Concrete failure mode:** controller A держит claim generation 4. Controller A становится недоступен, но executor/process остается способным писать. Controller B после restart реконструирует journal недостаточно точно и выпускает generation 5. Поскольку generation не обязана проверяться на каждом write/effect boundary, старый executor generation 4 продолжает mutation одновременно с replacement executor generation 5. В журнале будет "one active claim", но реальных writers будет два.
+`single authoritative current-claim owner/store -> atomic compare-and-acquire -> monotonic generation/fencing token -> mandatory current-generation validation at write-capable boundaries -> stale-generation denial -> successor only after predecessor containment and reconciliation`.
 
-**Smallest sufficient correction:** без выбора технологии определить semantic fencing contract:
+A claim record, heartbeat, workspace name, or journal entry without enforcement is not fencing.
 
-`single authoritative claim owner/store -> atomic compare-and-acquire -> monotonic generation/fencing token -> mandatory current-generation validation at every write-capable boundary -> stale-generation denial -> release only after proven containment + reconciliation`.
+## F-03 — semantic execution-state ownership was ambiguous
 
-Local workspace mutation, Git mutation и разрешенные external effects должны либо проходить через boundary, который проверяет current generation, либо дизайн обязан доказать другим способом, почему stale writer более не может produce effects. Claim record без такого enforcement нельзя считать fencing.
+### Failure mode
 
-**F-03, MAJOR: semantic execution-state ownership остается двусмысленным.**
+An implementation could interpret controller-owned dispatch ordering or transition recording as authority to write `active`, `blocked`, cancellation, or recovery semantic state, creating a second mutable owner and violating DI-1.
 
-§4.1 использует формулировку `Existing project/task execution-state owner`, а в колонке runtime relationship говорит `Supplies/records semantic transitions`. §6.2 одновременно отдает controller "dispatch ordering". fileciteturn0file0
+### Required correction
 
-Workflow v1 намного точнее: task-control, cancellation и recovery transitions имеет единственного `designated run/task execution-state owner`; controllers и side-effect owners поставляют evidence, но не становятся вторым writer этих semantic planes. fileciteturn20file0 Explanatory task-control reference еще конкретнее: execution-control authority supplies transitions, а sole recorder `R` alone updates current projection. fileciteturn18file0
+The authority resolver had to identify the exact designated run/task execution-state owner and, where distinct, the sole recorder. The runtime controller may supply facts and transition requests only. It may continue consequential execution only after fresh authoritative readback of the required semantic transition. Its journal is never the semantic transition record.
 
-**Concrete failure mode:** реализация трактует "controller owns dispatch ordering" и "supplies/records semantic transitions" как право controller самостоятельно записать task `active`, `blocked` или recovery transition в своем journal или project task state. Возникают либо два owners, либо runtime state становится surrogate semantic state, что прямо нарушает DI-1.
+## F-04 — restart projection was incomplete
 
-**Smallest sufficient correction:** заменить vague owner на runtime-resolved exact role:
+### Failure mode
 
-- authority resolver обязан возвращать exact designated task/run execution-state owner и, если применимо, sole recorder;
-- controller может выдавать operation evidence / transition request;
-- semantic owner или его designated recorder производит authoritative transition;
-- controller начинает/возобновляет effect только после fresh authoritative observation соответствующего разрешенного transition;
-- runtime journal никогда не является semantic transition record.
+After restart during reviewer or correction phases, multiple implementations could make incompatible but superficially compliant choices: resume the old reviewer, start a replacement, return to executor activity, block, or terminate.
 
-Это не требует выбрать конкретный task tracker или schema.
+### Required correction
 
-**F-04, MAJOR: restart reconstruction не имеет детерминированного destination rule.**
+Restart/reconciliation had to deterministically map:
 
-В §5.3 restart ведет в `RECONCILING`, но основной diagram показывает только последующий путь в `EXECUTOR_ACTIVE`. При этом controller может упасть во время `REVIEWER_ACTIVE`, `CORRECTION_ACTIVE`, `AWAITING_NEW_AUTHORITATIVE_CANDIDATE` или `FRESH_REVIEWER_ACTIVE`. Для этих случаев нет исчерпывающей mapping rule. В `FRESH_REVIEWER_ACTIVE` результат "anything else -> BLOCKED or TERMINATED" также оставляет реализации выбор между двумя semantic outcomes. fileciteturn0file0
+`pre-crash phase + authoritative semantic state + journal evidence + live worker/reviewer state + workspace/Git state + outstanding effects`
 
-Workflow v1 не разрешает timeout, silence, missing evidence или ambiguity превращать в success, а unresolved ambiguity требует block/intervention и сохраняет recovery history. fileciteturn21file0
+to exactly one permitted result under explicit guards:
 
-**Concrete failure mode:** restart во время R1 review. После reconciliation один implementation возвращается в `REVIEWER_ACTIVE`, другой запускает replacement reviewer, третий попадает в `EXECUTOR_ACTIVE` по diagram. Все три могут формально утверждать соответствие proposal, хотя последствия для freshness, duplicate review и candidate binding различаются.
+- resume the same exact identity;
+- recognize an already completed exact operation;
+- replace only after containment/reconciliation;
+- `BLOCKED`;
+- `TERMINATED`.
 
-**Smallest sufficient correction:** добавить exhaustive restart/reconciliation projection:
+No unguarded implementation choice such as `BLOCKED or TERMINATED` is acceptable.
 
-`pre-crash runtime phase + authoritative semantic state + journal evidence + live worker state + workspace/Git state + outstanding effects -> exactly one allowed runtime destination or BLOCKED`.
+## F-05 — consequential-effect semantics were too generic
 
-Для каждого active/awaiting state должны быть определены at least `resume same operation`, `replace after containment`, `advance from already-completed exact effect`, `BLOCKED`, `TERMINATED`, с однозначными guards. `BLOCKED vs TERMINATED` нельзя оставлять implementation choice там, где решение зависит от authority/evidence.
+### Failure mode
 
-**F-05, MAJOR: side-effect contract слишком общий для operation-aware conformance.**
+Different implementations could treat an ambiguous Git ref update, candidate-object creation, workspace mutation, or other effect differently: retry, block, or duplicate the operation, with no objective conformance rule identifying the correct behavior.
 
-§6.4 правильно требует explicit authority, expected state/version, reconciliation и exact result identity. Но §10 затем для нескольких effect classes оставляет правила в форме `operation-specific` или `tool/domain-specific`. В частности, local workspace mutation, Git object creation, PR update/publication и tracker mutation не имеют полного design-level tuple:
+### Required correction
 
-`authority + exact target + expected state + operation identity + ambiguity reconciliation + repeatability classification + safe retry predicate`. fileciteturn0file0
+Every allowed consequential effect had to carry an exact descriptor containing at least:
 
-Workflow v1 требует именно operation-aware classification до retry и запрещает blind repeat при ambiguous completion. fileciteturn21file0 Existing protected write path уже конкретизирует один пример: branch push выполняется non-force с explicit expected state; ambiguous ready/merge требует read-only inspection и не повторяется без доказательства non-occurrence и fresh authority. fileciteturn19file0
+- effect class;
+- operation ID;
+- authority reference;
+- exact target identity;
+- expected/precondition state;
+- writer generation when applicable;
+- repeatability/idempotency classification;
+- intended/result identity binding;
+- observed outcome;
+- reconciliation/readback rule;
+- safe retry predicate.
 
-**Concrete failure mode:** две реализации side-effect port по-разному трактуют ambiguous `create PR` или Git ref update. Одна считает operation idempotent по request identity, другая повторяет создание после transport timeout, третья блокирует. Proposal не дает conformance reviewer объективного основания определить, какая реализация правильная.
+Effects outside the future minimum PoC should have denial conformance only rather than speculative positive mutation design.
 
-**Smallest sufficient correction:** определить общий mandatory effect descriptor и минимальные per-class semantics. Для операций, запрещенных будущим minimum PoC, достаточно явно сказать `no execution contract exists; only denial conformance applies`. Для разрешаемых Git/workspace effects нужно зафиксировать semantic retry/reconcile contract, не выбирая библиотеку или transport.
+## Review-positive areas retained
 
-**NOTE N-01:** reviewer independence contract сам по себе сформулирован качественно. Fresh reviewer имеет новую execution identity и новую context, не наследует executor history, связан с immutable candidate SHA и не получает candidate mutation authority; correction создает C2 и fresh R2. Это соответствует Workflow v1 correction/re-review semantics. fileciteturn0file0 fileciteturn20file0
+The independent review did **not** require redesign of these areas:
 
-**NOTE N-02:** текущая App Server re-verification не создает D5 selection. Proposal использует App Server только как сравниваемый transport и явно сохраняет отдельный D5 gate. Это authority-safe. Более того, текущий upstream Codex продолжает показывать transport-specific edge cases вокруг `thread/resume`, что подтверждает необходимость отдельного transport/target validation, а не право считать documented protocol surface operational proof. citeturn0search0turn0search4
+- authority resolver -> deterministic controller -> replaceable transport architecture;
+- separation of runtime state from Workflow semantic state in principle;
+- fresh reviewer identity/context;
+- immutable candidate binding;
+- correction produces a new candidate and fresh affected review;
+- D5 independence from D13;
+- transport-neutral comparison of Native Threads and App Server;
+- future PoC ceiling stopping before human acceptance;
+- no hidden mechanism-selection, implementation, PoC, or Workflow v1 amendment authority.
 
-## Архитектурная оценка
+The review specifically assessed reviewer independence and D5 separation as sound at the design-semantics level, subject to later transport-specific evidence.
 
-**Authority model:** **CORRECTION REQUIRED.** Основная декомпозиция правильная: `authority resolver -> deterministic controller -> replaceable transport`, отдельно `side-effect/reconciliation boundary`. Runtime journal объявлен execution/recovery evidence, а не task/review/acceptance owner. Это сохраняет базовую идею DD-003 и DI-1. fileciteturn0file0 fileciteturn6file0 Но F-03 нужно исправить, потому что exact semantic execution-state owner и recorder boundary сейчас не достаточно определены.
+## Evidence-layer conclusion
 
-**Runtime / recovery journal:** **PARTIALLY ACCEPTABLE, CORRECTION REQUIRED.** Плюсы: missing/corrupt journal не дает clean start; journal проигрывает live authority; unreconstructable writer/effect state блокирует continuation; recovery episodes не переписываются задним числом. Это соответствует reliance-based durability и fail-closed recovery. fileciteturn0file0 fileciteturn21file0 Недостаток: restart destination semantics не замкнуты, F-04. Retention boundary приемлема: journal может быть удален только после terminal runtime, отсутствия active claim, reconciliation consequential effects и передачи relied-on recovery evidence явному custodian. fileciteturn0file0
+The predecessor review concluded:
 
-**Adapter architecture:** **PASS SUBJECT TO FINDINGS.** Transport не получает права определять Workflow v1 transitions, acceptance или candidate correctness. Authority resolver read-only. Side-effect port заявлен subordinate to authorization, а не generic scheduler. Архитектура действительно допускает Native Threads, App Server или другой transport без изменения Workflow semantics. fileciteturn0file0 Текущий Codex source также подтверждает, что protocol surface имеет собственные stable/experimental distinctions, поэтому transport-specific behavior разумно оставлять за отдельной evidence layer. fileciteturn17file0
+- deterministic fixtures can legitimately test controller-only logic;
+- they cannot prove global writer exclusivity, real crash durability, real process containment, real Git/ref semantics, real transport reviewer freshness, or target credentials/sandbox behavior;
+- D13 prerequisite evidence must keep abstract-controller, transport, and target-environment claims distinct;
+- abstract-controller evidence must use real substrates for properties whose semantics depend on real persistence/process/Git behavior;
+- actual transport behavior must be validated separately for any transport later proposed for D13 reconsideration;
+- target-environment claims belong to later bounded PoC/operational validation unless separately required earlier.
 
-**Writer fencing:** **FAIL, BLOCKS DESIGN ACCEPTANCE.** Design определяет хорошую policy вокруг ownership, но пока не определяет semantic fence, который объективно предотвращает stale/concurrent writer. F-02 load-bearing.
-
-**Reviewer independence:** **PASS AT DESIGN-SEMANTICS LEVEL.** Fresh context, immutable SHA, отсутствие executor-history inheritance, отсутствие candidate-write authority, new SHA on correction и fresh affected review определены корректно. fileciteturn0file0 Реальное доказательство этих свойств конкретным transport остается отдельным conformance matter.
-
-**External effects / recovery:** **CORRECTION REQUIRED.** Default deny, read-only reconciliation after ambiguity, no blind retry и exact candidate binding правильны. Но F-05 не позволяет одинаково реализовать и проверить все разрешаемые effect classes.
-
-**DI-1:** **INTENT PRESERVED, ACCEPTANCE NOT YET PROVEN.** Proposal прямо различает runtime states и Workflow states и запрещает выводить acceptance/verification/review из worker completion. Это соответствует принятой DI-1 boundary: platform/runtime states не заменяют task, verification, review, disposition, normativity или acceptance planes. fileciteturn10file1 Но F-03 должен быть исправлен, иначе implementation может превратить journal/controller в second semantic owner.
-
-**DI-2:** **INTENT PRESERVED, DESIGN CONTRACT INCOMPLETE.** Freshness, stale-authority denial, ambiguous effect handling, containment, retained recovery history и terminal guards присутствуют. fileciteturn0file0 Однако настоящая DI-2 conformance зависит именно от F-01, F-02, F-04 и F-05: simulated retry/containment или unenforced writer token нельзя считать доказательством operation-aware safety.
-
-## D13 conformance evidence и роль fixtures
-
-**Да, deterministic test doubles и non-operational fixtures могут легитимно доказать часть D13 prerequisite properties. Нет, они не могут самостоятельно доказать весь accepted D13 conformance prerequisite.**
-
-Разрешенная claim boundary должна выглядеть так:
-
-| Property | Fixture / test double sufficient? | Требуется более сильное evidence |
-|---|---|---|
-| Controller transition determinism | Да | Exact executable controller realization |
-| Runtime state не означает Workflow pass/acceptance | Да | Controller transition tests |
-| Stale authority input блокирует dispatch | Да, для controller decision logic | Реальный authority resolver integration позднее подтверждает freshness source |
-| Automatic accept/ready/merge отсутствует | Да | Structural/interface tests |
-| Correction требует C2 и new review assignment | Да, policy logic | Real Git needed to prove actual candidate identity behavior |
-| Wrong candidate/reviewer subject rejected | Да, abstract identity checks | Real Git/transport for operational binding |
-| Duplicate dispatch внутри одного controller instance | Да | Не доказывает global writer exclusivity |
-| Atomic unique writer ownership | **Нет** | Real claim implementation, concurrency/crash exercise |
-| Stale writer не может писать после replacement | **Нет** | Real process/effect containment plus fencing enforcement |
-| Journal survives controller crash | **Нет**, не через in-memory fake | Real durable implementation and restart |
-| Corrupt/missing journal fail-closed | Частично | Real storage failure/recovery exercise |
-| Git object/ref expected-state behavior | **Нет** | Real Git repository/ref operations |
-| Ambiguous Git mutation reconciliation | **Нет** | Real Git/remote or controlled equivalent with actual operation semantics |
-| Transport fresh reviewer context | **Нет** | Actual selected transport |
-| Transport resume/read/interrupt/reconcile | **Нет** | Actual selected transport |
-| Reviewer lacks effective external write capability | **Нет** | Actual permissions/credentials/environment |
-| GitHub/remote/tracker effect containment | **Нет** | Actual relevant target interface/environment |
-| Target sandbox/process retention/credentials | **Нет** | Target-environment validation |
-
-Эта граница следует из Workflow v1: evidence должен фиксировать expected/observed preconditions, operation identities, retries, dedup/version keys и reconciliation, а retry зависит от фактической operation semantics, не от названия mock method. fileciteturn21file0 DR-006 source review также прямо не сертифицирует target-environment runtime behavior и требует повторно проверять unstable App Server/Codex behavior на зависимом gate. fileciteturn12file0
-
-**Следовательно, три conformance уровня должны быть разделены.**
-
-`Abstract-controller conformance` подтверждает, что exact controller realization правильно реализует authority inputs, state transitions, negative guards, identity binding, DI-1 semantics и modeled recovery decisions. Deterministic doubles здесь уместны, но для writer fencing, durable restart и Git/process semantics внутри этой же layer нужны реальные integration substrates, а не только mocks.
-
-`Transport conformance` подтверждает, что конкретный adapter для Native Threads, App Server или другого transport действительно обеспечивает lifecycle observation, executor continuity, fresh reviewer context, interruption/containment evidence и restart reconciliation без подмены Workflow semantics.
-
-`Target-environment conformance` подтверждает actual filesystem/process behavior, credentials, sandbox/permission boundaries, Git remote behavior, protection configuration и allowed external effects в конкретной среде.
-
-Эти levels не должны автоматически выдавать authority друг другу. Abstract-controller PASS не выбирает transport. Transport PASS не означает target deployment safety. Target conformance не означает acceptance или D13/D5 selection.
-
-**Текущий proposal действительно рискует считать simulation evidence actual conformance.** Формулировка Stage 2 допускает non-operational fixture для "D13 conformance", а §16 затем определяет satisfaction всей prerequisite без claim-level distinction. Именно это является F-01 BLOCKER. fileciteturn0file0
-
-При этом требовать target-environment conformance уже на current design gate было бы чрезмерно и означало бы смешать design acceptance с PoC/operational validation. Исправление должно определить evidence taxonomy и gate composition, а не выбрать transport или запустить PoC.
-
-## D5 separation, PoC ceiling и скрытая authority
-
-**D5 separation: PASS.** Proposal не выбирает App Server. Он сравнивает Native Threads и App Server как возможные adapter targets, прямо называет comparison non-selection verdict, сохраняет D5 `CONFIRM DEFER` и требует отдельный applicable D5 selection перед App Server-based PoC. Это в точности соответствует DR-006 disposition. fileciteturn0file0 fileciteturn11file0
-
-Фраза о том, что App Server имеет более явные lifecycle primitives, сама по себе не является selection. Current pinned `openai/codex@b1f3c2f77e7cb802af0d8ef1c325cb6e9d39d8d9` действительно существует; current protocol source имеет explicit thread parameters и отдельно маркированные experimental fields. fileciteturn16file0 fileciteturn17file0 Но operational reliability этих primitives остается transport evidence, а не design proof, что дополнительно подтверждается недавними upstream reports о `thread/resume` edge cases. citeturn0search0turn0search4
-
-**Future PoC ceiling: PASS.** Proposal удерживает максимальную форму:
-
-`executor -> C1 -> fresh reviewer -> one correction -> C2 -> fresh reviewer -> STOP before human acceptance`
-
-и отдельно допускает только controlled restart/reconciliation evidence и duplicate-writer denial. Automatic ready, merge, acceptance, tracker migration, distributed workers, parallel writers и AFK/unattended execution явно исключены. fileciteturn0file0 Это соответствует non-authorities DR-006 disposition. fileciteturn11file0
-
-**Hidden mechanism-selection authority: не обнаружена.**
-
-**Hidden implementation authority: не обнаружена.** Proposal несколько раз отделяет design acceptance от later conformance realization и прямо говорит, что conformance work требует отдельного gate. fileciteturn0file0
-
-**Hidden PoC authority: не обнаружена.** Stage 3 только позволяет coordinator "consider" D13 PoC disposition после accepted design и accepted conformance, а Stage 4 остается отдельным actual PoC gate. fileciteturn0file0
-
-**Hidden Workflow v1 amendment: не обнаружена.** Runtime controller не получает normative semantics authority, а D5/D13/X3 формально сохраняются. После исправления F-03 это разделение станет достаточно точным.
-
-## Точные corrections required
-
-До coordinator disposition proposal должен получить новый exact identity и fresh review. Нужны только следующие material corrections, без выбора технологии.
-
-**Writer fencing:** заменить current claim model на explicit semantic fencing contract. В design должны появиться единственный authoritative claim owner, atomic unique acquisition, monotonic generation/fencing token, mandatory stale-generation denial на всех write-capable boundaries, explicit release/transfer guards и правило, что new generation невозможна до proven predecessor containment/reconciliation. Не требуется выбирать database, lock service или OS primitive.
-
-**Conformance taxonomy:** переписать §14-16 так, чтобы fixture evidence имело явный claim ceiling. Отдельно определить abstract-controller, transport и target-environment conformance. Прямо запретить трактовать fixture-only suite как полное accepted D13 conformance prerequisite. Определить minimum prerequisite evidence, которое должно использовать real controller realization и real substrate behavior для durability, writer fencing, process containment и Git semantics.
-
-**Semantic owner boundary:** заменить `Existing project/task execution-state owner` на runtime-resolved exact designated owner/recorder contract. Controller не должен записывать Workflow task-control/cancellation/recovery state. Он поставляет facts/request, затем перечитывает authoritative transition перед consequential dispatch/resumption.
-
-**Restart state machine:** добавить exhaustive reconciliation transition matrix для restart из каждого active/awaiting state. Для каждой комбинации нужно иметь один outcome: resume same identity, recognize already-completed operation, replace only after containment, block/intervention, либо terminate. Убрать неопределенные choices вроде `BLOCKED or TERMINATED`.
-
-**Effect descriptors:** для каждого effect, который design разрешает выполнять до/в minimum PoC, определить mandatory operation identity, authority, expected state, reconciliation readback и safe retry predicate. Для effects, которые minimum PoC запрещает, явно оставить только denial conformance, не проектируя преждевременно mutation implementation.
-
-Эти corrections являются design-semantic, не mechanism-specific. Они не требуют выбирать Native Threads, App Server, Symphony, storage engine, lock implementation или GitHub automation.
-
-После corrections прежний attachment SHA-256 `eb06edc9b27c2c3a01210e8340f85a89723594f719b5c380fd75b76cd04fc9f8` должен считаться историческим review subject. Материально исправленный текст требует новой exact identity и fresh independent affected review, поскольку Workflow v1 связывает review с immutable subject и требует нового identity после material correction. fileciteturn20file0
-
-## Recommended next gate и итоговый disposition
-
-**Recommended next gate: correction of `ADW-D13-PREREQUISITE-DESIGN-001`, затем fresh independent review exact corrected proposal.**
-
-Не следует переходить к coordinator acceptance текущего текста как accepted D13 prerequisite ownership/adapter design. Также не следует переходить к implementation, conformance execution, D13 reconsideration, D5 selection или PoC.
-
-После исправления design review должен прежде всего повторно проверить пять закрывающих predicates:
-
-`semantic owner is unique`  
-`writer claim is enforceable fencing, not bookkeeping`  
-`restart has deterministic reconstruction`  
-`allowed effects have operation-aware contracts`  
-`fixture claims cannot masquerade as full D13 conformance`
-
-Все остальные крупные архитектурные направления текущего proposal можно сохранить. Authority resolver, deterministic controller, replaceable transport, separate effect/reconciliation boundary, fresh-reviewer model, exact-candidate correction semantics, D5 separation и bounded PoC ceiling не требуют redesign.
+## Historical verdict
 
 **VERDICT: REQUIRES_CORRECTION**
 
-**Finding counts: 2 BLOCKER / 3 MAJOR / 0 MINOR / 2 NOTE**
+Finding counts:
 
-NOT READY FOR COORDINATOR DISPOSITION
+- BLOCKER: 2
+- MAJOR: 3
+- MINOR: 0
+- NOTE: 2
+
+The predecessor subject was **NOT READY FOR COORDINATOR DISPOSITION**.
+
+## Successor review boundary
+
+The corrected design now persisted at [`ADW-D13-PREREQUISITE-DESIGN-001.md`](ADW-D13-PREREQUISITE-DESIGN-001.md) is a materially different subject and must receive a fresh independent affected review.
+
+That review should primarily re-evaluate closure of F-01 through F-05 and scan for regressions in DI-1, DI-2, D5 separation, reviewer independence, transport neutrality, and explicit non-authorities.
+
+Passing that future review would make the corrected design eligible for coordinator disposition only. It would not itself authorize implementation, conformance execution, D13 reconsideration, D5 selection, PoC, ready transition, or merge.
