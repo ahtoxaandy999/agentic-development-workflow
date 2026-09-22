@@ -183,30 +183,189 @@ does not remove producer review, CI, independent technical review or correction.
 
 ## 5. Control-plane design
 
-The preferred coordinator is ephemeral and event-driven.
+The preferred coordinator is ephemeral and event-driven, but the design does not
+make an event runner, chat, GitHub workflow or model session the owner of ADW
+semantics.
 
-Each run should:
-
-1. receive a GitHub signal;
-2. reread live authoritative state;
-3. establish the exact subject and authorization;
-4. perform one permitted transition;
-5. publish a bounded receipt/result;
-6. terminate.
+Each run should receive a signal, reread live authoritative state, establish the
+exact subject and authorization, perform one permitted transition, publish the
+required evidence/receipt, and terminate.
 
 A permanently alive chat, private agent memory or second task database is not a
 required correctness component.
 
-The minimum durable operational state should be reconstructable from:
+### 5.1 Authoritative runtime orchestration state
 
-- accepted milestone authorization;
-- Git/PR identity;
-- Actions/check evidence;
-- structured review/correction/final-review results;
-- human acceptance evidence;
-- merge/closeout facts.
+For each active milestone/task there is exactly one designated execution-state
+recorder. That role owns only the mutable orchestration lifecycle state needed to
+answer which authorized transition, if any, may occur next. It does not own
+Product policy, repository/Git identity, CI truth, review truth, disposition,
+normativity, baseline acceptance, join state or side-effect truth.
 
-Chat history is navigation, not an operational state owner.
+The recorder's state is a projection over the orthogonal authoritative planes,
+not a replacement for them. A transition is valid only when every relied-upon
+plane owner independently supports it.
+
+The recorder must preserve durable transition history before another actor,
+session, retry, recovery step or decision relies on it. A later implementation
+may choose a repository-local or GitHub-native representation only through its
+own mechanism-selection gate. This design selects no storage product.
+
+Any runtime cache is derived and disposable. It may accelerate lookup but may
+never authorize a transition or override durable evidence. It must be rebuildable
+from the authoritative plane owners plus durable transition history.
+
+If a recovery journal is implemented, it is an append-only historical evidence
+record, not a competing current-state owner. It records operation identities,
+attempts, observations, containment/recovery decisions and links to immutable
+evidence. The designated execution-state recorder remains the sole recorder of
+current orchestration state. Loss of a cache is recoverable. Loss or ambiguity
+of required durable recovery history blocks reliance until evidence is restored
+or an accountable owner resolves the gap.
+
+This preserves X2: no Register/Issue/file/harness database combination may become
+multiple independently mutable owners of the same current state.
+
+### 5.2 Minimal adapter boundary
+
+The mechanism-neutral adapter has three responsibility layers.
+
+Policy and authority layer:
+
+- Workflow v1 and project-specific authorities define permitted objectives,
+  semantic planes, task/milestone scope, stop conditions and accountable owners.
+- This layer never executes transport operations and never infers runtime success
+  from product-native statuses.
+
+Lifecycle orchestration layer:
+
+- the designated execution-state recorder evaluates whether a transition is
+  allowed from fresh evidence;
+- it binds the transition to the exact task/milestone subject, policy revision,
+  current generation and required plane-owner evidence;
+- it records the resulting orchestration transition or a blocked/intervention
+  state;
+- it cannot mutate Git, publish reviews, merge, create privileged effects or
+  decide Product/architecture semantics on its own.
+
+Execution and transport layer:
+
+- bounded executors perform implementation/review work;
+- repository/GitHub adapters read current shared state;
+- privileged effect owners perform authorized mutations only after validating
+  the lifecycle request and their own preconditions;
+- every material operation returns independently addressable effect evidence.
+
+Adapter inputs must include exact authorization/policy identity, task/milestone
+identity, current orchestration generation, exact relied-upon repository/evidence
+identities and the requested operation. Outputs are a typed observation, a
+denied/blocked result, or an effect receipt tied to the same operation identity.
+
+The adapter must not invent authority, collapse planes, silently retry a failed
+operation or promote an observed product status into an ADW decision.
+
+### 5.3 Exclusive-writer, duplicate and stale-event semantics
+
+Shared mutation uses one logical writer at a time.
+
+Before a mutation-capable task begins, the execution-state recorder establishes a
+writer generation for that logical task. Every write request is bound to:
+
+- milestone/task identity;
+- writer generation;
+- exact expected remote head/base as applicable;
+- operation kind;
+- a stable operation identifier.
+
+A privileged publisher/effect owner must refuse the operation when the supplied
+generation is not current, the expected remote identity no longer matches, the
+operation is outside scope, or another active writer owns the same mutation
+domain.
+
+The concrete fencing primitive is deliberately not selected here. A later
+mechanism must prove that stale writers cannot successfully publish merely
+because they still possess a workspace or credential. Worktree separation,
+CODEOWNERS or prompt instructions alone are not writer fencing, preserving X4.
+
+Duplicate delivery of the same operation identifier and exact subject is
+idempotent: the adapter returns the existing completed receipt or reports the
+already-active operation without repeating the side effect. A changed candidate
+SHA, changed authority/policy revision or changed requested effect is a new
+operation, not a retry of the old one.
+
+A stale event is only a wake-up signal. Before acting, the lifecycle layer
+rereads current plane owners. If the event subject no longer matches current
+authority, head or generation, it records no advancing transition.
+
+Retry is operation-aware. A retry is permitted only after prior-effect evidence
+classifies the previous attempt sufficiently to make another attempt safe.
+Unknown or partial effects force reconciliation/intervention rather than blind
+retry.
+
+### 5.4 External side-effect ownership and containment
+
+Every privileged external effect has exactly one accountable side-effect owner
+for the operation domain, for example repository publication, review publication,
+external notification or another separately authorized service.
+
+The lifecycle layer may request an effect but does not execute it. The side-effect
+owner:
+
+1. validates authorization, exact subject, writer generation and operation ID;
+2. performs or rejects the bounded effect;
+3. observes authoritative post-effect state;
+4. returns a durable receipt including attempted/completed/partial/unknown state;
+5. owns containment reporting and residual-effect inventory for that operation
+   until reconciliation transfers or closes the obligation.
+
+Model execution must not share the privileged credential when a deterministic
+publisher/effect owner can enforce the operation contract separately.
+
+Cancellation request, process exit or transport failure is never containment.
+Containment is established only when every relevant side-effect domain proves
+that further effects have ceased or are boundedly isolated and any residual
+effect is durably owned. This preserves X7 and the existing Workflow v1
+cancellation/recovery separation.
+
+### 5.5 Reconciliation across runtime, workspace, remote and effects
+
+Reconciliation is required after interruption, stale identity, ambiguous effect,
+writer conflict, restart with incomplete state, or any mismatch between:
+
+1. current policy/task authority and current orchestration generation;
+2. durable orchestration transition/recovery history;
+3. workspace/local Git state, treated as tentative work product;
+4. live remote Git/PR/check state, authoritative for shared repository identity;
+5. authoritative receipts/observations from every affected side-effect owner.
+
+Precedence is by ownership, not timestamp:
+
+- normative/project owners decide authority and semantic permission;
+- Git/GitHub decides current shared repository identity;
+- the designated execution-state recorder decides only current orchestration
+  lifecycle state, constrained by the other owners;
+- a workspace never overrides remote shared identity;
+- each side-effect owner decides what actually happened in its domain;
+- prose summaries and caches decide nothing.
+
+The reconciliation procedure is:
+
+1. stop initiating new effects and fence stale writers;
+2. inventory in-flight and potentially completed operations by stable operation ID;
+3. reread every relevant authoritative plane and remote identity;
+4. compare expected and observed state without rewriting either;
+5. classify each operation as no-effect, completed, partial/residual or unknown;
+6. if any domain is partial/unknown or authority is stale, record blocked or
+   intervention-required as applicable and deny retry/resumption/terminal closure;
+7. obtain the applicable owner's bounded recovery/reconciliation decision;
+8. execute only the authorized recovery action with a new attempt identity;
+9. validate the resulting authoritative state against the authorized target;
+10. retain the completed recovery episode and residual-risk disposition before
+    any separate resumption or terminal transition.
+
+No latest-wins rule is allowed. A remote write observed after an invalid or stale
+request does not retroactively authorize the operation. Missing critical evidence
+blocks reliance rather than being interpreted as success or semantic failure.
 
 ## 6. Review architecture
 
@@ -446,26 +605,155 @@ local policy only through a later evidence/review decision.
 
 ## 13. D13 conformance evidence required before reconsideration
 
-This design proposal does not satisfy D13.
+This design proposal defines the evidence boundary but does not satisfy it.
+Actual accepted conformance evidence remains a later prerequisite and disposition
+gate before D13 may be reconsidered.
 
-Before D13 may be reconsidered, a later accepted evidence package should show at
-minimum:
+### 13.1 DI-1 and DI-2 preservation
 
-1. exact authority and state ownership with no second task database;
-2. one-writer exclusion and stale/duplicate-event rejection;
-3. candidate/CI/review identity binding across corrections;
-4. read-only independent reviewer isolation;
-5. privileged effects separated from model execution;
-6. restart/recovery from zero conversational context;
-7. bounded retry/correction behavior;
-8. missing evidence failing closed;
-9. no hidden Product acceptance or merge authority;
-10. one complete milestone dry run with final cumulative review;
-11. interruption/recovery negative cases;
-12. evidence that ready-made GitHub/agentic mechanisms were compared before any
-    custom controller selection.
+This proposal preserves the controlling design invariants without creating new
+semantics.
 
-A design, schema or test plan alone is not this evidence.
+DI-1: orthogonal semantic planes remain orthogonal.
+
+Task control, cancellation, recovery, work product/product state, verification,
+review, disposition, normativity, baseline acceptance and join/integration state
+must not collapse into one native product status. A GitHub green, merged or
+closed status, completed run, model done response or orchestration transition can
+advance only the plane owned by the applicable authority. Legitimate
+non-applicability is distinct from PASS.
+
+DI-2: stale authority and recovery shortcuts cannot authorize reliance.
+
+Materially stale authority or evidence blocks reliance. Retry remains
+operation-aware; containment and recovery remain distinct; completed prior
+episodes and relied-upon evidence remain durable; reopening creates a distinct
+episode; accountable intervention and separate resumption/reset remain reachable;
+terminal guards cannot be bypassed by a controller, native status or model
+confidence.
+
+The conformance package must demonstrate both invariants under normal and adverse
+execution, not merely assert them in configuration.
+
+### 13.2 Evidence subject and binding
+
+A future conformance evaluation must bind its entire evidence package to one
+exact runtime subject containing at minimum:
+
+- accepted design/policy revision under evaluation;
+- exact orchestration implementation revision;
+- exact adapter/controller revision;
+- exact runtime/engine versions and relevant configuration;
+- exact permission/credential capability profile, without exposing secrets;
+- exact repository/profile fixtures used by the scenarios;
+- exact scenario-suite revision;
+- start/end timestamps and run/attempt identities.
+
+Changing any load-bearing implementation, policy, permission or scenario input
+creates a new conformance subject unless an accepted impact analysis explicitly
+permits carry-forward.
+
+Every evidence artifact must have an immutable locator or retained byte content
+plus cryptographic digest and provenance sufficient for independent retrieval.
+A green aggregate without underlying subject-bound evidence is insufficient.
+
+### 13.3 Required evidence forms
+
+The future package must contain, at minimum:
+
+1. subject manifest: exact revisions/configuration/permissions and scenario
+   inventory;
+2. transition evidence: input state, requested operation, generation/operation
+   ID, resulting orchestration state and authoritative plane reads for every
+   relied-upon transition;
+3. repository identity evidence: workspace/local Git observations plus live
+   remote Git/PR/check readback where applicable;
+4. side-effect receipts: attempted/completed/partial/unknown result and
+   authoritative post-effect observation for every privileged operation;
+5. writer-fencing evidence: competing/stale writer attempts and deterministic
+   rejection/readback showing they did not gain write authority;
+6. recovery history: interruption, containment, residual-effect inventory,
+   recovery authorization/attempt/validation and preserved prior episode history;
+7. review-isolation evidence: reviewer subject, input authority/evidence,
+   permission profile and proof that reviewer execution lacks candidate-code
+   mutation/merge authority;
+8. negative-control results: stale, duplicate, missing-evidence, out-of-order
+   and unauthorized-operation scenarios with expected denial;
+9. independent conformance review of the exact complete package, separate from
+   producer self-check;
+10. disposition record from a later accountable owner stating whether the exact
+    package establishes the D13 conformance prerequisite.
+
+Logs alone are insufficient when they cannot prove exact subject or retained
+effects. Digests alone are insufficient when the relied-upon bytes are not
+independently retrievable under the evidence-retention policy.
+
+### 13.4 Mandatory positive and negative scenario matrix
+
+The exact implementation-specific scenarios may be expanded later, but these
+semantic cases are mandatory.
+
+| Scenario | Required evidence | Primary invariant |
+| --- | --- | --- |
+| authorized single-writer happy path | exact transition chain, writer generation, candidate/CI/review identity and expected effect receipts | DI-1, DI-2 |
+| stale event after head/authority change | live reread plus denied transition, with no advancing effect | DI-2 |
+| duplicate event / duplicate operation | same operation ID returns prior receipt or active status without duplicate side effect | DI-2 |
+| competing or stale writer | old/non-current generation attempts a shared write and is rejected before authoritative publication | DI-2, X4 |
+| process interruption before known effect | restart reconstructs state from durable owners/history and does not infer success | DI-2 |
+| interruption after partial/queued external effect | effect owner reports residual/unknown state; containment/reconciliation blocks blind retry | DI-2, X7 |
+| missing required evidence | transition/review/retry is blocked as evidence gap, not converted to PASS | DI-2 |
+| contradictory plane statuses | native green/merged/done cannot collapse task/review/disposition/acceptance planes | DI-1 |
+| reviewer isolation | reviewer can read exact subject/evidence but cannot mutate candidate, merge or self-accept | DI-1 |
+| recovery episode reopening | completed prior recovery remains immutable; a later obligation opens a distinct episode | DI-2 |
+| intervention-required state | unresolved ambiguity reaches a durable blocked/intervention owner rather than unsafe continuation | DI-2 |
+| terminal-guard attempt | incomplete containment/recovery/evidence prevents completion, cancellation closure, resumption or release | DI-2 |
+
+A future implementation must also test any additional mechanism-specific failure
+modes introduced by its selected transport/runtime. Passing only this table does
+not excuse untested load-bearing mechanism behavior.
+
+### 13.5 Acceptance bar
+
+The D13 conformance prerequisite is established only when a later coordinator
+disposition accepts one exact conformance package after fresh independent review.
+
+A package is eligible for such disposition only when:
+
+- every mandatory scenario applicable to the selected mechanism was executed
+  against the exact runtime subject;
+- all required positive scenarios reached their authorized target states;
+- all required negative scenarios demonstrated required denial/containment;
+- DI-1 and DI-2 are explicitly evidenced, not inferred from a generic green run;
+- exclusive-writer and stale/duplicate controls are demonstrated by effect-level
+  evidence;
+- interruption/restart and partial-effect recovery preserve durable history and
+  terminal guards;
+- reviewer isolation and privileged-effect separation are demonstrated;
+- all load-bearing evidence is independently retrievable and identity-bound;
+- there is no unresolved BLOCKER/MAJOR conformance finding;
+- there is no unresolved critical evidence gap, contradictory result or unowned
+  residual effect.
+
+If a required scenario is not applicable, the package must identify the
+controlling reason and the independent reviewer must confirm legitimate
+non-applicability. Non-applicable is not PASS.
+
+Missing, stale, contradictory or partial load-bearing evidence yields
+CONFORMANCE NOT ESTABLISHED for the prerequisite. It is an evidence result, not
+a Product-semantic failure and not permission to retry or broaden authority.
+
+### 13.6 Later-gate boundary
+
+Defining this evidence contract, test matrix and acceptance bar does not itself
+satisfy D13.
+
+Actual execution of conformance trials, installation/selection of a mechanism,
+collection of runtime evidence, acceptance of the package and any later D13
+reconsideration each require their own applicable authority.
+
+D5 remains independent. Even accepted D13 conformance evidence does not select or
+authorize a Codex SDK/App Server mechanism unless D5 is separately reconsidered
+or explicitly superseded within its own named scope.
 
 ## 14. Explicit non-authorities
 
