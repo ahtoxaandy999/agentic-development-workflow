@@ -1446,12 +1446,18 @@ repository_wide_current_gate_unchanged: true
 d13_prerequisite_design_candidate: docs/design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001.md
 d13_prerequisite_design_task_id: ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001
 d13_prerequisite_design_subject_base: 796fef15a7ba3b78b57c1f06f5911c6a3f85dad5
-d13_prerequisite_design_status: candidate-review-required
+d13_prerequisite_design_accepted_subject: 72451ac5733a3f13d88f6ce566b455eb8012c945
+d13_prerequisite_design_publication_merge: ec62de8caf4c048521088a367cfa72d7e33d5dcd
+d13_prerequisite_design_review_verdict: PASS
+d13_prerequisite_design_review_findings: 0-blocker-0-major-0-minor-0-note
+d13_prerequisite_design_disposition: docs/design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-DISPOSITION-001.md
+d13_prerequisite_design_disposition_decision: accept-d13-conveyor-prerequisite-design-as-prerequisite-design-basis
+d13_prerequisite_design_status: accepted-prerequisite-design-basis
 d13_prerequisite_design_normative_effect: none
-next_gate: D13 prerequisite design independent review gate
+next_gate: D13 conformance-evidence readiness assessment gate
 ```
 
-The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; D13 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The one authorized D13 prerequisite-scoping/design gate now has a design-only candidate at [ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001](../design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001.md), produced from subject base `796fef15a7ba3b78b57c1f06f5911c6a3f85dad5`. The candidate has no normative effect, does not satisfy D13, and requires fresh independent exact-candidate review before any coordinator disposition. No PoC, mechanism selection, automation, unattended execution, local-model training or Workflow v1 amendment is authorized. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 prerequisite design independent review gate`.
+The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; D13 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The corrected exact design candidate [ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001](../design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001.md) at `72451ac5733a3f13d88f6ce566b455eb8012c945` received fresh independent `PASS` with 0 BLOCKER / 0 MAJOR / 0 MINOR / 0 NOTE findings after resolving the two prior MAJOR findings. It was published unchanged through PR #15 at merge commit `ec62de8caf4c048521088a367cfa72d7e33d5dcd`. Coordinator disposition [ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-DISPOSITION-001](../design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-DISPOSITION-001.md) accepts only that exact corrected design as the D13 prerequisite-design basis. The acceptance has no normative effect, does not establish D13 conformance evidence, does not reconsider D13, does not reopen D5, and authorizes no PoC, mechanism selection, automation, unattended execution, local-model training or Workflow v1 amendment. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 conformance-evidence readiness assessment gate`.
 
 ## Superseded
 
