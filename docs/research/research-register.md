@@ -1443,10 +1443,15 @@ authority_boundary: >
   mutation, unattended, AFK, acceptance, merge, baseline or Workflow v1
   amendment authority.
 repository_wide_current_gate_unchanged: true
-next_gate: D13 prerequisite-scoping/design gate
+d13_prerequisite_design_candidate: docs/design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001.md
+d13_prerequisite_design_task_id: ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001
+d13_prerequisite_design_subject_base: 796fef15a7ba3b78b57c1f06f5911c6a3f85dad5
+d13_prerequisite_design_status: candidate-review-required
+d13_prerequisite_design_normative_effect: none
+next_gate: D13 prerequisite design independent review gate
 ```
 
-The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; D13 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. Exactly one bounded D13 prerequisite-scoping/design gate is authorized to design and propose only; no PoC or mechanism selection is authorized. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 prerequisite-scoping/design gate`.
+The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; D13 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The one authorized D13 prerequisite-scoping/design gate now has a design-only candidate at [ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001](../design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001.md), produced from subject base `796fef15a7ba3b78b57c1f06f5911c6a3f85dad5`. The candidate has no normative effect, does not satisfy D13, and requires fresh independent exact-candidate review before any coordinator disposition. No PoC, mechanism selection, automation, unattended execution, local-model training or Workflow v1 amendment is authorized. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 prerequisite design independent review gate`.
 
 ## Superseded
 
