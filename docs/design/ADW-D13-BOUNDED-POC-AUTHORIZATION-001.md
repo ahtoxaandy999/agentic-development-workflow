@@ -13,7 +13,7 @@ selected_profile_repository: ahtoxaandy999/housing-recovery
 observed_profile_main: 01b3ae5288069660a12c6b35254e4fa59867429e
 decided_on: 2026-09-23
 human_signal: "++"
-decision: conditionally-select-task-local-python-github-graphql-cas-for-one-bounded-d13-poc-and-authorize-implementation-preflight-candidate-production
+decision: conditionally-select-task-local-python-single-publisher-lifetime-lock-github-graphql-cas-for-one-bounded-d13-poc-and-authorize-implementation-preflight-candidate-production
 d13_status: CONDITIONALLY SELECT FOR ONE BOUNDED POC
 d5_status: CONFIRM DEFER
 x3_status: CONFIRM REJECT
@@ -37,11 +37,18 @@ select one mechanism for one bounded D13 proof of concept:
 
 - a supervised task-local deterministic Python runtime;
 - a separate deterministic privileged publisher;
+- exactly one credential-holding publisher process per pilot evidence root;
+- a canonical POSIX lifetime lock held with Python stdlib `fcntl.flock` for the
+  entire credential-bearing publisher process lifetime;
+- a canonical generation record stored beside that lock, outside any repository
+  worktree;
 - GitHub GraphQL `createCommitOnBranch` as the commit-mutation primitive on the
   dedicated pilot branch;
 - provider-side exact-head fencing through required `expectedHeadOid`;
-- writer generation bound to the pilot runtime subject and branch-head progression;
-- a separate minimal Housing publisher credential available only to the publisher;
+- writer generation activated only by the lock-owning publisher after prior
+  publisher cessation is established;
+- a separate minimal Housing publisher credential available only to that
+  lock-owning publisher;
 - a separate isolated Housing read-only reviewer credential;
 - a local append-only evidence/recovery journal outside the governed repositories.
 
@@ -120,19 +127,40 @@ Only the publisher receives the Housing write credential.
 
 The runtime, executor role and independent reviewer do not receive that credential.
 
+Exactly one credential-holding publisher process may be active for the pilot
+evidence root.
+
+Before the process may receive or use the publisher credential for an operation,
+it must own the canonical publisher lifetime lock:
+
+`publisher.lock`
+
+using Python stdlib `fcntl.flock(..., LOCK_EX | LOCK_NB)`.
+
+The lock is held for the entire credential-bearing process lifetime. The
+publisher must not release the lock and continue running with the credential.
+Normal release is process termination/descriptor close. If the process is still
+alive and the lifetime lock is not proven released, replacement is blocked.
+
+The canonical lock and generation record are located in the selected local
+evidence root, outside ADW, Housing and disposable worktrees.
+
 The publisher must:
 
-1. verify the exact runtime subject;
-2. verify the current writer generation;
-3. verify target repository/ref/path allowlists;
-4. verify exact expected branch head;
-5. reject conflicting operation IDs;
-6. invoke the selected provider mutation;
-7. perform authoritative post-effect readback;
-8. emit one durable effect receipt;
-9. expose partial/unknown/residual effects for reconciliation.
+1. acquire and hold the canonical lifetime lock;
+2. verify the exact runtime subject;
+3. reread the canonical generation record while holding the lock;
+4. verify the request generation equals that canonical current generation;
+5. verify target repository/ref/path allowlists;
+6. verify exact expected branch head;
+7. reject conflicting operation IDs;
+8. invoke the selected provider mutation;
+9. perform authoritative post-effect readback;
+10. emit one durable effect receipt;
+11. expose partial/unknown/residual effects for reconciliation.
 
-A model response, prompt or remembered instruction is never a privileged write
+A model response, prompt, remembered instruction, stale workspace copy or mere
+possession of the publisher credential is never a privileged write
 authorization.
 
 ## Selected GitHub commit primitive
@@ -171,23 +199,97 @@ pilot stops. No fallback mechanism is implicitly selected.
 
 ## Generation binding
 
-The pilot generation is part of the exact runtime subject and every operation
-request.
+The selected generation fence combines two independent conditions:
 
-Each successful authorized pilot-branch commit advances the remote head and
-records the current generation in pilot evidence.
+1. process-level stale-instance exclusion through the canonical publisher
+   lifetime lock; and
+2. provider-side exact-head compare-and-swap through `expectedHeadOid`.
 
-A stale operation carries:
+The canonical current generation is not owned by a worktree or process-local
+cache. It is stored in one canonical generation record in the local evidence
+root and may be read or changed only while holding `publisher.lock`.
 
-- a stale generation;
-- and/or a stale `expectedHeadOid`.
+### Generation activation rule
 
-The publisher must reject stale generation before effect where it can be known
-locally, and the provider-side exact-head mutation must reject a stale remote head
-at the effect boundary.
+Generation `N+1` may become current only after all of the following are true:
 
-For a competing same-head attempt, at most one exact-head commit may succeed.
-Every competing result must be read back and retained.
+1. the prior publisher is proven ceased or otherwise contained;
+2. its credential-bearing process no longer holds the canonical lifetime lock;
+3. the replacement publisher exclusively acquires that same lock;
+4. while holding the lock, it rereads the durable generation record and recovery
+   history;
+5. unresolved prior effects are reconciled or the transition remains blocked;
+6. it atomically replaces the canonical generation record from `N` to `N+1`
+   using write-to-temp + fsync + `os.replace`;
+7. it reads the resulting generation record back before accepting any mutation
+   request.
+
+A local variable, stale workspace, chat state or copied `state.json` cannot
+activate a generation.
+
+The publisher must not decrement, reuse or overwrite a completed generation
+identity. Recovery reopening creates new history; it does not rewrite old
+generation evidence.
+
+### Stale credential-holding publisher exclusion
+
+The stale-instance case is defined explicitly.
+
+If publisher instance `P1` still runs and still holds the prior valid publisher
+credential, then either:
+
+- `P1` still owns `publisher.lock`, in which case `P2` cannot activate a new
+  generation and execution remains blocked; or
+- `P1` no longer owns the lifetime lock, which is permitted only after `P1`
+  has terminated/ceased as a credential-bearing publisher under this selected
+  runtime contract.
+
+Therefore generation `N+1` cannot become current while a live generation-`N`
+credential-bearing publisher remains eligible to execute the mutation path.
+
+A publisher process that loses the lifetime lock is not allowed to continue with
+the credential. The exact implementation must fail closed and terminate before
+any further provider call.
+
+The implementation/preflight must demonstrate:
+
+- a second publisher cannot acquire the lock while the first lives;
+- generation cannot advance while the prior publisher holds the lock;
+- after prior-process termination, the replacement can acquire the lock and
+  advance generation exactly once;
+- a stale generation request delivered after advancement is rejected from the
+  canonical generation record before GraphQL mutation construction/sending;
+- copied/stale worktree state cannot substitute for the canonical generation
+  record.
+
+This lifetime-lock behavior is part of the selected mechanism, not merely a
+testing suggestion.
+
+### Provider head fence
+
+Within the currently active generation, every commit request additionally binds
+the exact remote branch head through `expectedHeadOid`.
+
+The publisher must verify the expected head by authoritative readback and pass
+that same OID to `createCommitOnBranch`.
+
+For competing same-head provider mutations, at most one exact-head commit may
+succeed. Every result must be read back and retained.
+
+`expectedHeadOid` does not replace the lifetime lock/generation authority.
+The lifetime lock/generation authority does not replace provider exact-head CAS.
+Both conditions are required.
+
+### Recovery and replacement consequence
+
+If prior publisher cessation cannot be established, replacement is not
+authorized and generation cannot advance.
+
+If the prior publisher is killed/crashes, kernel lock release is necessary but
+not alone sufficient: the replacement must still reconcile prior operation
+receipts and live GitHub state before generation activation.
+
+This preserves the accepted containment/recovery distinction.
 
 This is the selected proof strategy for S4. It must still be demonstrated in the
 actual PoC; this decision does not claim the proof already exists.
@@ -196,6 +298,11 @@ actual PoC; this decision does not claim the proof already exists.
 
 The selected credential architecture is separation by role, not shared user
 authentication.
+
+The credential-bearing publisher is also constrained by the selected lifetime
+lock contract above. Credential possession without ownership of the canonical
+publisher lock and current canonical generation is insufficient authorization
+under this PoC mechanism.
 
 ### Publisher credential
 
@@ -348,20 +455,27 @@ It must provide:
 3. exact runtime-subject schema;
 4. exact operation/receipt schema;
 5. exact generation transition logic;
-6. exact target repository/ref/path allowlists;
-7. exact GraphQL mutation document and variables shape;
-8. tests demonstrating no mutation occurs in preflight mode;
-9. synthetic stale-head, stale-generation, duplicate and contradictory-state
-   tests;
-10. restart/reconstruction tests using only durable local evidence;
-11. exact publisher permission proposal;
-12. exact reviewer read-only permission proposal;
-13. exact evidence root and custodian;
-14. exact scenario execution order;
-15. exact branch/PR setup procedure;
-16. exact fault-injection procedure;
-17. exact stop/recovery owner;
-18. a list of every remaining fact requiring live readback before execution.
+6. exact canonical `publisher.lock` and generation-record paths;
+7. exact lifetime-lock acquire/hold/release/termination semantics;
+8. atomic generation-record replacement and readback logic;
+9. exact target repository/ref/path allowlists;
+10. exact GraphQL mutation document and variables shape;
+11. tests demonstrating no mutation occurs in preflight mode;
+12. synthetic competing-publisher, stale-head, stale-generation, duplicate and
+    contradictory-state tests;
+13. tests proving a second publisher cannot acquire the lifetime lock while the
+    first credential-bearing publisher remains alive;
+14. tests proving generation cannot advance until prior publisher cessation and
+    lock release are established;
+15. restart/reconstruction tests using only durable local evidence;
+16. exact publisher permission proposal;
+17. exact reviewer read-only permission proposal;
+18. exact evidence root and custodian;
+19. exact scenario execution order;
+20. exact branch/PR setup procedure;
+21. exact fault-injection procedure;
+22. exact stop/recovery owner;
+23. a list of every remaining fact requiring live readback before execution.
 
 No producer-green result from that candidate authorizes Housing effects.
 
