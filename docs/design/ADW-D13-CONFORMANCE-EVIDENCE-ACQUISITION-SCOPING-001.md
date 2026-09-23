@@ -68,10 +68,15 @@ The future pilot effect domain is limited to:
 - dedicated branch: pilot/d13-runtime-control-evidence-001
 - one draft pull request targeting main
 - inert marker path on that branch: docs/d13-runtime-control-evidence-pilot.md
+- indirect GitHub Actions runs triggered by the existing Housing pull_request workflow for opened/synchronize events
 
 The marker is not Product state, policy, a task tracker or repository authority.
 
 The pilot may create successive immutable commits changing only that marker path.
+
+Opening the draft PR and later pilot-branch pushes are known to trigger the existing Candidate verification workflow. Those workflow runs are indirect external effects of the branch/PR operations and must be inventoried, observed and reconciled as part of the effect domain. A queued, in-progress, cancelled or completed run is not ignored merely because the primary branch mutation already completed.
+
+Merge closeout verification is not expected because merge is forbidden. If any unexpected closeout or other workflow effect appears, the pilot must stop and reconcile.
 
 The pilot may not write main, merge, change rulesets/protection, modify canonical Housing data/decisions/intake/schemas/application code, delete branches/PR history, modify verifier/workflow files, use production/user data, or persist secrets.
 
@@ -108,6 +113,8 @@ It must not possess the publisher write credential.
 Receives the exact runtime subject and evidence package in fresh context.
 
 It must have read-only access and no candidate-branch write, PR-write, ready, merge or ruleset mutation capability.
+
+It cannot be the producer/publisher of the evidence package and cannot accept its own review result, advance the acceptance plane or confer merge authority.
 
 ## Runtime subject manifest
 
@@ -152,9 +159,23 @@ Before a write, the publisher must verify the request belongs to the current sub
 
 Stale generation, stale head, changed payload under the same operation ID, unexpected ref or authority drift must fail before mutation.
 
-The concrete fencing primitive is not selected here.
+A pre-read followed by an unconditional provider write is not sufficient fencing. The selected later mechanism must close the check-to-write race at the effect boundary.
 
-The later mechanism must prove an old executor cannot bypass the publisher merely because it still has a workspace or remembered command. Credential separation is mandatory.
+The mutation must be conditionally fenced against both:
+
+- the exact expected remote head at write time; and
+- the current writer generation.
+
+The concrete primitive is deliberately not selected here. The later authorization must identify and independently verify a mechanism in which a stale or competing publisher instance cannot successfully mutate merely because it still possesses a workspace or credential.
+
+A stale instance that retains a previously valid repository write credential is part of the threat model. Credential separation between publisher and executor/reviewer is necessary but not sufficient by itself.
+
+The selected mechanism must prove one of the following, without this scoping record choosing which:
+
+- provider-side conditional/CAS-like write semantics plus an effective generation fence; or
+- an equivalently strong serialized/fenced publisher critical section whose stale-instance exclusion and provider-head precondition are independently evidenced.
+
+Worktree separation, prompt instructions, a remembered command, or an ordinary check-then-write sequence do not satisfy this requirement.
 
 ## Stable operation identity
 
@@ -179,11 +200,15 @@ Every privileged mutation must produce a durable receipt containing:
 - result classification: no-effect, completed, partial/residual, or unknown
 - authoritative post-effect readback
 - exact observed branch/PR identities
+- expected and observed indirect workflow-run identities/states when branch/PR activity triggers GitHub Actions
+- residual/queued-effect inventory
 - receipt timestamp and digest
 
 A successful return without readback is insufficient.
 
 A failed or lost return is not evidence of no effect.
+
+A branch mutation is not fully reconciled merely because the ref reached the desired SHA if it also caused a queued or in-progress external workflow effect that remains unobserved or unowned.
 
 ## Reconciliation
 
@@ -204,30 +229,80 @@ GitHub owns what happened in GitHub. The execution-state recorder owns lifecycle
 
 ## Mandatory scenario matrix
 
+The accepted D13 scenarios map exactly as follows. Supplemental scenarios do not replace any accepted mandatory scenario.
+
+| Accepted D13 scenario | Pilot scenario |
+| --- | --- |
+| authorized single-writer happy path | S1 |
+| stale event after head/authority change | S3 |
+| duplicate event / duplicate operation | S2 |
+| competing or stale writer | S4 |
+| process interruption before known effect | S5 |
+| interruption after partial/queued external effect | S6 |
+| missing required evidence | S7 |
+| contradictory plane statuses | S8 |
+| reviewer isolation | S9 |
+| recovery episode reopening | S10 |
+| intervention-required state | S11 |
+| terminal-guard attempt | S12 |
+
 | ID | Scenario | Required outcome |
 | --- | --- | --- |
-| S1 | authorized single-writer happy path | one authorized operation moves only the pilot branch from exact expected head to exact desired head; receipt/readback agree |
+| S1 | authorized single-writer happy path | one authorized operation moves only the pilot branch from exact expected head to exact desired head; exact candidate SHA, triggered candidate-verification identity, receipt/readback and later exact reviewer subject all bind consistently without advancing acceptance by implication |
 | S2 | duplicate same operation | repeated identical operation ID causes no second mutation and reuses/returns existing receipt |
 | S3 | stale event | earlier head/generation event is reread against live state and denied without mutation |
-| S4 | stale writer generation | old generation after advance is rejected before effect |
-| S5 | interruption before effect | operation is durably prepared, runtime stops before publisher call, restart proves no effect before any continuation |
-| S6 | lost response after completed effect | mutation completes, caller acknowledgement is lost, restart discovers completion and does not repeat it |
+| S4 | competing or stale writer/publisher | after generation advances, a stale or concurrent credential-holding publisher instance attempts the same mutation boundary; only the current generation may succeed and the stale/competing instance is denied with no second effect |
+| S5 | interruption before known effect | operation is durably prepared, runtime stops before publisher call, restart proves no effect before any continuation |
+| S6 | interruption after partial/queued external effect | a branch/PR mutation has created or may have created a queued/in-progress Candidate verification run or other residual effect; restart inventories branch/PR plus workflow state, records residual/unknown effects, verifies containment where applicable, and blocks blind retry until reconciliation is complete |
 | S7 | missing required receipt/evidence | unsafe conclusion is impossible; runtime blocks/intervention-required and does not retry |
-| S8 | contradictory state | recorder, receipt and live branch disagree; runtime fails closed |
-| S9 | reviewer isolation | reviewer reads package but controlled mutation attempt with reviewer capability is denied |
+| S8 | contradictory plane statuses / DI-1 non-collapse | a native status such as green candidate verification, PR open/closed state or runtime done state cannot advance review, disposition, Product/coordinator acceptance, merge authority or terminal task state; the orthogonal planes remain distinct |
+| S9 | reviewer isolation | reviewer reads the exact package; any controlled mutation attempt is limited to the pilot branch/marker or draft PR domain and is denied, and the reviewer cannot self-accept, ready or merge |
 | S10 | recovery episode reopening | later independent recovery obligation opens a new episode without rewriting the completed first one |
 | S11 | intervention-required | unresolved ambiguity reaches durable blocked/intervention-required with named owner |
 | S12 | terminal guard | completion/closure is denied while containment, recovery, evidence or intervention remains unresolved |
 
+Supplemental scenarios are also required because the readiness assessment identified them as load-bearing gaps:
+
+| ID | Supplemental scenario | Required outcome |
+| --- | --- | --- |
+| F1 | lost response after completed effect | mutation completes, caller acknowledgement is intentionally lost, restart discovers the completed effect by durable receipt/live readback and does not repeat it |
+| F2 | provider/recorder contradiction | execution-state projection, receipt and live GitHub state disagree; no plane is overwritten, the conflict is retained, and execution fails closed pending reconciliation |
+
 ## Fault-injection boundary
 
-Later authorization may consider only control-path faults such as suppressed caller acknowledgement, restart before publisher invocation, restart after publisher effect, duplicate event replay, stale generation, withheld test-local receipt, contradictory expected state, and one reviewer mutation attempt expected to be denied.
+Later authorization may consider only control-path faults such as:
+
+- suppressed caller acknowledgement after a completed publisher action
+- restart before publisher invocation
+- restart after publisher effect but before caller acknowledgement
+- duplicate event replay
+- stale writer generation
+- a competing/stale credential-holding publisher instance
+- a queued/in-progress Candidate verification run remaining after the primary branch mutation
+- withheld test-local receipt
+- deliberately contradictory test-local expected state
+- one reviewer mutation attempt expected to be denied, targeted only at the dedicated pilot branch/marker or draft PR domain
 
 It may not corrupt Git, mutate/delete main, force-push, alter rulesets/protection, affect non-pilot branches, use production data or intentionally create an unrecoverable repository state.
 
+A reviewer-isolation negative test must never target main or any Housing canonical data path.
+
+The partial/queued-effect scenario must observe and account for the existing pull_request-triggered Candidate verification workflow rather than pretending the branch mutation is the only external effect.
+
 ## Reviewer isolation evidence
 
-The package must include fresh reviewer execution identity, runtime-subject digest, package digest, reviewer permission profile, proof the reviewer did not receive publisher credentials, one bounded denied mutation attempt or equivalent effective permission proof, exact read accesses, and final verdict.
+The package must include:
+
+- fresh reviewer execution identity
+- exact runtime-subject digest
+- exact evidence-package digest
+- reviewer permission/capability profile
+- proof the reviewer did not receive publisher credentials
+- one bounded denied mutation attempt targeted only at the dedicated pilot branch/marker or draft PR domain, or an equivalent effective permission proof
+- exact read accesses used for the review
+- proof the reviewer cannot ready, merge or otherwise mutate the acceptance/publication planes
+- explicit statement that reviewer verdict cannot self-accept or advance coordinator/human acceptance
+- final verdict bound to the exact package
 
 Procedural role separation alone is insufficient.
 
@@ -241,6 +316,7 @@ The run must retain one exact package containing:
 - publisher receipts
 - safe raw provider responses and authoritative readbacks
 - branch/PR identity snapshots
+- triggered GitHub Actions run identities/states and residual/queued-effect inventory
 - permission profiles
 - fault-injection records
 - restart/reconstruction records
