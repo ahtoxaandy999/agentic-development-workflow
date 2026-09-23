@@ -1439,11 +1439,14 @@ authority_boundary: >
   docs/research/ADW-DR-005-DISPOSITION-001.md and
   docs/research/ADW-DR-006-DISPOSITION-001.md remain historical owners of their
   recorded D5/D13/X3 dispositions. Current D13 status is conditionally selected
-  for one bounded Housing PoC only through
-  docs/design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md. That selection authorizes
-  local implementation/preflight candidate production only. It creates no Housing
-  mutation, credential creation, pilot execution, unattended/AFK, merge, D5
-  reconsideration, conformance or Workflow v1 amendment authority.
+  for one bounded Pet Project PoC only through
+  docs/design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md as amended, for the
+  current selected profile only, by
+  docs/design/ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001.md. The prior
+  Housing profile selection is historical. That selection authorizes local
+  implementation/preflight candidate production only. It creates no Pet Project
+  or Housing mutation, credential creation, pilot execution, unattended/AFK,
+  merge, D5 reconsideration, conformance or Workflow v1 amendment authority.
 repository_wide_current_gate_unchanged: true
 d13_prerequisite_design_candidate: docs/design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001.md
 d13_prerequisite_design_task_id: ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001
@@ -1468,23 +1471,32 @@ d13_conformance_evidence_acquisition_scoping_subject_main: 07fdfc72cf21488b61905
 d13_conformance_evidence_acquisition_scoping_selected_profile: ahtoxaandy999/housing-recovery
 d13_conformance_evidence_acquisition_scoping_observed_profile_main: 01b3ae5288069660a12c6b35254e4fa59867429e
 d13_conformance_evidence_acquisition_scoping_decision: scope-one-housing-runtime-control-evidence-pilot-for-later-explicit-authorization
-d13_conformance_evidence_acquisition_scoping_status: scoped-profile-authorized-for-selected-bounded-poc-preflight
+d13_conformance_evidence_acquisition_scoping_status: scoped-semantics-retained-housing-profile-selection-historical
 d13_bounded_poc_authorization: docs/design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md
 d13_bounded_poc_authorization_task_id: ADW-D13-BOUNDED-POC-AUTHORIZATION-001
 d13_bounded_poc_authorization_subject_main: 2bc213c857e6e3713b881470408dbe429906f68a
 d13_bounded_poc_authorization_decision: conditionally-select-task-local-python-single-publisher-lifetime-lock-github-graphql-cas-for-one-bounded-d13-poc-and-authorize-implementation-preflight-candidate-production
-d13_bounded_poc_selected_profile: ahtoxaandy999/housing-recovery
+d13_bounded_poc_profile_amendment: docs/design/ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001.md
+d13_bounded_poc_profile_amendment_task_id: ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001
+d13_bounded_poc_profile_amendment_subject_main: 1256727d511ac973fae4501ce2c4181dda0fee9d
+d13_bounded_poc_profile_amendment_decision: correct-d13-bounded-poc-selected-profile-from-housing-to-pet-project
+d13_bounded_poc_profile_amendment_scope: current-selected-profile-only
+d13_bounded_poc_prior_selected_profile: ahtoxaandy999/housing-recovery
+d13_bounded_poc_prior_selected_profile_status: historical
+d13_bounded_poc_selected_profile: ahtoxaandy999/pet-project
+d13_bounded_poc_observed_profile_main: 28f84fe4324925adae0f17163d578ed2e1f9bc19
+d13_bounded_poc_selected_mechanism_changed: false
 d13_bounded_poc_selected_runtime: supervised-task-local-deterministic-python
 d13_bounded_poc_selected_generation_fence: posix-single-credential-publisher-lifetime-flock-plus-canonical-generation-record
 d13_bounded_poc_selected_commit_primitive: github-graphql-createCommitOnBranch-expectedHeadOid
 d13_bounded_poc_implementation_preflight_authorized: true
 d13_bounded_poc_pilot_execution_authorized: false
-d13_bounded_poc_housing_mutation_authorized: false
+d13_bounded_poc_pet_project_mutation_authorized: false
 d13_bounded_poc_credential_creation_authorized: false
 next_gate: D13 bounded PoC implementation/preflight candidate production gate
 ```
 
-The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The historical DR-006 decision that D13 remained `CONFIRM DEFER` is preserved as the prior disposition. The accepted prerequisite design, readiness assessment and corrected conformance-evidence scoping establish the prerequisites for one explicit mechanism decision. Coordinator authorization [ADW-D13-BOUNDED-POC-AUTHORIZATION-001](../design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md), after human `++`, changes the current D13 status only to `CONDITIONALLY SELECT FOR ONE BOUNDED POC` for the Housing profile using a supervised task-local deterministic Python runtime, exactly one credential-bearing publisher process fenced by a canonical lifetime POSIX `flock` plus canonical generation record, GitHub GraphQL `createCommitOnBranch(expectedHeadOid)` exact-head fencing, generation-bound operation control, local append-only evidence/recovery state and an isolated read-only reviewer credential. A new generation cannot activate until prior publisher cessation/lock release is established, and stale workspace/credential possession cannot substitute for the canonical lock/generation authority. This selection authorizes only local implementation/preflight candidate production. It authorizes no Housing mutation, credential creation, pilot execution, merge, unattended execution, D5 reconsideration or D13 conformance claim. `d13_conformance_result` remains `not-established`. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 bounded PoC implementation/preflight candidate production gate`.
+The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The historical DR-006 decision that D13 remained `CONFIRM DEFER` is preserved as the prior disposition. The accepted prerequisite design, readiness assessment and corrected conformance-evidence scoping establish the prerequisites for one explicit mechanism decision. Coordinator authorization [ADW-D13-BOUNDED-POC-AUTHORIZATION-001](../design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md), after human `++`, changes the current D13 status only to `CONDITIONALLY SELECT FOR ONE BOUNDED POC` for the Housing profile using a supervised task-local deterministic Python runtime, exactly one credential-bearing publisher process fenced by a canonical lifetime POSIX `flock` plus canonical generation record, GitHub GraphQL `createCommitOnBranch(expectedHeadOid)` exact-head fencing, generation-bound operation control, local append-only evidence/recovery state and an isolated read-only reviewer credential. A new generation cannot activate until prior publisher cessation/lock release is established, and stale workspace/credential possession cannot substitute for the canonical lock/generation authority. This selection authorizes only local implementation/preflight candidate production. It authorizes no Housing mutation, credential creation, pilot execution, merge, unattended execution, D5 reconsideration or D13 conformance claim. Profile amendment [ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001](../design/ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001.md) corrects only the current selected profile from Housing to `ahtoxaandy999/pet-project`, observed at Pet `main` `28f84fe4324925adae0f17163d578ed2e1f9bc19`; the Housing selection and its review and merge evidence remain historical. The selected runtime, generation fence and GraphQL commit primitive are unchanged, and the amendment is not a new D13 mechanism selection. Pet's exact-candidate verification workflow and Chat conveyor controls are prior evidence only; its push-triggered `Exact candidate verification` runs are indirect pilot effects that must be inventoried and reconciled. The amendment authorizes no Pet Project mutation, credential creation or pilot execution. `d13_conformance_result` remains `not-established`. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 bounded PoC implementation/preflight candidate production gate`, now targeting Pet Project.
 
 ## Superseded
 
