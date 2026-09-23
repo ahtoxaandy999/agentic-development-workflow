@@ -1433,15 +1433,17 @@ decision_scope: >
   propose only. No PoC execution or mechanism selection is authorized.
 
 d5_status: CONFIRM DEFER
-d13_status: CONFIRM DEFER
+d13_status: CONDITIONALLY SELECT FOR ONE BOUNDED POC
 x3_status: CONFIRM REJECT
 authority_boundary: >
-  The accepted disposition preserves docs/research/ADW-DR-005-DISPOSITION-001.md
-  as the owner of the D5, D13 and X3 boundaries. The authorized D13
-  prerequisite-scoping/design gate may design and propose only. It creates no
-  PoC, App Server selection, implementation, automation, reviewer-to-GitHub
-  mutation, unattended, AFK, acceptance, merge, baseline or Workflow v1
-  amendment authority.
+  docs/research/ADW-DR-005-DISPOSITION-001.md and
+  docs/research/ADW-DR-006-DISPOSITION-001.md remain historical owners of their
+  recorded D5/D13/X3 dispositions. Current D13 status is conditionally selected
+  for one bounded Housing PoC only through
+  docs/design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md. That selection authorizes
+  local implementation/preflight candidate production only. It creates no Housing
+  mutation, credential creation, pilot execution, unattended/AFK, merge, D5
+  reconsideration, conformance or Workflow v1 amendment authority.
 repository_wide_current_gate_unchanged: true
 d13_prerequisite_design_candidate: docs/design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001.md
 d13_prerequisite_design_task_id: ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001
@@ -1466,11 +1468,23 @@ d13_conformance_evidence_acquisition_scoping_subject_main: 07fdfc72cf21488b61905
 d13_conformance_evidence_acquisition_scoping_selected_profile: ahtoxaandy999/housing-recovery
 d13_conformance_evidence_acquisition_scoping_observed_profile_main: 01b3ae5288069660a12c6b35254e4fa59867429e
 d13_conformance_evidence_acquisition_scoping_decision: scope-one-housing-runtime-control-evidence-pilot-for-later-explicit-authorization
-d13_conformance_evidence_acquisition_scoping_status: scoped-profile-awaiting-explicit-pilot-authorization
-next_gate: D13 bounded conformance-evidence pilot authorization gate
+d13_conformance_evidence_acquisition_scoping_status: scoped-profile-authorized-for-selected-bounded-poc-preflight
+d13_bounded_poc_authorization: docs/design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md
+d13_bounded_poc_authorization_task_id: ADW-D13-BOUNDED-POC-AUTHORIZATION-001
+d13_bounded_poc_authorization_subject_main: 2bc213c857e6e3713b881470408dbe429906f68a
+d13_bounded_poc_authorization_decision: conditionally-select-task-local-python-single-publisher-lifetime-lock-github-graphql-cas-for-one-bounded-d13-poc-and-authorize-implementation-preflight-candidate-production
+d13_bounded_poc_selected_profile: ahtoxaandy999/housing-recovery
+d13_bounded_poc_selected_runtime: supervised-task-local-deterministic-python
+d13_bounded_poc_selected_generation_fence: posix-single-credential-publisher-lifetime-flock-plus-canonical-generation-record
+d13_bounded_poc_selected_commit_primitive: github-graphql-createCommitOnBranch-expectedHeadOid
+d13_bounded_poc_implementation_preflight_authorized: true
+d13_bounded_poc_pilot_execution_authorized: false
+d13_bounded_poc_housing_mutation_authorized: false
+d13_bounded_poc_credential_creation_authorized: false
+next_gate: D13 bounded PoC implementation/preflight candidate production gate
 ```
 
-The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; D13 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The corrected exact design candidate [ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001](../design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001.md) at `72451ac5733a3f13d88f6ce566b455eb8012c945` received fresh independent `PASS` with 0 BLOCKER / 0 MAJOR / 0 MINOR / 0 NOTE findings after resolving the two prior MAJOR findings. It was published unchanged through PR #15 at merge commit `ec62de8caf4c048521088a367cfa72d7e33d5dcd`. Coordinator disposition [ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-DISPOSITION-001](../design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-DISPOSITION-001.md) accepts only that exact corrected design as the D13 prerequisite-design basis. Readiness assessment [ADW-D13-CONFORMANCE-EVIDENCE-READINESS-ASSESSMENT-001](../design/ADW-D13-CONFORMANCE-EVIDENCE-READINESS-ASSESSMENT-001.md) records `CONFORMANCE NOT ESTABLISHED` while concluding that current exact-identity, CI, protected-publication, closeout and transport evidence is sufficient to scope one bounded conformance-evidence acquisition pilot. That assessment authorizes design/scoping only and does not authorize a PoC, mechanism selection, runtime implementation, privileged evidence acquisition, unattended execution, local-model training, D13 reconsideration, D5 reconsideration or Workflow v1 amendment. Scoping candidate [ADW-D13-CONFORMANCE-EVIDENCE-ACQUISITION-SCOPING-001](../design/ADW-D13-CONFORMANCE-EVIDENCE-ACQUISITION-SCOPING-001.md) selects Housing only as the representative profile for a later explicitly authorized runtime-control evidence pilot, preserves all accepted D13 mandatory scenarios including partial/queued effects and DI-1 plane separation, defines writer-generation/atomic effect-boundary requirements, reviewer capability isolation and exact evidence/reconciliation contracts, and selects no runtime mechanism. It authorizes no Housing mutation, privileged evidence acquisition, PoC execution, mechanism selection, unattended execution, local-model training, D13 reconsideration, D5 reconsideration or Workflow v1 amendment. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 bounded conformance-evidence pilot authorization gate`.
+The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The historical DR-006 decision that D13 remained `CONFIRM DEFER` is preserved as the prior disposition. The accepted prerequisite design, readiness assessment and corrected conformance-evidence scoping establish the prerequisites for one explicit mechanism decision. Coordinator authorization [ADW-D13-BOUNDED-POC-AUTHORIZATION-001](../design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md), after human `++`, changes the current D13 status only to `CONDITIONALLY SELECT FOR ONE BOUNDED POC` for the Housing profile using a supervised task-local deterministic Python runtime, exactly one credential-bearing publisher process fenced by a canonical lifetime POSIX `flock` plus canonical generation record, GitHub GraphQL `createCommitOnBranch(expectedHeadOid)` exact-head fencing, generation-bound operation control, local append-only evidence/recovery state and an isolated read-only reviewer credential. A new generation cannot activate until prior publisher cessation/lock release is established, and stale workspace/credential possession cannot substitute for the canonical lock/generation authority. This selection authorizes only local implementation/preflight candidate production. It authorizes no Housing mutation, credential creation, pilot execution, merge, unattended execution, D5 reconsideration or D13 conformance claim. `d13_conformance_result` remains `not-established`. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 bounded PoC implementation/preflight candidate production gate`.
 
 ## Superseded
 
