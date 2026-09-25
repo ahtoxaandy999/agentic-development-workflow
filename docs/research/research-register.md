@@ -1447,6 +1447,13 @@ authority_boundary: >
   implementation/preflight candidate production only. It creates no Pet Project
   or Housing mutation, credential creation, pilot execution, unattended/AFK,
   merge, D5 reconsideration, conformance or Workflow v1 amendment authority.
+  docs/design/ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001.md accepts the
+  exact reviewed preflight-003 package as execution-preparation input, accepts
+  the known main-write residual risk for one bounded Pet PoC only without
+  eliminating it, and selects two separate GitHub fine-grained personal access
+  tokens as publisher and reviewer/live-provider-reader credential products. It
+  creates no credential creation, Pet Project mutation, pilot execution or
+  conformance authority.
 repository_wide_current_gate_unchanged: true
 d13_prerequisite_design_candidate: docs/design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001.md
 d13_prerequisite_design_task_id: ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001
@@ -1490,13 +1497,35 @@ d13_bounded_poc_selected_runtime: supervised-task-local-deterministic-python
 d13_bounded_poc_selected_generation_fence: posix-single-credential-publisher-lifetime-flock-plus-canonical-generation-record
 d13_bounded_poc_selected_commit_primitive: github-graphql-createCommitOnBranch-expectedHeadOid
 d13_bounded_poc_implementation_preflight_authorized: true
+d13_execution_prerequisite_disposition: docs/design/ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001.md
+d13_execution_prerequisite_disposition_task_id: ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001
+d13_execution_prerequisite_disposition_subject_main: d1f30a3c362459fe3a59cbba725a77be3f571f97
+d13_execution_prerequisite_disposition_decision: accept-preflight-003-as-execution-preparation-input-accept-one-poc-main-write-residual-risk-and-select-two-separate-fine-grained-pat-credential-products
+d13_bounded_poc_preflight_candidate_root: /Users/antony/Work/Projects/adw-d13-poc-preflight-003
+d13_bounded_poc_preflight_candidate_identity: e06eee1bbb0083adc35a965c8768f1516d97bae1d017908dffe1c0e05d7b32e8
+d13_bounded_poc_preflight_candidate_identity_definition: sha256-of-exact-MANIFEST.sha256-bytes
+d13_bounded_poc_preflight_subject_sha256: 7ca638b99e7d3025347f0969d9decbda5aaed2a596ccf37f468d30bb7e3c0ff7
+d13_bounded_poc_preflight_report_sha256: ac80f130eb8ed7d6c6f9df332afd1160a6cf1213a355f3292023be7f3bfaefbe
+d13_bounded_poc_preflight_review_result: PASS
+d13_bounded_poc_preflight_review_findings: 0-blocker-0-major-2-minor-4-note
+d13_bounded_poc_preflight_status: accepted-as-execution-preparation-input
+d13_bounded_poc_preflight_minor_2_report_section_5_7_stale_prose: preserved-historical-nonblocking-use-exact-identities
+d13_bounded_poc_main_write_residual_risk_disposition: accepted
+d13_bounded_poc_main_write_residual_risk_scope: one-bounded-pet-poc-selected-mechanism-dedicated-pilot-branch-effect-domain-only
+d13_bounded_poc_main_write_residual_risk_eliminated: false
+d13_bounded_poc_publisher_credential_product: github-fine-grained-personal-access-token
+d13_bounded_poc_reviewer_live_reader_credential_product: github-fine-grained-personal-access-token
+d13_bounded_poc_credential_separation: two-separate-credentials
+d13_bounded_poc_credential_repository_scope: ahtoxaandy999/pet-project-only
+d13_bounded_poc_live_provider_reader_required_before_execution: true
+d13_bounded_poc_live_provider_reader_status: not-produced-not-reviewed
 d13_bounded_poc_pilot_execution_authorized: false
 d13_bounded_poc_pet_project_mutation_authorized: false
 d13_bounded_poc_credential_creation_authorized: false
-next_gate: D13 bounded PoC implementation/preflight candidate production gate
+next_gate: D13 Pet credential creation and effective-permission proof authorization gate
 ```
 
-The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The historical DR-006 decision that D13 remained `CONFIRM DEFER` is preserved as the prior disposition. The accepted prerequisite design, readiness assessment and corrected conformance-evidence scoping establish the prerequisites for one explicit mechanism decision. Coordinator authorization [ADW-D13-BOUNDED-POC-AUTHORIZATION-001](../design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md), after human `++`, changes the current D13 status only to `CONDITIONALLY SELECT FOR ONE BOUNDED POC` for the Housing profile using a supervised task-local deterministic Python runtime, exactly one credential-bearing publisher process fenced by a canonical lifetime POSIX `flock` plus canonical generation record, GitHub GraphQL `createCommitOnBranch(expectedHeadOid)` exact-head fencing, generation-bound operation control, local append-only evidence/recovery state and an isolated read-only reviewer credential. A new generation cannot activate until prior publisher cessation/lock release is established, and stale workspace/credential possession cannot substitute for the canonical lock/generation authority. This selection authorizes only local implementation/preflight candidate production. It authorizes no Housing mutation, credential creation, pilot execution, merge, unattended execution, D5 reconsideration or D13 conformance claim. Profile amendment [ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001](../design/ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001.md) corrects only the current selected profile from Housing to `ahtoxaandy999/pet-project`, observed at Pet `main` `28f84fe4324925adae0f17163d578ed2e1f9bc19`; the Housing selection and its review and merge evidence remain historical. The selected runtime, generation fence and GraphQL commit primitive are unchanged, and the amendment is not a new D13 mechanism selection. Pet's exact-candidate verification workflow and Chat conveyor controls are prior evidence only; its push-triggered `Exact candidate verification` runs are indirect pilot effects that must be inventoried and reconciled. The amendment authorizes no Pet Project mutation, credential creation or pilot execution. `d13_conformance_result` remains `not-established`. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 bounded PoC implementation/preflight candidate production gate`, now targeting Pet Project.
+The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The historical DR-006 decision that D13 remained `CONFIRM DEFER` is preserved as the prior disposition. The accepted prerequisite design, readiness assessment and corrected conformance-evidence scoping establish the prerequisites for one explicit mechanism decision. Coordinator authorization [ADW-D13-BOUNDED-POC-AUTHORIZATION-001](../design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md), after human `++`, changes the current D13 status only to `CONDITIONALLY SELECT FOR ONE BOUNDED POC` for the Housing profile using a supervised task-local deterministic Python runtime, exactly one credential-bearing publisher process fenced by a canonical lifetime POSIX `flock` plus canonical generation record, GitHub GraphQL `createCommitOnBranch(expectedHeadOid)` exact-head fencing, generation-bound operation control, local append-only evidence/recovery state and an isolated read-only reviewer credential. A new generation cannot activate until prior publisher cessation/lock release is established, and stale workspace/credential possession cannot substitute for the canonical lock/generation authority. This selection authorizes only local implementation/preflight candidate production. It authorizes no Housing mutation, credential creation, pilot execution, merge, unattended execution, D5 reconsideration or D13 conformance claim. Profile amendment [ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001](../design/ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001.md) corrects only the current selected profile from Housing to `ahtoxaandy999/pet-project`, observed at Pet `main` `28f84fe4324925adae0f17163d578ed2e1f9bc19`; the Housing selection and its review and merge evidence remain historical. The selected runtime, generation fence and GraphQL commit primitive are unchanged, and the amendment is not a new D13 mechanism selection. Pet's exact-candidate verification workflow and Chat conveyor controls are prior evidence only; its push-triggered `Exact candidate verification` runs are indirect pilot effects that must be inventoried and reconciled. The amendment authorizes no Pet Project mutation, credential creation or pilot execution. Execution-prerequisite disposition [ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001](../design/ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001.md) accepts the exact local preflight-003 package (candidate identity `e06eee1bbb0083adc35a965c8768f1516d97bae1d017908dffe1c0e05d7b32e8`, fresh independent affected review PASS) as the reviewed implementation/preflight input for subsequent D13 execution-preparation decisions. It accepts, for exactly one bounded D13 Pet PoC within the dedicated pilot branch/effect domain, the known residual risk that no evidenced GitHub provider-side control prevents a repository contents-write credential from targeting Pet `main`; the risk is not eliminated and confers no general, production, multi-project, merge or unattended/AFK authority. It selects two separate GitHub fine-grained personal access tokens scoped to Pet only: a publisher credential and a reviewer/live-provider-reader credential. Before execution authorization can become effective, a separately reviewed live provider reader using the read-only credential must replace the caller-supplied `fresh_snapshot` relied on by preflight-003. The stale preflight-003 report §5.7 prose is preserved as historical review evidence. No credential or token is created, and credential creation, Pet Project mutation and pilot execution remain unauthorized. `d13_conformance_result` remains `not-established`. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 Pet credential creation and effective-permission proof authorization gate`.
 
 ## Superseded
 
