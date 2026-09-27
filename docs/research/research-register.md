@@ -1555,6 +1555,40 @@ next_gate: D13 Pet credential proof and live-provider-reader evidence acquisitio
 
 The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The historical DR-006 decision that D13 remained `CONFIRM DEFER` is preserved as the prior disposition. The accepted prerequisite design, readiness assessment and corrected conformance-evidence scoping establish the prerequisites for one explicit mechanism decision. Coordinator authorization [ADW-D13-BOUNDED-POC-AUTHORIZATION-001](../design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md), after human `++`, changes the current D13 status only to `CONDITIONALLY SELECT FOR ONE BOUNDED POC` for the Housing profile using a supervised task-local deterministic Python runtime, exactly one credential-bearing publisher process fenced by a canonical lifetime POSIX `flock` plus canonical generation record, GitHub GraphQL `createCommitOnBranch(expectedHeadOid)` exact-head fencing, generation-bound operation control, local append-only evidence/recovery state and an isolated read-only reviewer credential. A new generation cannot activate until prior publisher cessation/lock release is established, and stale workspace/credential possession cannot substitute for the canonical lock/generation authority. This selection authorizes only local implementation/preflight candidate production. It authorizes no Housing mutation, credential creation, pilot execution, merge, unattended execution, D5 reconsideration or D13 conformance claim. Profile amendment [ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001](../design/ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001.md) corrects only the current selected profile from Housing to `ahtoxaandy999/pet-project`, observed at Pet `main` `28f84fe4324925adae0f17163d578ed2e1f9bc19`; the Housing selection and its review and merge evidence remain historical. The selected runtime, generation fence and GraphQL commit primitive are unchanged, and the amendment is not a new D13 mechanism selection. Pet's exact-candidate verification workflow and Chat conveyor controls are prior evidence only; its push-triggered `Exact candidate verification` runs are indirect pilot effects that must be inventoried and reconciled. The amendment authorizes no Pet Project mutation, credential creation or pilot execution. Execution-prerequisite disposition [ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001](../design/ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001.md) accepts the exact local preflight-003 package (candidate identity `e06eee1bbb0083adc35a965c8768f1516d97bae1d017908dffe1c0e05d7b32e8`, fresh independent affected review PASS) as the reviewed implementation/preflight input for subsequent D13 execution-preparation decisions. It accepts, for exactly one bounded D13 Pet PoC within the dedicated pilot branch/effect domain, the known residual risk that no evidenced GitHub provider-side control prevents a repository contents-write credential from targeting Pet `main`; the risk is not eliminated and confers no general, production, multi-project, merge or unattended/AFK authority. It selects two separate GitHub fine-grained personal access tokens scoped to Pet only: a publisher credential and a reviewer/live-provider-reader credential. Before execution authorization can become effective, a separately reviewed live provider reader using the read-only credential must replace the caller-supplied `fresh_snapshot` relied on by preflight-003. The stale preflight-003 report §5.7 prose is preserved as historical review evidence. No credential or token is created by that disposition. Credential authorization [ADW-D13-PET-CREDENTIAL-CREATION-AUTHORIZATION-001](../design/ADW-D13-PET-CREDENTIAL-CREATION-AUTHORIZATION-001.md), after human `++` and effective only after independent review, coordinator acceptance, protected publication and verified readback, authorizes manual user-mediated creation of exactly two distinct 7-day GitHub fine-grained personal access tokens with resource owner `ahtoxaandy999` and only `ahtoxaandy999/pet-project` selected: publisher A (Metadata read, Contents read/write, Actions read, Pull requests read/write) stored in macOS Keychain service `adw-d13-pet-publisher`, and reviewer/live-provider-reader B (Metadata read, Contents read, Actions read, Pull requests read) stored in service `adw-d13-pet-reviewer-reader`, both under account `ahtoxaandy999`. It also authorizes a non-secret, read-only effective-permission proof and implementation of a separately reviewed, read-only live provider reader bound to Pet and credential B only. A's Contents write is not branch-scoped; the main-write residual risk remains accepted for one bounded Pet PoC only and is not eliminated. Pet Project mutation and pilot execution remain unauthorized. `d13_conformance_result` remains `not-established`. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 Pet credential proof and live-provider-reader evidence acquisition gate`.
 
+
+## DR-007 — Local LLM benchmark protocol
+
+```yaml
+id: DR-007
+research_status: completed
+current_decision_status: proposed
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-007.md
+evidence_as_of: 2026-09-27
+research_basis_main: f87caf01ab7c09198c664bee654d86b438881c0f
+scope: local-llm-model-selection-benchmark-protocol-for-m5-pro-24gb
+candidate_set:
+  - qwen3.5:9b-mlx
+  - gpt-oss:20b
+  - gemma4:26b-nvfp4
+initial_execution_slice: ollama-plus-qwen3.5-9b-setup-and-protocol-smoke-only
+source_review_status: not-performed
+repository_wide_current_gate_unchanged: true
+normative_effect: none
+skill_status: deferred-until-two-stable-manual-model-runs
+next_gate: independent source review of the exact DR-007 evidence candidate
+```
+
+DR-007 records a bounded model-selection and benchmark-design proposal for the
+M5 Pro 24 GB local semantic-policy/orchestration use case. It separates runtime
+performance from workflow correctness, defines controlled/daily/stretch
+profiles, proposes machine-readable local run bundles, and defers reusable-skill
+implementation until repeated manual evidence establishes a stable surface.
+It authorizes no model/runtime installation, system mutation, skill
+implementation, model adoption, Workflow v1 amendment or baseline change. The
+repository-wide current gate remains unchanged. The DR-007-specific next gate is
+independent source review of the exact evidence candidate.
+
 ## Superseded
 
 None.
