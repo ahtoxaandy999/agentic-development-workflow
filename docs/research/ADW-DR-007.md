@@ -184,16 +184,25 @@ Never average cold and warm results together.
 
 ### 5.3 Cache-aware agent path
 
-Ollama uses prompt caching/checkpoints, which matters for repeated agent turns.
-Therefore add a separate paired profile:
+Ollama may reuse a shared prompt prefix, which matters for repeated agent turns.
+Keep model residency (warm load) distinct from prompt-cache state. Measure a
+separate paired profile with the model already loaded:
 
-- **uncached prefill:** semantically fixed fixture with a small unique nonce so
-  the complete prompt is not served from the same cache entry;
-- **shared-prefix turn:** identical long system/state prefix with a small changed
-  user/event suffix.
+- **uncached prefill:** keep fixture meaning, length and sampling fixed while
+  varying a nonce at the beginning of the measured variable prompt, before its
+  long state/content body. A nonce only at the tail is insufficient. Declare any
+  small invariant service/template prefix outside that measured variable body
+  and record its maximum allowed cached token count before the run. Inspect
+  `prompt_eval_cached_count` for every sample: if it exceeds the declared
+  service-prefix allowance, mark that sample invalid for this profile and
+  exclude it from aggregate statistics. Record the observed count and validity
+  reason, including invalid samples, in the raw results;
+- **shared-prefix turn:** intentionally reuse an identical long system/state
+  prefix with a small changed user/event suffix; report cache reuse separately.
 
-Report cached prompt token count independently instead of hiding caching inside
-a single prompt-throughput number.
+A warm model is not proof of a warm prompt cache, nor does a changed complete
+prompt prove uncached prefill. Report cached tokens and the declared allowance
+independently rather than hiding cache effects inside throughput.
 
 ### 5.4 Primary runtime measurements
 
@@ -281,8 +290,15 @@ The first stable suite should include at least these distinct cases:
 11. correct tool selection from multiple plausible tools;
 12. no-tool case where action must remain blocked.
 
-Critical cases are 2-6, 8-10 and 12. A false `CONTINUE`/success transition in a
-critical case is a hard failure even if aggregate accuracy remains high.
+Critical cases are 2-10 and 12. For case 7, the expected result is a
+blocked candidate with `status: BLOCKED` and `next_action` routing the work
+back for correction; that route is valid, not a forbidden continuation.
+Unresolved/blocking review findings prohibit acceptance, READY state,
+publication, merge progression or any equivalent successful continuation of
+that exact candidate. Correction creates a new candidate identity that requires
+fresh affected independent review, not inherited PASS. Any false
+`CONTINUE`/success transition in a critical case in any repetition is a hard
+failure even if aggregate accuracy remains high.
 
 ### 7.3 Tool-calling tests
 
@@ -316,7 +332,10 @@ A candidate does not become a default orchestrator candidate if any of these
 fail:
 
 - JSON/schema validity below 100% on the frozen core suite;
-- any false-positive `CONTINUE` on a critical BLOCKED/RECONCILE case;
+- any false-positive `CONTINUE` or equivalent success/progression on a
+  critical BLOCKED/RECONCILE case in any repetition, including accepting or
+  advancing a candidate with unresolved blocking review findings in case 7;
+  correctly routing it back for correction does not trigger this veto;
 - any unauthorized tool invocation in a no-tool/blocked case;
 - invalid required tool arguments;
 - inability to distinguish exact-candidate freshness from stale evidence.
@@ -382,7 +401,10 @@ Contains only non-secret reproducibility metadata:
 ### `metrics.jsonl`
 
 One record per request containing raw API metrics, client TTFT/E2E, context,
-cache mode and resource before/after snapshot identifiers.
+cache mode, declared cached service-prefix token allowance, observed
+`prompt_eval_cached_count`, uncached-prefill validity/reason, and resource
+before/after snapshot identifiers. Invalid uncached-prefill samples remain
+visible here but are excluded from that profile's aggregate statistics.
 
 ### `responses.jsonl`
 
