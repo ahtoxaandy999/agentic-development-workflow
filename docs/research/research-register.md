@@ -1606,8 +1606,8 @@ benchmark-result synthesis and independent evidence review recorded below.
 
 ```yaml
 id: DR-008
-research_status: completed
-current_decision_status: proposed
+research_status: reviewed
+current_decision_status: accepted
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-008.md
 evidence_as_of: 2026-09-28
@@ -1627,7 +1627,31 @@ deterministic_guard_required: true
 raw_result_storage: local-hashed-bundles-not-repository-persisted
 repository_wide_current_gate_unchanged: true
 normative_effect: none
-next_gate: independent evidence review of the exact DR-008 candidate before any local-model integration design
+source_review_status: completed-pass
+source_review_subject_commit: 970a0b1711bd528a8030b0b8ff0323f2ca4565e6
+source_review_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/25#issuecomment-5870603955
+source_review_body_bytes: 6881
+source_review_body_sha256: 37936862ad8620496fc8cd4d2430730a5052190a5289d6d27dea82744ac6a14d
+source_review_findings: 0-blocker-0-major-1-minor-1-note
+coordinator_disposition_status: completed
+coordinator_disposition_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/25#issuecomment-5870605888
+coordinator_disposition_body_bytes: 2363
+coordinator_disposition_body_sha256: b27c8ca1ce8d1fa9e87c293ff8f88100ce5b5d040afe36662c7962f7e841a153
+coordinator_signal: "++m"
+adoption_scope: bounded-research-evidence-acceptance-and-integration-design-continuation-only
+model_runtime_or_workflow_policy_adoption: false
+publication_pr: 25
+publication_merge: 0d8805255556dfa86a18c28d95b7602b69164172
+publication_tree: 76f70e076a92f9f01a6a1562c0be336417823c32
+publication_second_parent: 970a0b1711bd528a8030b0b8ff0323f2ca4565e6
+publication_state: verified
+recovered_evidence_materialized_on: 2026-09-28
+recovered_evidence_timing: post-merge-materialization-of-earlier-review-and-disposition
+authorized_follow_up_gate: ADW-LOCAL-LLM-INTEGRATION-DESIGN-001
+integration_design_candidate: docs/design/ADW-LOCAL-LLM-INTEGRATION-DESIGN-001.md
+integration_design_status: proposed-pending-independent-review
+integration_design_normative_effect: none
+next_gate: fresh independent review of the exact ADW-LOCAL-LLM-INTEGRATION-DESIGN-001 candidate
 ```
 
 DR-008 records the executed DR-007 benchmark results, corrected validator and
@@ -1642,6 +1666,21 @@ This is evidence and a proposed integration hypothesis only. It authorizes no
 model adoption, runtime adoption, Workflow v1 amendment, tooling implementation
 or autonomous repository action. The repository-wide current gate remains
 unchanged.
+
+The recovered PR #25 records make the full independent PASS and coordinator
+disposition retrievable from GitHub. They were posted after merge and do not
+claim pre-merge GitHub persistence. The exact reviewed subject is preserved as
+the second parent of the independently verified publication. Acceptance is
+limited to bounded research evidence and continuation to integration design,
+not adoption of either model or its role split as policy. The nonblocking
+MINOR 1 and NOTE 1 remain recorded in the review; DR-008 publication-time
+evidence is unchanged.
+
+The authorized follow-up is now the bounded [local-LLM integration design](../design/ADW-LOCAL-LLM-INTEGRATION-DESIGN-001.md).
+Its proposal and this reconciliation form one candidate pending fresh independent
+review. Its containing full commit SHA is supplied by live GitHub at review,
+not embedded recursively in the candidate. No design acceptance, implementation,
+pilot execution, automated writes or baseline acceptance is claimed.
 
 
 ## Superseded
