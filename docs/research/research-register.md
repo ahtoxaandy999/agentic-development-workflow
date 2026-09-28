@@ -3,7 +3,7 @@ artifact: research-register
 artifact_status: active
 maturity: v1
 authority: research-index
-as_of: 2026-09-03
+as_of: 2026-09-28
 ---
 
 # Research Register
@@ -1560,7 +1560,7 @@ The exact source-reviewed DR-006 evidence received coordinator disposition throu
 
 ```yaml
 id: DR-007
-research_status: completed
+research_status: reviewed
 current_decision_status: proposed
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-007.md
@@ -1572,11 +1572,15 @@ candidate_set:
   - gpt-oss:20b
   - gemma4:26b-nvfp4
 initial_execution_slice: ollama-plus-qwen3.5-9b-setup-and-protocol-smoke-only
-source_review_status: not-performed
+source_review_status: completed-pass
+review_subject_commit: 0ff0be54375551e04663f36e1b6baae11845f38a
+review_findings: 0-blocking-0-correction
+publication_merge: 572a511775ec926d24a0be2c67b13c8db4e1043b
+publication_tree: 3d9b4dd983aa53c4bce88a80f78b88f4ade33cb5
 repository_wide_current_gate_unchanged: true
 normative_effect: none
 skill_status: deferred-until-two-stable-manual-model-runs
-next_gate: independent source review of the exact DR-007 evidence candidate
+next_gate: DR-008 benchmark-result synthesis and independent evidence review
 ```
 
 DR-007 records a bounded model-selection and benchmark-design proposal for the
@@ -1588,6 +1592,49 @@ It authorizes no model/runtime installation, system mutation, skill
 implementation, model adoption, Workflow v1 amendment or baseline change. The
 repository-wide current gate remains unchanged. The DR-007-specific next gate is
 independent source review of the exact evidence candidate.
+
+
+## DR-008 — Local LLM benchmark results and role-split evidence
+
+```yaml
+id: DR-008
+research_status: completed
+current_decision_status: proposed
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-008.md
+evidence_as_of: 2026-09-28
+research_basis_main: 572a511775ec926d24a0be2c67b13c8db4e1043b
+depends_on:
+  - DR-007
+scope: executed-local-llm-benchmark-results-and-role-split-evidence
+tested_candidates:
+  - qwen3.5:9b-mlx
+  - gpt-oss:20b
+  - gemma4:26b-nvfp4
+recommended_reasoning_candidate: gpt-oss:20b
+recommended_generation_candidate: gemma4:26b-nvfp4
+lightweight_fallback_candidate: qwen3.5:9b-mlx
+autonomous_policy_authority: prohibited-by-evidence
+deterministic_guard_required: true
+raw_result_storage: local-hashed-bundles-not-repository-persisted
+repository_wide_current_gate_unchanged: true
+normative_effect: none
+next_gate: independent evidence review of the exact DR-008 candidate before any local-model integration design
+```
+
+DR-008 records the executed DR-007 benchmark results, corrected validator and
+cache-methodology findings, workstation resource observations, hidden
+code/reasoning results and workflow-specific replay evidence. Its current
+recommendation is a bounded phase-based role split: `gpt-oss:20b` for
+reasoning/review/ambiguity analysis and `gemma4:26b-nvfp4` for code and
+generation batches, with deterministic workflow code retaining authority over
+freshness, exact identity, authorization, transitions, tools, retry containment
+and merge/publication gates. Qwen3.5 9B remains a lightweight measured fallback.
+This is evidence and a proposed integration hypothesis only. It authorizes no
+model adoption, runtime adoption, Workflow v1 amendment, tooling implementation
+or autonomous repository action. The repository-wide current gate remains
+unchanged.
+
 
 ## Superseded
 
