@@ -106,8 +106,16 @@ Current Ollama primary documentation, checked 2026-09-28, documents:
 - `GET /api/ps` for currently loaded models;
 - `keep_alive: 0` as an unload request;
 - localhost `127.0.0.1:11434` as the default bind;
-- a documented default context length of 4096 and `options.num_ctx` as a
-  context-length setting.
+- automatic context defaults on the Context Length page based on detected VRAM:
+  less than 24 GiB -> 4k, 24-48 GiB -> 32k, and at least 48 GiB -> 256k;
+- the separately scoped Modelfile reference documents `num_ctx` as the context
+  window parameter, currently labels its parameter default as 2048, and uses
+  4096 as an example value.
+
+These documentation surfaces have different scopes and are not treated as proof
+of the exact effective request budget on this Mac. Every qualification probe
+whose conclusion depends on context supplied `num_ctx` explicitly and measured
+the resulting runtime behavior.
 
 Primary sources:
 
@@ -117,6 +125,7 @@ Primary sources:
 - https://docs.ollama.com/api/ps
 - https://docs.ollama.com/faq
 - https://docs.ollama.com/context-length
+- https://docs.ollama.com/modelfile
 - https://docs.ollama.com/api/streaming
 - https://docs.ollama.com/api/errors
 - https://github.com/ollama/ollama/releases/tag/v0.34.4
@@ -148,12 +157,12 @@ Installed model inventory additionally contained `qwen3.5:9b-mlx`, but it was
 not loaded or tested by this qualification. No artifact was pulled, upgraded or
 reconfigured.
 
-Before the probes, `memory_pressure` reported 86% system-wide free memory and
-swap usage was approximately 1.0 GiB of 2.0 GiB. After all bounded probes and
-verified unload, free-memory percentage was again 86%; swap had expanded to
-approximately 4.16 GiB used of 5.0 GiB. No warning/critical memory-pressure state
-or runtime crash was observed. This is a bounded safety/resource observation,
-not a production resource threshold or performance comparison.
+Resource-safety checks were performed transiently during qualification, but the
+final SHA-bound local bundle does not preserve the historical pre/post
+`memory_pressure` or swap snapshots. Therefore this note does not claim exact
+historical resource values as independently recoverable evidence. Resource
+thresholds remain unqualified and no production resource limit or performance
+comparison is established here.
 
 ## 5. Minimal effective structured-output contract
 
@@ -328,7 +337,9 @@ Final SHA-256 identities:
 The bundle contains synthetic inputs, visible model output only where needed,
 derived validation observations and probe scripts. It contains no credentials,
 repository source content, private transcripts or retained hidden
-chain-of-thought.
+chain-of-thought. It also does not preserve historical pre/post
+`memory_pressure` or swap snapshots; no exact resource values rely on such
+unbound observations in this corrected note.
 
 ## 11. Decision, blockers and next gate
 
