@@ -15,6 +15,9 @@ semantic_review_ref: docs/design/ADW-WF1-DESIGN-REVIEW-004.md
 semantic_review_blob: 3cdb92769bb955c8782dfa504843fd32a4736168
 semantic_disposition_ref: docs/design/ADW-WF1-DESIGN-DISPOSITION-001.md
 semantic_disposition_blob: 35d3a8ba5c3901e90d070b000659541b1ef4975c
+workspace_closeout_amendment_decision_id: ADW-WF1-WORKSPACE-CLOSEOUT-AMENDMENT-001
+workspace_closeout_amendment_decision: adopt-mandatory-workspace-closeout-accounting
+workspace_closeout_amendment_effective_condition: protected-publication-and-verified-readback
 effective_condition: protected-publication-and-verified-readback
 supersedes: null
 ---
@@ -61,6 +64,77 @@ RG1 through RG12 remain unresolved in their existing scopes under the [DR-005 di
 The [protected supervised publication decision](docs/design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001.md) remains the default mechanism for each separately authorized supervised write: one bounded candidate branch, draft PR, exact-candidate independent review, coordinator acceptance, separately authorized ready transition and merge, then exact remote readback. Effective protection and relied-upon identities must be freshly verified at each applicable boundary.
 
 This mechanism and semantic adoption confer no standing substantive-write authority, direct-main writes, routine writes, parallel writers, automated writes, unattended execution or AFK execution. They authorize no Actions, hooks, automation, ruleset changes, automatic publication or branch cleanup. Each substantive task and external mutation remains bounded by its own authority.
+
+## Workspace closeout and cleanup amendment
+
+Decision `ADW-WF1-WORKSPACE-CLOSEOUT-AMENDMENT-001`:
+`adopt-mandatory-workspace-closeout-accounting`.
+
+This amendment adds a mandatory closeout gate for task-created disposable
+workspaces and local evidence surfaces. It does not grant standing cleanup,
+branch-deletion, archival, or other mutation authority.
+
+The amendment becomes effective only after its exact immutable candidate receives
+affected independent review, explicit coordinator acceptance tied to that SHA,
+separately authorized protected publication, and verified remote readback. Until
+those conditions are satisfied, the pre-amendment Workflow v1 remains
+controlling.
+
+At an authorized terminal task outcome, after required durable candidate,
+review, acceptance, publication, recovery, and evidence obligations are
+satisfied, the execution owner must inventory every disposable workspace,
+worktree, local task branch, temporary run directory, and local evidence
+directory created for that task and classify each item before claiming clean
+closeout.
+
+A cleanup item is eligible only when all applicable facts are freshly verified:
+
+- it is no longer active, under review, needed for recovery, or required for an
+  unresolved obligation;
+- its worktree/filesystem state is clean, with no uncommitted or untracked work
+  that would be lost;
+- any candidate, result, or evidence that must remain durable is already
+  preserved in its authoritative repository, remote ref, accepted publication,
+  or designated durable evidence/archive root;
+- removing the local item cannot erase the only known copy of an unpublished
+  change, exact review subject, required recovery input, or retained evidence;
+- the current task or terminal-closeout authority explicitly permits the
+  corresponding local mutation.
+
+Dirty, unpublished, active, ambiguously owned, or recovery-relevant state is not
+cleaned to make the workspace look tidy. It makes cleanup `BLOCKED` for that
+item. The executor must preserve the state, report its exact path and reason,
+and escalate instead of stashing, resetting, force-removing, overwriting, or
+silently discarding it.
+
+For an eligible Git worktree, normal closeout removes the worktree through Git
+and prunes stale worktree metadata. A local task branch may be deleted only when
+the same closeout authority covers that mutation and its tip is independently
+recoverable from an exact remote ref or is already contained in the accepted
+published history. Remote branch deletion is a separate mutation and is never
+implied by local workspace cleanup.
+
+Task-local evidence that must be retained must not remain scattered in the
+active project/workspace root after closeout. It moves only under authorized
+retention to a designated durable evidence or archive location with enough
+identity to recover its task/source relationship. Evidence deletion requires
+its own applicable retention/deletion authority; archival is not permission to
+discard sensitive-data controls.
+
+Every terminal task report that created disposable local state must include one
+of these outcomes:
+
+- `WORKSPACE CLEANUP: PASS` — all task-owned disposable cleanup obligations
+  are resolved, and any intentionally retained state has an explicit current
+  owner/location outside the disposable surface;
+- `WORKSPACE CLEANUP: BLOCKED` — one or more task-owned cleanup obligations
+  remain, with exact path, state, preservation reason, and the missing authority
+  or dependency required to resolve them.
+
+A semantic result, test PASS, review PASS, Product/coordinator acceptance, PR
+merge, cancellation, or termination does not imply workspace cleanup. Likewise,
+cleanup does not alter those independent state planes. A task must not be
+reported as cleanly closed while its workspace cleanup outcome is `BLOCKED`.
 
 ## Baseline and amendment control
 
