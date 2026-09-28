@@ -1590,8 +1590,10 @@ profiles, proposes machine-readable local run bundles, and defers reusable-skill
 implementation until repeated manual evidence establishes a stable surface.
 It authorizes no model/runtime installation, system mutation, skill
 implementation, model adoption, Workflow v1 amendment or baseline change. The
-repository-wide current gate remains unchanged. The DR-007-specific next gate is
-independent source review of the exact evidence candidate.
+repository-wide current gate remains unchanged. Independent review and protected
+publication of the exact corrected DR-007 candidate are complete. The current
+DR-007 follow-up gate is the DR-008 benchmark-result synthesis and independent
+evidence review recorded below.
 
 
 ## DR-008 — Local LLM benchmark results and role-split evidence
