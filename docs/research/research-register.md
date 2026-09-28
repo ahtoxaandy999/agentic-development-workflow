@@ -1595,12 +1595,11 @@ implementation until repeated manual evidence establishes a stable surface.
 It authorizes no model/runtime installation, system mutation, skill
 implementation, model adoption, Workflow v1 amendment or baseline change. The
 repository-wide current gate remains unchanged. Protected publication of the exact corrected DR-007 candidate is independently
-recoverable from live GitHub. The independent source-review verdict that
-preceded publication is not represented by an immutable repository or GitHub
-review/comment record available to this repository review, so the Register does
-not claim that review as independently verified. The current DR-007 follow-up
-gate remains the DR-008 benchmark-result synthesis and independent evidence
-review recorded below.
+recoverable from live GitHub. No immutable independent DR-007 source-review
+verdict/findings record is currently recoverable from repository or GitHub
+review/comment evidence, so the Register does not claim a completed or verified
+source-review verdict. The current DR-007 follow-up gate remains the DR-008
+benchmark-result synthesis and independent evidence review recorded below.
 
 
 ## DR-008 — Local LLM benchmark results and role-split evidence
