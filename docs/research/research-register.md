@@ -1560,7 +1560,7 @@ The exact source-reviewed DR-006 evidence received coordinator disposition throu
 
 ```yaml
 id: DR-007
-research_status: reviewed
+research_status: completed
 current_decision_status: proposed
 owner: agentic-development-research
 artifact: docs/research/ADW-DR-007.md
@@ -1572,11 +1572,15 @@ candidate_set:
   - gpt-oss:20b
   - gemma4:26b-nvfp4
 initial_execution_slice: ollama-plus-qwen3.5-9b-setup-and-protocol-smoke-only
-source_review_status: completed-pass
-review_subject_commit: 0ff0be54375551e04663f36e1b6baae11845f38a
-review_findings: 0-blocking-0-correction
+source_review_status: not-independently-recoverable-from-repository-or-github-evidence
 publication_merge: 572a511775ec926d24a0be2c67b13c8db4e1043b
 publication_tree: 3d9b4dd983aa53c4bce88a80f78b88f4ade33cb5
+publication_state: verified
+review_evidence_boundary: >
+  Publication is independently recoverable from live GitHub, but an immutable
+  independent DR-007 source-review verdict/findings record is not currently
+  recoverable from repository or GitHub review/comment evidence. The Register
+  therefore does not claim a verified completed source-review verdict.
 repository_wide_current_gate_unchanged: true
 normative_effect: none
 skill_status: deferred-until-two-stable-manual-model-runs
@@ -1590,10 +1594,13 @@ profiles, proposes machine-readable local run bundles, and defers reusable-skill
 implementation until repeated manual evidence establishes a stable surface.
 It authorizes no model/runtime installation, system mutation, skill
 implementation, model adoption, Workflow v1 amendment or baseline change. The
-repository-wide current gate remains unchanged. Independent review and protected
-publication of the exact corrected DR-007 candidate are complete. The current
-DR-007 follow-up gate is the DR-008 benchmark-result synthesis and independent
-evidence review recorded below.
+repository-wide current gate remains unchanged. Protected publication of the exact corrected DR-007 candidate is independently
+recoverable from live GitHub. The independent source-review verdict that
+preceded publication is not represented by an immutable repository or GitHub
+review/comment record available to this repository review, so the Register does
+not claim that review as independently verified. The current DR-007 follow-up
+gate remains the DR-008 benchmark-result synthesis and independent evidence
+review recorded below.
 
 
 ## DR-008 — Local LLM benchmark results and role-split evidence

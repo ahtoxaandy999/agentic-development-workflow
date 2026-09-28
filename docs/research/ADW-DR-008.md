@@ -95,8 +95,11 @@ measurement script SHA-256 at the frozen comparison boundary was
 the frozen fixture SHA-256 was
 `39ac5b42fb875f85ad3fc97e356c988e959c36915c35001dd33d5bfc5383c213`.
 
-Raw machine logs and response bundles remain local hashed evidence rather than
-a new permanent repository result-storage convention, consistent with DR-007.
+Raw machine logs and response bundles remain local rather than creating a new
+permanent repository result-storage convention, consistent with DR-007. Final
+frozen bundles and selected correction probes are SHA-identified; some earlier
+exploratory v0 runs predate per-run hash manifests and are treated as weaker
+path-identified local evidence rather than execution-time hashed bundles.
 
 ## 3. Runtime performance and workstation headroom
 
@@ -124,6 +127,14 @@ Additional measured observations:
 - Gemma's normal loaded footprint was about 16-17 GB and could reach about
   19 GB during cache/context-heavy operation. A bounded 32K stress request hit
   the benchmark memory guard at 9% free memory. Its 16K class remained usable.
+  This 32K observation comes from the earlier exploratory
+  `local-llm-bench-v0/runs/stress-gemma-v03` run, which did not have an
+  execution-time per-run SHA manifest. During review correction, the preserved
+  run files were given a post-hoc correction-time digest identity:
+  `SHA256SUMS.review-correction` SHA-256
+  `a98662514f8b0461b52b729a7e03808cd43d77adb17ccf4760848df03519d75e`.
+  That digest strengthens current traceability but is not represented as an
+  execution-time manifest.
 - gpt-oss normally loaded around 12 GB on the tested 4K/8K profiles. Its
   model-native low reasoning adds user-visible latency even when internal
   reasoning begins quickly.
@@ -139,10 +150,15 @@ Prompt-cache reuse was measured separately from model residency.
   cache workload.
 - Gemma hot shared-prefix TTFR was about 0.17-0.33 s across corrected runs.
 - gpt-oss with low reasoning can start reasoning quickly on a hot cache, but
-  visible final output may remain materially later. In the corrected extended
-  cache probe, hot-cache first internal output was about 0.16 s while visible
-  response arrived about 3.78 s later because roughly 1.1K reasoning characters
-  were generated first.
+  visible final output may remain materially later. Review correction reproduced
+  this as hash-identified local run
+  `DR007-GPTOSS20B-EXTENDED-CACHE-001` using the frozen v0.4.3 fixture.
+  Its two hot-cache samples recorded first internal output at about 0.172 s and
+  0.158 s, visible response at about 3.51 s and 3.80 s, and 1060 / 1109
+  reasoning characters respectively. The run's `metrics.jsonl` SHA-256 is
+  `6ce8c3486d2af27c52e77a36102ee9b05647724c0d6c6cf8ad7d87b5b854770d`
+  and its manifest SHA-256 is
+  `52b0a93fc857366f38c06e8ca1f5f93286beecae462cee873a84350ee6e594c9`.
 
 Therefore cache architecture is a major latency lever, but gpt-oss reasoning
 latency must be treated separately from first internal token latency.
@@ -348,8 +364,12 @@ only if the integration design actually requires it.
 - Structured-output compatibility differed by model; format failures were kept
   separate from semantic scores where the distinction was observable.
 - Raw local bundles are not durable repository evidence. This note is a compact
-  synthesis of checked local run bundles whose internal SHA-256 manifests were
-  verified at execution time.
+  synthesis of checked local evidence with mixed provenance strength. Final
+  frozen benchmark bundles and selected correction probes have verified SHA-256
+  identities; some earlier exploratory v0 runs lacked execution-time per-run
+  hash manifests. Where such an early run remains load-bearing, this note
+  identifies that limitation explicitly and does not upgrade a correction-time
+  digest into an execution-time manifest.
 - No result here grants standing execution, merge, unattended, AFK or
   autonomous-policy authority.
 
