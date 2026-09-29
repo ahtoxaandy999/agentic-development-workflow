@@ -1649,9 +1649,22 @@ recovered_evidence_materialized_on: 2026-09-28
 recovered_evidence_timing: post-merge-materialization-of-earlier-review-and-disposition
 authorized_follow_up_gate: ADW-LOCAL-LLM-INTEGRATION-DESIGN-001
 integration_design_candidate: docs/design/ADW-LOCAL-LLM-INTEGRATION-DESIGN-001.md
-integration_design_status: proposed-pending-independent-review
+integration_design_review_status: completed-pass
+integration_design_review_subject_commit: c2d30acbac0b9024d55a4714feba51edea1b1fd6
+integration_design_review_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/26#issuecomment-5871186931
+integration_design_review_findings: 0-blocker-0-major-1-minor-1-note
+integration_design_disposition_status: completed-accept
+integration_design_disposition_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/26#issuecomment-5872023875
+integration_design_publication_pr: 26
+integration_design_publication_merge: df96ac3a865fd82083647067a5af7c29f553c202
+integration_design_publication_tree: 293bc7087ee8a52a48c6ad32f21bd65678974a4e
+integration_design_publication_second_parent: c2d30acbac0b9024d55a4714feba51edea1b1fd6
+integration_design_publication_receipt_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/26#issuecomment-5872291302
+integration_design_status: accepted-published-non-normative-design-basis
 integration_design_normative_effect: none
-next_gate: fresh independent review of the exact ADW-LOCAL-LLM-INTEGRATION-DESIGN-001 candidate
+integration_design_nonblocking_follow_up: review-minor-1-quality-metric-terminology
+post_publication_follow_up_gate: ADW-LOCAL-LLM-RUNTIME-QUALIFICATION-001
+next_gate: DR-009 local LLM runtime/API qualification and fresh independent review
 ```
 
 DR-008 records the executed DR-007 benchmark results, corrected validator and
@@ -1676,11 +1689,75 @@ not adoption of either model or its role split as policy. The nonblocking
 MINOR 1 and NOTE 1 remain recorded in the review; DR-008 publication-time
 evidence is unchanged.
 
-The authorized follow-up is now the bounded [local-LLM integration design](../design/ADW-LOCAL-LLM-INTEGRATION-DESIGN-001.md).
-Its proposal and this reconciliation form one candidate pending fresh independent
-review. Its containing full commit SHA is supplied by live GitHub at review,
-not embedded recursively in the candidate. No design acceptance, implementation,
-pilot execution, automated writes or baseline acceptance is claimed.
+The bounded [local-LLM integration design](../design/ADW-LOCAL-LLM-INTEGRATION-DESIGN-001.md)
+received exact-subject independent-review PASS in PR #26 comment `5871186931`,
+coordinator ACCEPT in comment `5872023875`, and protected publication as merge
+`df96ac3a865fd82083647067a5af7c29f553c202`; publication receipt
+`5872291302` records the exact topology and unchanged design blob. The design is
+an accepted/published non-normative design basis only. Its review MINOR 1 about
+the pilot quality-metric wording remains a nonblocking follow-up and is not
+silently corrected here.
+
+The separately authorized post-publication follow-up is the bounded DR-009
+runtime/API qualification recorded below. No adapter implementation, model/runtime
+adoption, pilot execution, automated writes, Workflow v1 amendment or baseline
+acceptance is claimed.
+
+
+## DR-009 — Local LLM effective runtime/API qualification
+
+```yaml
+id: DR-009
+research_status: completed
+current_decision_status: proposed
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-009.md
+evidence_as_of: 2026-09-28
+research_basis_main: df96ac3a865fd82083647067a5af7c29f553c202
+depends_on:
+  - DR-008
+  - ADW-LOCAL-LLM-INTEGRATION-DESIGN-001
+scope: local-llm-effective-runtime-api-qualification
+qualification_result: qualified-with-blockers
+target_machine: MacBook-Pro-Mac17,9-Apple-M5-Pro-24GB
+runtime: Ollama-0.34.4
+effective_endpoint: http://127.0.0.1:11434
+gpt_oss_tag: gpt-oss:20b
+gpt_oss_digest: 17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7
+gemma_tag: gemma4:26b-nvfp4
+gemma_digest: f60799545325362bdaa15cbf38694f997514d3d46425c900b4eb06c1d6422d18
+structured_output_status: qualified-with-model-specific-profiles
+residency_unload_status: qualified
+cancellation_status: observed-cessation-positive-via-local-server-log-http-reconciliation-unresolved
+context_overflow_status: runtime-not-fail-closed-adapter-preflight-required
+blocking_unknowns:
+  - supported-timeout-cancellation-reconciliation-with-request-identity-or-equivalent
+  - fail-closed-preflight-token-accounting-and-context-budget-enforcement
+local_evidence_root: /Users/atolkanets/DR009-LOCAL-LLM-RUNTIME-QUALIFICATION-001
+local_evidence_sha256s_file_sha256: 6c518d065ce2753d26e4073d92329458bac95a3ee8256e05353d65bac9103017
+repository_wide_current_gate_unchanged: true
+normative_effect: none
+next_gate: fresh independent review of the exact DR-009 candidate
+```
+
+DR-009 qualifies the effective Ollama/runtime boundary on the authorized target
+Mac without installing, updating or reconfiguring the runtime or models. Both
+historical finalist digests remain current. Strict schema output is reproducible
+for both finalists under explicit model-specific request profiles, and
+`/api/ps` plus `keep_alive: 0` provides an observed residency/unload contract.
+
+The qualification remains blocked for two adapter semantics. First, client
+cancellation was positively observed to cancel and release the single active
+gpt-oss task only through local server-log evidence; the native HTTP surface
+exposed no request identity or in-flight reconciliation state. Second, declared
+`num_ctx` did not fail closed on over-budget input: the gpt-oss backend silently
+truncated with only a server warning, while the Gemma MLX backend processed the
+full oversized prompt despite the smaller declared budget. No exact pre-request
+token-count API was established.
+
+This is bounded evidence, not model/runtime adoption or implementation authority.
+The compact raw evidence remains local under the SHA-identified bundle above.
+The exact next gate is fresh independent review of the exact DR-009 candidate.
 
 
 ## Superseded
