@@ -5,6 +5,11 @@ artifact_status: active
 authority: evidence
 owner: architecture-design-producer
 evidence_as_of: 2026-09-16
+research_status_at_publication: completed
+recommendation_status_at_publication: proposed
+question: Does the supervising ChatGPT surface establish the accepted trial host prerequisites?
+scope: September 16 ChatGPT host availability and explicit-only control/treatment isolation assessment; no installation or behavioral trial.
+repository_state: Package candidate a11863bd78424ad22ca24786a9a85b1d6a855274; historical assessment as of 2026-09-16, not a current eligibility verification.
 repository: ahtoxaandy999/agentic-development-workflow
 package_candidate_commit: a11863bd78424ad22ca24786a9a85b1d6a855274
 supersedes: null
