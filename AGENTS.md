@@ -22,6 +22,12 @@ Workflow v1 is adopted through [WORKFLOW-V1.md](WORKFLOW-V1.md), subject to its 
 - Do not select or install Apps, MCP servers, skills, hooks, or automation, and do not make broad connector writes, without an explicit later gate.
 - Do not expose, commit, or transmit secrets or unnecessary sensitive data.
 - Preserve the separation between evidence, normative policy, mutable research state, and commit acceptance state.
+- For a terminal task that created disposable local state, follow the
+  [Workspace closeout and cleanup amendment](WORKFLOW-V1.md#workspace-closeout-and-cleanup-amendment):
+  inventory task-owned worktrees/run/evidence surfaces, never discard dirty,
+  unpublished, active, ambiguous, or recovery-relevant state to obtain a clean
+  result, perform cleanup only under the task's explicit mutation authority,
+  and report `WORKSPACE CLEANUP: PASS` or `WORKSPACE CLEANUP: BLOCKED`.
 
 # Verification and acceptance
 
