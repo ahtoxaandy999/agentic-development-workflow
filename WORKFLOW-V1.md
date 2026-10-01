@@ -80,12 +80,13 @@ separately authorized protected publication, and verified remote readback. Until
 those conditions are satisfied, the pre-amendment Workflow v1 remains
 controlling.
 
-At an authorized terminal task outcome, after required durable candidate,
-review, acceptance, publication, recovery, and evidence obligations are
-satisfied, the execution owner must inventory every disposable workspace,
-worktree, local task branch, temporary run directory, and local evidence
-directory created for that task and classify each item before claiming clean
-closeout.
+At every terminal task report for a task that created disposable local state,
+including cancellation or abandonment and outcomes with downstream review,
+acceptance, publication, recovery, or evidence obligations still pending, the
+execution owner must inventory every disposable workspace, worktree, local task
+branch, temporary run directory, and local evidence directory created for that
+task and classify each item. Pending obligations do not defer inventory or
+classification. The task's terminal state is independent of its cleanup result.
 
 A cleanup item is eligible only when all applicable facts are freshly verified:
 
@@ -96,6 +97,8 @@ A cleanup item is eligible only when all applicable facts are freshly verified:
 - any candidate, result, or evidence that must remain durable is already
   preserved in its authoritative repository, remote ref, accepted publication,
   or designated durable evidence/archive root;
+- required durable candidate, review, acceptance, publication, recovery, and
+  evidence obligations applicable to removal of that item are satisfied;
 - removing the local item cannot erase the only known copy of an unpublished
   change, exact review subject, required recovery input, or retained evidence;
 - the current task or terminal-closeout authority explicitly permits the
@@ -108,7 +111,14 @@ and escalate instead of stashing, resetting, force-removing, overwriting, or
 silently discarding it.
 
 For an eligible Git worktree, normal closeout removes the worktree through Git
-and prunes stale worktree metadata. A local task branch may be deleted only when
+and verifies the target's removal and administrative state. `git worktree prune`
+has no path selector and may affect unrelated missing or unmounted worktrees.
+Pruning is permitted only when the complete affected set has been freshly
+inspected, every affected item is safe to prune, and explicit mutation authority
+covers that entire set. Global pruning is not required for
+`WORKSPACE CLEANUP: PASS`; any unresolved target administrative state must
+instead be reported.
+A local task branch may be deleted only when
 the same closeout authority covers that mutation and its tip is independently
 recoverable from an exact remote ref or is already contained in the accepted
 published history. Remote branch deletion is a separate mutation and is never
