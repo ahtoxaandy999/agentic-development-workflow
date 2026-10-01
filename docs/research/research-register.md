@@ -3,7 +3,7 @@ artifact: research-register
 artifact_status: active
 maturity: v1
 authority: research-index
-as_of: 2026-09-03
+as_of: 2026-09-28
 ---
 
 # Research Register
@@ -1572,11 +1572,19 @@ candidate_set:
   - gpt-oss:20b
   - gemma4:26b-nvfp4
 initial_execution_slice: ollama-plus-qwen3.5-9b-setup-and-protocol-smoke-only
-source_review_status: not-performed
+source_review_status: not-independently-recoverable-from-repository-or-github-evidence
+publication_merge: 572a511775ec926d24a0be2c67b13c8db4e1043b
+publication_tree: 3d9b4dd983aa53c4bce88a80f78b88f4ade33cb5
+publication_state: verified
+review_evidence_boundary: >
+  Publication is independently recoverable from live GitHub, but an immutable
+  independent DR-007 source-review verdict/findings record is not currently
+  recoverable from repository or GitHub review/comment evidence. The Register
+  therefore does not claim a verified completed source-review verdict.
 repository_wide_current_gate_unchanged: true
 normative_effect: none
 skill_status: deferred-until-two-stable-manual-model-runs
-next_gate: independent source review of the exact DR-007 evidence candidate
+next_gate: DR-008 benchmark-result synthesis and independent evidence review
 ```
 
 DR-007 records a bounded model-selection and benchmark-design proposal for the
@@ -1586,8 +1594,171 @@ profiles, proposes machine-readable local run bundles, and defers reusable-skill
 implementation until repeated manual evidence establishes a stable surface.
 It authorizes no model/runtime installation, system mutation, skill
 implementation, model adoption, Workflow v1 amendment or baseline change. The
-repository-wide current gate remains unchanged. The DR-007-specific next gate is
-independent source review of the exact evidence candidate.
+repository-wide current gate remains unchanged. Protected publication of the exact corrected DR-007 candidate is independently
+recoverable from live GitHub. No immutable independent DR-007 source-review
+verdict/findings record is currently recoverable from repository or GitHub
+review/comment evidence, so the Register does not claim a completed or verified
+source-review verdict. The current DR-007 follow-up gate remains the DR-008
+benchmark-result synthesis and independent evidence review recorded below.
+
+
+## DR-008 — Local LLM benchmark results and role-split evidence
+
+```yaml
+id: DR-008
+research_status: reviewed
+current_decision_status: accepted
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-008.md
+evidence_as_of: 2026-09-28
+research_basis_main: 572a511775ec926d24a0be2c67b13c8db4e1043b
+depends_on:
+  - DR-007
+scope: executed-local-llm-benchmark-results-and-role-split-evidence
+tested_candidates:
+  - qwen3.5:9b-mlx
+  - gpt-oss:20b
+  - gemma4:26b-nvfp4
+recommended_reasoning_candidate: gpt-oss:20b
+recommended_generation_candidate: gemma4:26b-nvfp4
+lightweight_fallback_candidate: qwen3.5:9b-mlx
+autonomous_policy_authority: prohibited-by-evidence
+deterministic_guard_required: true
+raw_result_storage: local-hashed-bundles-not-repository-persisted
+repository_wide_current_gate_unchanged: true
+normative_effect: none
+source_review_status: completed-pass
+source_review_subject_commit: 970a0b1711bd528a8030b0b8ff0323f2ca4565e6
+source_review_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/25#issuecomment-5870603955
+source_review_body_bytes: 6881
+source_review_body_sha256: 37936862ad8620496fc8cd4d2430730a5052190a5289d6d27dea82744ac6a14d
+source_review_findings: 0-blocker-0-major-1-minor-1-note
+coordinator_disposition_status: completed
+coordinator_disposition_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/25#issuecomment-5870605888
+coordinator_disposition_body_bytes: 2363
+coordinator_disposition_body_sha256: b27c8ca1ce8d1fa9e87c293ff8f88100ce5b5d040afe36662c7962f7e841a153
+coordinator_signal: "++m"
+adoption_scope: bounded-research-evidence-acceptance-and-integration-design-continuation-only
+model_runtime_or_workflow_policy_adoption: false
+publication_pr: 25
+publication_merge: 0d8805255556dfa86a18c28d95b7602b69164172
+publication_tree: 76f70e076a92f9f01a6a1562c0be336417823c32
+publication_second_parent: 970a0b1711bd528a8030b0b8ff0323f2ca4565e6
+publication_state: verified
+recovered_evidence_materialized_on: 2026-09-28
+recovered_evidence_timing: post-merge-materialization-of-earlier-review-and-disposition
+authorized_follow_up_gate: ADW-LOCAL-LLM-INTEGRATION-DESIGN-001
+integration_design_candidate: docs/design/ADW-LOCAL-LLM-INTEGRATION-DESIGN-001.md
+integration_design_review_status: completed-pass
+integration_design_review_subject_commit: c2d30acbac0b9024d55a4714feba51edea1b1fd6
+integration_design_review_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/26#issuecomment-5871186931
+integration_design_review_findings: 0-blocker-0-major-1-minor-1-note
+integration_design_disposition_status: completed-accept
+integration_design_disposition_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/26#issuecomment-5872023875
+integration_design_publication_pr: 26
+integration_design_publication_merge: df96ac3a865fd82083647067a5af7c29f553c202
+integration_design_publication_tree: 293bc7087ee8a52a48c6ad32f21bd65678974a4e
+integration_design_publication_second_parent: c2d30acbac0b9024d55a4714feba51edea1b1fd6
+integration_design_publication_receipt_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/26#issuecomment-5872291302
+integration_design_status: accepted-published-non-normative-design-basis
+integration_design_normative_effect: none
+integration_design_nonblocking_follow_up: review-minor-1-quality-metric-terminology
+post_publication_follow_up_gate: ADW-LOCAL-LLM-RUNTIME-QUALIFICATION-001
+next_gate: DR-009 local LLM runtime/API qualification and fresh independent review
+```
+
+DR-008 records the executed DR-007 benchmark results, corrected validator and
+cache-methodology findings, workstation resource observations, hidden
+code/reasoning results and workflow-specific replay evidence. Its current
+recommendation is a bounded phase-based role split: `gpt-oss:20b` for
+reasoning/review/ambiguity analysis and `gemma4:26b-nvfp4` for code and
+generation batches, with deterministic workflow code retaining authority over
+freshness, exact identity, authorization, transitions, tools, retry containment
+and merge/publication gates. Qwen3.5 9B remains a lightweight measured fallback.
+This is evidence and a proposed integration hypothesis only. It authorizes no
+model adoption, runtime adoption, Workflow v1 amendment, tooling implementation
+or autonomous repository action. The repository-wide current gate remains
+unchanged.
+
+The recovered PR #25 records make the full independent PASS and coordinator
+disposition retrievable from GitHub. They were posted after merge and do not
+claim pre-merge GitHub persistence. The exact reviewed subject is preserved as
+the second parent of the independently verified publication. Acceptance is
+limited to bounded research evidence and continuation to integration design,
+not adoption of either model or its role split as policy. The nonblocking
+MINOR 1 and NOTE 1 remain recorded in the review; DR-008 publication-time
+evidence is unchanged.
+
+The bounded [local-LLM integration design](../design/ADW-LOCAL-LLM-INTEGRATION-DESIGN-001.md)
+received exact-subject independent-review PASS in PR #26 comment `5871186931`,
+coordinator ACCEPT in comment `5872023875`, and protected publication as merge
+`df96ac3a865fd82083647067a5af7c29f553c202`; publication receipt
+`5872291302` records the exact topology and unchanged design blob. The design is
+an accepted/published non-normative design basis only. Its review MINOR 1 about
+the pilot quality-metric wording remains a nonblocking follow-up and is not
+silently corrected here.
+
+The separately authorized post-publication follow-up is the bounded DR-009
+runtime/API qualification recorded below. No adapter implementation, model/runtime
+adoption, pilot execution, automated writes, Workflow v1 amendment or baseline
+acceptance is claimed.
+
+
+## DR-009 — Local LLM effective runtime/API qualification
+
+```yaml
+id: DR-009
+research_status: completed
+current_decision_status: proposed
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-009.md
+evidence_as_of: 2026-09-28
+research_basis_main: df96ac3a865fd82083647067a5af7c29f553c202
+depends_on:
+  - DR-008
+  - ADW-LOCAL-LLM-INTEGRATION-DESIGN-001
+scope: local-llm-effective-runtime-api-qualification
+qualification_result: qualified-with-blockers
+target_machine: MacBook-Pro-Mac17,9-Apple-M5-Pro-24GB
+runtime: Ollama-0.34.4
+effective_endpoint: http://127.0.0.1:11434
+gpt_oss_tag: gpt-oss:20b
+gpt_oss_digest: 17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7
+gemma_tag: gemma4:26b-nvfp4
+gemma_digest: f60799545325362bdaa15cbf38694f997514d3d46425c900b4eb06c1d6422d18
+structured_output_status: qualified-with-model-specific-profiles
+residency_unload_status: qualified
+cancellation_status: observed-cessation-positive-via-local-server-log-http-reconciliation-unresolved
+context_overflow_status: runtime-not-fail-closed-adapter-preflight-required
+blocking_unknowns:
+  - supported-timeout-cancellation-reconciliation-with-request-identity-or-equivalent
+  - fail-closed-preflight-token-accounting-and-context-budget-enforcement
+local_evidence_root: /Users/atolkanets/DR009-LOCAL-LLM-RUNTIME-QUALIFICATION-001
+local_evidence_sha256s_file_sha256: 6c518d065ce2753d26e4073d92329458bac95a3ee8256e05353d65bac9103017
+repository_wide_current_gate_unchanged: true
+normative_effect: none
+next_gate: fresh independent review of the exact DR-009 candidate
+```
+
+DR-009 qualifies the effective Ollama/runtime boundary on the authorized target
+Mac without installing, updating or reconfiguring the runtime or models. Both
+historical finalist digests remain current. Strict schema output is reproducible
+for both finalists under explicit model-specific request profiles, and
+`/api/ps` plus `keep_alive: 0` provides an observed residency/unload contract.
+
+The qualification remains blocked for two adapter semantics. First, client
+cancellation was positively observed to cancel and release the single active
+gpt-oss task only through local server-log evidence; the native HTTP surface
+exposed no request identity or in-flight reconciliation state. Second, declared
+`num_ctx` did not fail closed on over-budget input: the gpt-oss backend silently
+truncated with only a server warning, while the Gemma MLX backend processed the
+full oversized prompt despite the smaller declared budget. No exact pre-request
+token-count API was established.
+
+This is bounded evidence, not model/runtime adoption or implementation authority.
+The compact raw evidence remains local under the SHA-identified bundle above.
+The exact next gate is fresh independent review of the exact DR-009 candidate.
+
 
 ## Superseded
 
