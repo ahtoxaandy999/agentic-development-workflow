@@ -3,7 +3,7 @@ artifact: research-register
 artifact_status: active
 maturity: v1
 authority: research-index
-as_of: 2026-09-03
+as_of: 2026-09-28
 ---
 
 # Research Register
@@ -1435,20 +1435,332 @@ decision_scope: >
   propose only. No PoC execution or mechanism selection is authorized.
 
 d5_status: CONFIRM DEFER
-d13_status: CONFIRM DEFER
+d13_status: CONDITIONALLY SELECT FOR ONE BOUNDED POC
 x3_status: CONFIRM REJECT
 authority_boundary: >
-  The accepted disposition preserves docs/research/ADW-DR-005-DISPOSITION-001.md
-  as the owner of the D5, D13 and X3 boundaries. The authorized D13
-  prerequisite-scoping/design gate may design and propose only. It creates no
-  PoC, App Server selection, implementation, automation, reviewer-to-GitHub
-  mutation, unattended, AFK, acceptance, merge, baseline or Workflow v1
-  amendment authority.
+  docs/research/ADW-DR-005-DISPOSITION-001.md and
+  docs/research/ADW-DR-006-DISPOSITION-001.md remain historical owners of their
+  recorded D5/D13/X3 dispositions. Current D13 status is conditionally selected
+  for one bounded Pet Project PoC only through
+  docs/design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md as amended, for the
+  current selected profile only, by
+  docs/design/ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001.md. The prior
+  Housing profile selection is historical. That selection authorizes local
+  implementation/preflight candidate production only. It creates no Pet Project
+  or Housing mutation, credential creation, pilot execution, unattended/AFK,
+  merge, D5 reconsideration, conformance or Workflow v1 amendment authority.
+  docs/design/ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001.md accepts the
+  exact reviewed preflight-003 package as execution-preparation input, accepts
+  the known main-write residual risk for one bounded Pet PoC only without
+  eliminating it, and selects two separate GitHub fine-grained personal access
+  tokens as publisher and reviewer/live-provider-reader credential products. It
+  creates no credential creation, Pet Project mutation, pilot execution or
+  conformance authority.
+  docs/design/ADW-D13-PET-CREDENTIAL-CREATION-AUTHORIZATION-001.md, after human
+  `++` and its effective condition, authorizes only the exact manual creation of
+  those two tokens, their macOS Keychain storage, their non-secret
+  effective-permission proof and a separately reviewed live-provider-reader
+  implementation. It creates no Pet Project mutation, pilot execution or
+  conformance authority.
 repository_wide_current_gate_unchanged: true
-next_gate: D13 prerequisite-scoping/design gate
+d13_prerequisite_design_candidate: docs/design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001.md
+d13_prerequisite_design_task_id: ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-001
+d13_prerequisite_design_subject_base: 796fef15a7ba3b78b57c1f06f5911c6a3f85dad5
+d13_prerequisite_design_accepted_subject: 72451ac5733a3f13d88f6ce566b455eb8012c945
+d13_prerequisite_design_publication_merge: ec62de8caf4c048521088a367cfa72d7e33d5dcd
+d13_prerequisite_design_review_verdict: PASS
+d13_prerequisite_design_review_findings: 0-blocker-0-major-0-minor-0-note
+d13_prerequisite_design_disposition: docs/design/ADW-D13-CONVEYOR-PREREQUISITE-DESIGN-DISPOSITION-001.md
+d13_prerequisite_design_disposition_decision: accept-d13-conveyor-prerequisite-design-as-prerequisite-design-basis
+d13_prerequisite_design_status: accepted-prerequisite-design-basis
+d13_prerequisite_design_normative_effect: none
+d13_conformance_evidence_readiness_assessment: docs/design/ADW-D13-CONFORMANCE-EVIDENCE-READINESS-ASSESSMENT-001.md
+d13_conformance_evidence_readiness_assessment_task_id: ADW-D13-CONFORMANCE-EVIDENCE-READINESS-ASSESSMENT-001
+d13_conformance_evidence_readiness_assessment_subject_main: bb177107d199f8e1f944779dba57daffd096eca9
+d13_conformance_evidence_readiness_assessment_decision: authorize-one-d13-conformance-evidence-acquisition-scoping-gate
+d13_conformance_evidence_readiness_assessment_result: ready-for-bounded-conformance-evidence-acquisition-scoping
+d13_conformance_result: not-established
+d13_conformance_evidence_acquisition_scoping: docs/design/ADW-D13-CONFORMANCE-EVIDENCE-ACQUISITION-SCOPING-001.md
+d13_conformance_evidence_acquisition_scoping_task_id: ADW-D13-CONFORMANCE-EVIDENCE-ACQUISITION-SCOPING-001
+d13_conformance_evidence_acquisition_scoping_subject_main: 07fdfc72cf21488b6190547aeaa14f8b19152a8e
+d13_conformance_evidence_acquisition_scoping_selected_profile: ahtoxaandy999/housing-recovery
+d13_conformance_evidence_acquisition_scoping_observed_profile_main: 01b3ae5288069660a12c6b35254e4fa59867429e
+d13_conformance_evidence_acquisition_scoping_decision: scope-one-housing-runtime-control-evidence-pilot-for-later-explicit-authorization
+d13_conformance_evidence_acquisition_scoping_status: scoped-semantics-retained-housing-profile-selection-historical
+d13_bounded_poc_authorization: docs/design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md
+d13_bounded_poc_authorization_task_id: ADW-D13-BOUNDED-POC-AUTHORIZATION-001
+d13_bounded_poc_authorization_subject_main: 2bc213c857e6e3713b881470408dbe429906f68a
+d13_bounded_poc_authorization_decision: conditionally-select-task-local-python-single-publisher-lifetime-lock-github-graphql-cas-for-one-bounded-d13-poc-and-authorize-implementation-preflight-candidate-production
+d13_bounded_poc_profile_amendment: docs/design/ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001.md
+d13_bounded_poc_profile_amendment_task_id: ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001
+d13_bounded_poc_profile_amendment_subject_main: 1256727d511ac973fae4501ce2c4181dda0fee9d
+d13_bounded_poc_profile_amendment_decision: correct-d13-bounded-poc-selected-profile-from-housing-to-pet-project
+d13_bounded_poc_profile_amendment_scope: current-selected-profile-only
+d13_bounded_poc_prior_selected_profile: ahtoxaandy999/housing-recovery
+d13_bounded_poc_prior_selected_profile_status: historical
+d13_bounded_poc_selected_profile: ahtoxaandy999/pet-project
+d13_bounded_poc_observed_profile_main: 28f84fe4324925adae0f17163d578ed2e1f9bc19
+d13_bounded_poc_selected_mechanism_changed: false
+d13_bounded_poc_selected_runtime: supervised-task-local-deterministic-python
+d13_bounded_poc_selected_generation_fence: posix-single-credential-publisher-lifetime-flock-plus-canonical-generation-record
+d13_bounded_poc_selected_commit_primitive: github-graphql-createCommitOnBranch-expectedHeadOid
+d13_bounded_poc_implementation_preflight_authorized: true
+d13_execution_prerequisite_disposition: docs/design/ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001.md
+d13_execution_prerequisite_disposition_task_id: ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001
+d13_execution_prerequisite_disposition_subject_main: d1f30a3c362459fe3a59cbba725a77be3f571f97
+d13_execution_prerequisite_disposition_decision: accept-preflight-003-as-execution-preparation-input-accept-one-poc-main-write-residual-risk-and-select-two-separate-fine-grained-pat-credential-products
+d13_bounded_poc_preflight_candidate_root: /Users/antony/Work/Projects/adw-d13-poc-preflight-003
+d13_bounded_poc_preflight_candidate_identity: e06eee1bbb0083adc35a965c8768f1516d97bae1d017908dffe1c0e05d7b32e8
+d13_bounded_poc_preflight_candidate_identity_definition: sha256-of-exact-MANIFEST.sha256-bytes
+d13_bounded_poc_preflight_subject_sha256: 7ca638b99e7d3025347f0969d9decbda5aaed2a596ccf37f468d30bb7e3c0ff7
+d13_bounded_poc_preflight_report_sha256: ac80f130eb8ed7d6c6f9df332afd1160a6cf1213a355f3292023be7f3bfaefbe
+d13_bounded_poc_preflight_review_result: PASS
+d13_bounded_poc_preflight_review_findings: 0-blocker-0-major-2-minor-4-note
+d13_bounded_poc_preflight_status: accepted-as-execution-preparation-input
+d13_bounded_poc_preflight_minor_2_report_section_5_7_stale_prose: preserved-historical-nonblocking-use-exact-identities
+d13_bounded_poc_main_write_residual_risk_disposition: accepted
+d13_bounded_poc_main_write_residual_risk_scope: one-bounded-pet-poc-selected-mechanism-dedicated-pilot-branch-effect-domain-only
+d13_bounded_poc_main_write_residual_risk_eliminated: false
+d13_bounded_poc_publisher_credential_product: github-fine-grained-personal-access-token
+d13_bounded_poc_reviewer_live_reader_credential_product: github-fine-grained-personal-access-token
+d13_bounded_poc_credential_separation: two-separate-credentials
+d13_bounded_poc_credential_repository_scope: ahtoxaandy999/pet-project-only
+d13_bounded_poc_live_provider_reader_required_before_execution: true
+d13_bounded_poc_live_provider_reader_status: not-produced-not-reviewed
+d13_credential_creation_authorization: docs/design/ADW-D13-PET-CREDENTIAL-CREATION-AUTHORIZATION-001.md
+d13_credential_creation_authorization_task_id: ADW-D13-PET-CREDENTIAL-CREATION-AUTHORIZATION-001
+d13_credential_creation_authorization_subject_main: 7ae30eee82b71b5f06a84b1aa428721fd3766e76
+d13_credential_creation_authorization_decision: authorize-bounded-d13-pet-fine-grained-pat-creation-effective-permission-proof-and-live-provider-reader-implementation
+d13_credential_creation_authorization_human_signal: "++"
+d13_credential_creation_authorization_effective_condition: independent-review-coordinator-acceptance-protected-publication-verified-readback
+d13_bounded_poc_credential_products_changed: false
+d13_bounded_poc_credential_role_separation: A-publisher-B-reviewer-live-provider-reader-distinct-token-values-and-records
+d13_bounded_poc_credential_resource_owner: ahtoxaandy999
+d13_bounded_poc_credential_repository_selection: only-select-repositories-ahtoxaandy999/pet-project
+d13_bounded_poc_credential_expiration: 7-days-from-token-generation-no-renewal-authority
+d13_bounded_poc_publisher_credential_intended_permissions: metadata-read-contents-read-write-actions-read-pull-requests-read-write
+d13_bounded_poc_reviewer_live_reader_credential_intended_permissions: metadata-read-contents-read-actions-read-pull-requests-read
+d13_bounded_poc_credential_creation_method: manual-user-mediated-github-fine-grained-pat-ui
+d13_bounded_poc_credential_storage: macos-keychain-generic-password
+d13_bounded_poc_publisher_keychain_service: adw-d13-pet-publisher
+d13_bounded_poc_reviewer_live_reader_keychain_service: adw-d13-pet-reviewer-reader
+d13_bounded_poc_credential_keychain_account: ahtoxaandy999
+d13_bounded_poc_credential_effective_permission_proof_authorized: true
+d13_bounded_poc_live_provider_reader_implementation_authorized: true
+d13_bounded_poc_live_provider_reader_review_required: true
+d13_bounded_poc_live_provider_reader_credential: B-reviewer-live-reader-only
+d13_bounded_poc_pilot_execution_authorized: false
+d13_bounded_poc_pet_project_mutation_authorized: false
+d13_bounded_poc_credential_creation_authorized: true
+next_gate: D13 Pet credential proof and live-provider-reader evidence acquisition gate
 ```
 
-The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; D13 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. Exactly one bounded D13 prerequisite-scoping/design gate is authorized to design and propose only; no PoC or mechanism selection is authorized. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 prerequisite-scoping/design gate`.
+The exact source-reviewed DR-006 evidence received coordinator disposition through [ADW-DR-006-DISPOSITION-001](ADW-DR-006-DISPOSITION-001.md). D5 remains `CONFIRM DEFER`; X3 remains `CONFIRM REJECT`. The historical DR-006 decision that D13 remained `CONFIRM DEFER` is preserved as the prior disposition. The accepted prerequisite design, readiness assessment and corrected conformance-evidence scoping establish the prerequisites for one explicit mechanism decision. Coordinator authorization [ADW-D13-BOUNDED-POC-AUTHORIZATION-001](../design/ADW-D13-BOUNDED-POC-AUTHORIZATION-001.md), after human `++`, changes the current D13 status only to `CONDITIONALLY SELECT FOR ONE BOUNDED POC` for the Housing profile using a supervised task-local deterministic Python runtime, exactly one credential-bearing publisher process fenced by a canonical lifetime POSIX `flock` plus canonical generation record, GitHub GraphQL `createCommitOnBranch(expectedHeadOid)` exact-head fencing, generation-bound operation control, local append-only evidence/recovery state and an isolated read-only reviewer credential. A new generation cannot activate until prior publisher cessation/lock release is established, and stale workspace/credential possession cannot substitute for the canonical lock/generation authority. This selection authorizes only local implementation/preflight candidate production. It authorizes no Housing mutation, credential creation, pilot execution, merge, unattended execution, D5 reconsideration or D13 conformance claim. Profile amendment [ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001](../design/ADW-D13-BOUNDED-POC-PET-PROFILE-AMENDMENT-001.md) corrects only the current selected profile from Housing to `ahtoxaandy999/pet-project`, observed at Pet `main` `28f84fe4324925adae0f17163d578ed2e1f9bc19`; the Housing selection and its review and merge evidence remain historical. The selected runtime, generation fence and GraphQL commit primitive are unchanged, and the amendment is not a new D13 mechanism selection. Pet's exact-candidate verification workflow and Chat conveyor controls are prior evidence only; its push-triggered `Exact candidate verification` runs are indirect pilot effects that must be inventoried and reconciled. The amendment authorizes no Pet Project mutation, credential creation or pilot execution. Execution-prerequisite disposition [ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001](../design/ADW-D13-PET-EXECUTION-PREREQUISITE-DISPOSITION-001.md) accepts the exact local preflight-003 package (candidate identity `e06eee1bbb0083adc35a965c8768f1516d97bae1d017908dffe1c0e05d7b32e8`, fresh independent affected review PASS) as the reviewed implementation/preflight input for subsequent D13 execution-preparation decisions. It accepts, for exactly one bounded D13 Pet PoC within the dedicated pilot branch/effect domain, the known residual risk that no evidenced GitHub provider-side control prevents a repository contents-write credential from targeting Pet `main`; the risk is not eliminated and confers no general, production, multi-project, merge or unattended/AFK authority. It selects two separate GitHub fine-grained personal access tokens scoped to Pet only: a publisher credential and a reviewer/live-provider-reader credential. Before execution authorization can become effective, a separately reviewed live provider reader using the read-only credential must replace the caller-supplied `fresh_snapshot` relied on by preflight-003. The stale preflight-003 report §5.7 prose is preserved as historical review evidence. No credential or token is created by that disposition. Credential authorization [ADW-D13-PET-CREDENTIAL-CREATION-AUTHORIZATION-001](../design/ADW-D13-PET-CREDENTIAL-CREATION-AUTHORIZATION-001.md), after human `++` and effective only after independent review, coordinator acceptance, protected publication and verified readback, authorizes manual user-mediated creation of exactly two distinct 7-day GitHub fine-grained personal access tokens with resource owner `ahtoxaandy999` and only `ahtoxaandy999/pet-project` selected: publisher A (Metadata read, Contents read/write, Actions read, Pull requests read/write) stored in macOS Keychain service `adw-d13-pet-publisher`, and reviewer/live-provider-reader B (Metadata read, Contents read, Actions read, Pull requests read) stored in service `adw-d13-pet-reviewer-reader`, both under account `ahtoxaandy999`. It also authorizes a non-secret, read-only effective-permission proof and implementation of a separately reviewed, read-only live provider reader bound to Pet and credential B only. A's Contents write is not branch-scoped; the main-write residual risk remains accepted for one bounded Pet PoC only and is not eliminated. Pet Project mutation and pilot execution remain unauthorized. `d13_conformance_result` remains `not-established`. The repository-wide current gate remains unchanged. The DR-006-specific next gate is `D13 Pet credential proof and live-provider-reader evidence acquisition gate`.
+
+
+## DR-007 — Local LLM benchmark protocol
+
+```yaml
+id: DR-007
+research_status: completed
+current_decision_status: proposed
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-007.md
+evidence_as_of: 2026-09-27
+research_basis_main: f87caf01ab7c09198c664bee654d86b438881c0f
+scope: local-llm-model-selection-benchmark-protocol-for-m5-pro-24gb
+candidate_set:
+  - qwen3.5:9b-mlx
+  - gpt-oss:20b
+  - gemma4:26b-nvfp4
+initial_execution_slice: ollama-plus-qwen3.5-9b-setup-and-protocol-smoke-only
+source_review_status: not-independently-recoverable-from-repository-or-github-evidence
+publication_merge: 572a511775ec926d24a0be2c67b13c8db4e1043b
+publication_tree: 3d9b4dd983aa53c4bce88a80f78b88f4ade33cb5
+publication_state: verified
+review_evidence_boundary: >
+  Publication is independently recoverable from live GitHub, but an immutable
+  independent DR-007 source-review verdict/findings record is not currently
+  recoverable from repository or GitHub review/comment evidence. The Register
+  therefore does not claim a verified completed source-review verdict.
+repository_wide_current_gate_unchanged: true
+normative_effect: none
+skill_status: deferred-until-two-stable-manual-model-runs
+next_gate: DR-008 benchmark-result synthesis and independent evidence review
+```
+
+DR-007 records a bounded model-selection and benchmark-design proposal for the
+M5 Pro 24 GB local semantic-policy/orchestration use case. It separates runtime
+performance from workflow correctness, defines controlled/daily/stretch
+profiles, proposes machine-readable local run bundles, and defers reusable-skill
+implementation until repeated manual evidence establishes a stable surface.
+It authorizes no model/runtime installation, system mutation, skill
+implementation, model adoption, Workflow v1 amendment or baseline change. The
+repository-wide current gate remains unchanged. Protected publication of the exact corrected DR-007 candidate is independently
+recoverable from live GitHub. No immutable independent DR-007 source-review
+verdict/findings record is currently recoverable from repository or GitHub
+review/comment evidence, so the Register does not claim a completed or verified
+source-review verdict. The current DR-007 follow-up gate remains the DR-008
+benchmark-result synthesis and independent evidence review recorded below.
+
+
+## DR-008 — Local LLM benchmark results and role-split evidence
+
+```yaml
+id: DR-008
+research_status: reviewed
+current_decision_status: accepted
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-008.md
+evidence_as_of: 2026-09-28
+research_basis_main: 572a511775ec926d24a0be2c67b13c8db4e1043b
+depends_on:
+  - DR-007
+scope: executed-local-llm-benchmark-results-and-role-split-evidence
+tested_candidates:
+  - qwen3.5:9b-mlx
+  - gpt-oss:20b
+  - gemma4:26b-nvfp4
+recommended_reasoning_candidate: gpt-oss:20b
+recommended_generation_candidate: gemma4:26b-nvfp4
+lightweight_fallback_candidate: qwen3.5:9b-mlx
+autonomous_policy_authority: prohibited-by-evidence
+deterministic_guard_required: true
+raw_result_storage: local-hashed-bundles-not-repository-persisted
+repository_wide_current_gate_unchanged: true
+normative_effect: none
+source_review_status: completed-pass
+source_review_subject_commit: 970a0b1711bd528a8030b0b8ff0323f2ca4565e6
+source_review_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/25#issuecomment-5870603955
+source_review_body_bytes: 6881
+source_review_body_sha256: 37936862ad8620496fc8cd4d2430730a5052190a5289d6d27dea82744ac6a14d
+source_review_findings: 0-blocker-0-major-1-minor-1-note
+coordinator_disposition_status: completed
+coordinator_disposition_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/25#issuecomment-5870605888
+coordinator_disposition_body_bytes: 2363
+coordinator_disposition_body_sha256: b27c8ca1ce8d1fa9e87c293ff8f88100ce5b5d040afe36662c7962f7e841a153
+coordinator_signal: "++m"
+adoption_scope: bounded-research-evidence-acceptance-and-integration-design-continuation-only
+model_runtime_or_workflow_policy_adoption: false
+publication_pr: 25
+publication_merge: 0d8805255556dfa86a18c28d95b7602b69164172
+publication_tree: 76f70e076a92f9f01a6a1562c0be336417823c32
+publication_second_parent: 970a0b1711bd528a8030b0b8ff0323f2ca4565e6
+publication_state: verified
+recovered_evidence_materialized_on: 2026-09-28
+recovered_evidence_timing: post-merge-materialization-of-earlier-review-and-disposition
+authorized_follow_up_gate: ADW-LOCAL-LLM-INTEGRATION-DESIGN-001
+integration_design_candidate: docs/design/ADW-LOCAL-LLM-INTEGRATION-DESIGN-001.md
+integration_design_review_status: completed-pass
+integration_design_review_subject_commit: c2d30acbac0b9024d55a4714feba51edea1b1fd6
+integration_design_review_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/26#issuecomment-5871186931
+integration_design_review_findings: 0-blocker-0-major-1-minor-1-note
+integration_design_disposition_status: completed-accept
+integration_design_disposition_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/26#issuecomment-5872023875
+integration_design_publication_pr: 26
+integration_design_publication_merge: df96ac3a865fd82083647067a5af7c29f553c202
+integration_design_publication_tree: 293bc7087ee8a52a48c6ad32f21bd65678974a4e
+integration_design_publication_second_parent: c2d30acbac0b9024d55a4714feba51edea1b1fd6
+integration_design_publication_receipt_ref: https://github.com/ahtoxaandy999/agentic-development-workflow/pull/26#issuecomment-5872291302
+integration_design_status: accepted-published-non-normative-design-basis
+integration_design_normative_effect: none
+integration_design_nonblocking_follow_up: review-minor-1-quality-metric-terminology
+post_publication_follow_up_gate: ADW-LOCAL-LLM-RUNTIME-QUALIFICATION-001
+next_gate: DR-009 local LLM runtime/API qualification and fresh independent review
+```
+
+DR-008 records the executed DR-007 benchmark results, corrected validator and
+cache-methodology findings, workstation resource observations, hidden
+code/reasoning results and workflow-specific replay evidence. Its current
+recommendation is a bounded phase-based role split: `gpt-oss:20b` for
+reasoning/review/ambiguity analysis and `gemma4:26b-nvfp4` for code and
+generation batches, with deterministic workflow code retaining authority over
+freshness, exact identity, authorization, transitions, tools, retry containment
+and merge/publication gates. Qwen3.5 9B remains a lightweight measured fallback.
+This is evidence and a proposed integration hypothesis only. It authorizes no
+model adoption, runtime adoption, Workflow v1 amendment, tooling implementation
+or autonomous repository action. The repository-wide current gate remains
+unchanged.
+
+The recovered PR #25 records make the full independent PASS and coordinator
+disposition retrievable from GitHub. They were posted after merge and do not
+claim pre-merge GitHub persistence. The exact reviewed subject is preserved as
+the second parent of the independently verified publication. Acceptance is
+limited to bounded research evidence and continuation to integration design,
+not adoption of either model or its role split as policy. The nonblocking
+MINOR 1 and NOTE 1 remain recorded in the review; DR-008 publication-time
+evidence is unchanged.
+
+The bounded [local-LLM integration design](../design/ADW-LOCAL-LLM-INTEGRATION-DESIGN-001.md)
+received exact-subject independent-review PASS in PR #26 comment `5871186931`,
+coordinator ACCEPT in comment `5872023875`, and protected publication as merge
+`df96ac3a865fd82083647067a5af7c29f553c202`; publication receipt
+`5872291302` records the exact topology and unchanged design blob. The design is
+an accepted/published non-normative design basis only. Its review MINOR 1 about
+the pilot quality-metric wording remains a nonblocking follow-up and is not
+silently corrected here.
+
+The separately authorized post-publication follow-up is the bounded DR-009
+runtime/API qualification recorded below. No adapter implementation, model/runtime
+adoption, pilot execution, automated writes, Workflow v1 amendment or baseline
+acceptance is claimed.
+
+
+## DR-009 — Local LLM effective runtime/API qualification
+
+```yaml
+id: DR-009
+research_status: completed
+current_decision_status: proposed
+owner: agentic-development-research
+artifact: docs/research/ADW-DR-009.md
+evidence_as_of: 2026-09-28
+research_basis_main: df96ac3a865fd82083647067a5af7c29f553c202
+depends_on:
+  - DR-008
+  - ADW-LOCAL-LLM-INTEGRATION-DESIGN-001
+scope: local-llm-effective-runtime-api-qualification
+qualification_result: qualified-with-blockers
+target_machine: MacBook-Pro-Mac17,9-Apple-M5-Pro-24GB
+runtime: Ollama-0.34.4
+effective_endpoint: http://127.0.0.1:11434
+gpt_oss_tag: gpt-oss:20b
+gpt_oss_digest: 17052f91a42e97930aa6e28a6c6c06a983e6a58dbb00434885a0cf5313e376f7
+gemma_tag: gemma4:26b-nvfp4
+gemma_digest: f60799545325362bdaa15cbf38694f997514d3d46425c900b4eb06c1d6422d18
+structured_output_status: qualified-with-model-specific-profiles
+residency_unload_status: qualified
+cancellation_status: observed-cessation-positive-via-local-server-log-http-reconciliation-unresolved
+context_overflow_status: runtime-not-fail-closed-adapter-preflight-required
+blocking_unknowns:
+  - supported-timeout-cancellation-reconciliation-with-request-identity-or-equivalent
+  - fail-closed-preflight-token-accounting-and-context-budget-enforcement
+local_evidence_root: /Users/atolkanets/DR009-LOCAL-LLM-RUNTIME-QUALIFICATION-001
+local_evidence_sha256s_file_sha256: 6c518d065ce2753d26e4073d92329458bac95a3ee8256e05353d65bac9103017
+repository_wide_current_gate_unchanged: true
+normative_effect: none
+next_gate: fresh independent review of the exact DR-009 candidate
+```
+
+DR-009 qualifies the effective Ollama/runtime boundary on the authorized target
+Mac without installing, updating or reconfiguring the runtime or models. Both
+historical finalist digests remain current. Strict schema output is reproducible
+for both finalists under explicit model-specific request profiles, and
+`/api/ps` plus `keep_alive: 0` provides an observed residency/unload contract.
+
+The qualification remains blocked for two adapter semantics. First, client
+cancellation was positively observed to cancel and release the single active
+gpt-oss task only through local server-log evidence; the native HTTP surface
+exposed no request identity or in-flight reconciliation state. Second, declared
+`num_ctx` did not fail closed on over-budget input: the gpt-oss backend silently
+truncated with only a server warning, while the Gemma MLX backend processed the
+full oversized prompt despite the smaller declared budget. No exact pre-request
+token-count API was established.
+
+This is bounded evidence, not model/runtime adoption or implementation authority.
+The compact raw evidence remains local under the SHA-identified bundle above.
+The exact next gate is fresh independent review of the exact DR-009 candidate.
+
 
 ## Superseded
 
