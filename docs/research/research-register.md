@@ -1472,6 +1472,10 @@ d13_prerequisite_design_disposition: docs/design/ADW-D13-CONVEYOR-PREREQUISITE-D
 d13_prerequisite_design_disposition_decision: accept-d13-conveyor-prerequisite-design-as-prerequisite-design-basis
 d13_prerequisite_design_status: accepted-prerequisite-design-basis
 d13_prerequisite_design_normative_effect: none
+d13_historical_alternative_path: docs/design/ADW-D13-PREREQUISITE-DESIGN-001.md
+d13_historical_alternative_source_subject: 6152e23099fadd120911ad2aa2f4ab3342f793e3
+d13_historical_alternative_role_disposition: docs/design/ADW-D13-PREREQUISITE-DESIGN-CORRECTION-DISPOSITION-002.md
+d13_historical_alternative_status: corrected-normalized-historical-alternative-candidate-review-and-acceptance-pending
 d13_conformance_evidence_readiness_assessment: docs/design/ADW-D13-CONFORMANCE-EVIDENCE-READINESS-ASSESSMENT-001.md
 d13_conformance_evidence_readiness_assessment_task_id: ADW-D13-CONFORMANCE-EVIDENCE-READINESS-ASSESSMENT-001
 d13_conformance_evidence_readiness_assessment_subject_main: bb177107d199f8e1f944779dba57daffd096eca9
