@@ -24,6 +24,10 @@ supersedes: null
 
 # Workflow v1
 
+> **Historical (v1).** Since [ADW-CHARTER-AMENDMENT-001](decisions/ADW-CHARTER-AMENDMENT-001.md) this file has no
+> normative effect and owns no current state. Current work: the `Unreleased`
+> section of [CHANGELOG.md](CHANGELOG.md).
+
 ## Adoption decision and effective condition
 
 Decision `ADW-WF1-NORMATIVE-ADOPTION-001`: `adopt-initial-workflow-v1-semantic-contract`.

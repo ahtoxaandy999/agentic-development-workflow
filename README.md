@@ -1,67 +1,49 @@
 # Agentic Development Workflow
 
-This repository is the durable, versioned control plane for a cross-project Agentic Development Workflow. It provides a small authoritative base for coordination, evidence governance, decision boundaries, and navigation across projects without copying product repositories or their task state.
+A small, versioned, tool-agnostic workflow core for projects that work with AI
+agents: how work is picked, decided, checked, reviewed and closed out. A
+project copies what it needs from a release tag and adapts it with a profile.
 
-## Current maturity
+## Status: being rebuilt
 
-The repository is at **v1** maturity through [Workflow v1](WORKFLOW-V1.md), the sole normative owner of the adopted semantic contract, subject to its protected-publication and verified-readback effective condition. Adoption does not claim full tooling implementation or grant execution authority. Bootstrap Context Baseline v0 remains the only accepted baseline.
+- **Workflow v1** (September to October 2026) designed a ChatGPT-coordinated
+  control plane with separate gates for research, adoption, review and
+  baseline acceptance. The process proved too heavy for day-to-day work and is
+  no longer followed. It stays readable at tag `v1` (planned, commit
+  `a1bd2fb76f3038d53e115e0218f3b8e1e0c8509e`) and in Git history.
+- **The charter** was amended by
+  [ADW-CHARTER-AMENDMENT-001](decisions/ADW-CHARTER-AMENDMENT-001.md): the
+  repository owner leads, agents of any tool assist, and acceptance is the
+  owner's approval of an exact commit.
+- **The core is not published yet.** The next change adds `core/`, `skills/`
+  and `profiles/` and removes the v1 material from the tree. Until a core
+  release tag exists, there is nothing to adopt.
 
-A file being active or a normative decision being adopted does not make a repository commit an accepted baseline. Candidate review and coordinator acceptance remain separate, exact-SHA gates.
+Planned and in-progress work lives only in the `Unreleased` section of the
+[changelog](CHANGELOG.md).
 
-## Purpose
+## What is here now
 
-The repository exists to make shared workflow authority durable, reviewable, and addressable by commit SHA. It separates four concerns that are easy to conflate:
-
-- normative mission, scope, roles, and safety boundaries;
-- rules for producing and promoting research evidence;
-- mutable research and adoption disposition;
-- candidate, review, and baseline acceptance state tied to exact commits.
-
-This separation lets coordinators and bounded agents find the current owner of a claim without relying on historical chat, memory, or handoff summaries.
-
-## Start here
-
-1. Read the [Project Charter](PROJECT-CHARTER.md) for the repository mission, boundaries, roles, authority hierarchy, and acceptance principles.
-2. Read the [Research Evidence Policy](docs/policies/research-evidence.md) before starting research or using research to support a decision.
-3. Read the [Research Register](docs/research/research-register.md) for current research state, adoption disposition, dependencies, and the next gate.
-4. Consult the [bootstrap research note](docs/research/ADW-BOOTSTRAP-RESEARCH-001.md) only when its publication-time evidence and reasoning are needed. The note is evidence, not policy.
-
-## Protected supervised publication
-
-Separately authorized supervised writes follow the [protected publication path](docs/design/ADW-WF1-PROTECTED-SERIALIZED-WRITE-PATH-OPERATIONAL-USE-SCOPING-001.md): a bounded candidate branch, draft PR, exact-candidate independent review, coordinator acceptance and separately authorized merge. The [Research Register](docs/research/research-register.md) remains the sole owner of the mutable current gate.
-
-Using this mechanism does not authorize a substantive repository change. Direct-main, routine, parallel, automated, unattended and AFK writes remain unauthorized. Workflow v1 adoption is subject to the effective condition in its normative owner and does not expand these permissions.
-
-## Authority map
-
-| Artifact | Role |
+| Path | Status |
 |---|---|
-| [Project Charter](PROJECT-CHARTER.md) | Normative owner of mission, scope, roles, authority, and the bootstrap safety floor |
-| [Workflow v1](WORKFLOW-V1.md) | Sole normative owner of Workflow v1 semantics and the conditional adoption decision |
-| [Research Evidence Policy](docs/policies/research-evidence.md) | Normative owner of research quality, review, adoption separation, freshness, and supersession |
-| [Research Register](docs/research/research-register.md) | Sole repository owner of mutable research state, current decision disposition, dependencies, and the current next gate |
-| [Bootstrap research note](docs/research/ADW-BOOTSTRAP-RESEARCH-001.md) | Source-reviewed publication-time evidence snapshot and reasoning |
-| `AGENTS.md` | Concise agent-facing navigation and hard-boundary map |
+| [PROJECT-CHARTER.md](PROJECT-CHARTER.md) | Current: mission, scope, roles, authority, safety floor, acceptance |
+| [decisions/](decisions/) | Current: one record per decision about ADW itself |
+| [CHANGELOG.md](CHANGELOG.md) | Current: releases and the single list of planned changes |
+| [AGENTS.md](AGENTS.md) | Current: how agents change this repository |
+| `WORKFLOW-V1.md`, `docs/`, `tools/`, `tests/`, `skills/adw-repo-handoff/` | Historical v1 material; not current rules; to be removed from the tree |
 
-Committed and current repository artifacts are the durable authority for their scopes. Chat, project memory, uploaded copies, summaries, and handoffs can point to that authority but cannot replace it. State-dependent work must also verify the live repository and exact commit rather than infer current state from a stored copy.
+## How a project will use it
 
-## What belongs here
+1. Pick a release tag.
+2. Copy the core files and the skills you need into your own repository.
+3. Write your profile (check command, review tool, where decisions and plans
+   live) into your own agent instructions.
+4. Record the tag and commit you copied from. Update by copying again from a
+   newer tag.
 
-- adopted cross-project workflow premises and governance boundaries;
-- concise navigation to authoritative artifacts;
-- source-reviewed research notes with durable publication metadata;
-- a compact index of research state, dependencies, adoption disposition, and gates;
-- later workflow or tooling artifacts only after their own explicit research, ownership, and adoption gates.
+There is no submodule, plugin, runtime dependency or automatic sync.
 
-## What does not belong here
+## License
 
-- product code, product architecture, or project-specific implementation rules;
-- an automatic duplicate of issues, plans, or task state owned elsewhere;
-- historical chat transcripts, memory exports, or handoff archives;
-- secrets, credentials, production identities, or unnecessary sensitive data;
-- speculative architecture, ADR, context, task, tooling, hook, or automation structures;
-- unadopted research recommendations presented as policy.
-
-## Current work
-
-See the [Research Register](docs/research/research-register.md) for current research state and the next gate. This landing page intentionally does not duplicate mutable status.
+There is no license file yet, so no reuse rights are granted. A license
+decision is pending.

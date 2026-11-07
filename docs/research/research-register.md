@@ -8,6 +8,10 @@ as_of: 2026-09-28
 
 # Research Register
 
+> **Historical (v1).** Since [ADW-CHARTER-AMENDMENT-001](../../decisions/ADW-CHARTER-AMENDMENT-001.md) this file has no
+> normative effect and owns no current state. Current work: the `Unreleased`
+> section of [CHANGELOG.md](../../CHANGELOG.md).
+
 ## Authority and update rule
 
 This file is created for the first time by the bootstrap materialization. No earlier repository register or register update is claimed.
