@@ -4,46 +4,59 @@ A small, versioned, tool-agnostic workflow core for projects that work with AI
 agents: how work is picked, decided, checked, reviewed and closed out. A
 project copies what it needs from a release tag and adapts it with a profile.
 
-## Status: being rebuilt
+ADW is not a runtime dependency, a hosted service or a control plane. Nothing
+syncs automatically; each project's own repository stays the authority for its
+work.
 
-- **Workflow v1** (September to October 2026) designed a ChatGPT-coordinated
-  control plane with separate gates for research, adoption, review and
-  baseline acceptance. The process proved too heavy for day-to-day work and is
-  no longer followed. It stays readable at tag `v1` (planned, commit
-  `a1bd2fb76f3038d53e115e0218f3b8e1e0c8509e`) and in Git history.
-- **The charter** was amended by
-  [ADW-CHARTER-AMENDMENT-001](decisions/ADW-CHARTER-AMENDMENT-001.md): the
-  repository owner leads, agents of any tool assist, and acceptance is the
-  owner's approval of an exact commit.
-- **The core is not published yet.** The next change adds `core/`, `skills/`
-  and `profiles/` and removes the v1 material from the tree. Until a core
-  release tag exists, there is nothing to adopt.
+## What is here
 
-Planned and in-progress work lives only in the `Unreleased` section of the
-[changelog](CHANGELOG.md).
-
-## What is here now
-
-| Path | Status |
+| Path | What it is |
 |---|---|
-| [PROJECT-CHARTER.md](PROJECT-CHARTER.md) | Current: mission, scope, roles, authority, safety floor, acceptance |
-| [decisions/](decisions/) | Current: one record per decision about ADW itself |
-| [CHANGELOG.md](CHANGELOG.md) | Current: releases and the single list of planned changes |
-| [AGENTS.md](AGENTS.md) | Current: how agents change this repository |
-| `WORKFLOW-V1.md`, `docs/`, `tools/`, `tests/`, `skills/adw-repo-handoff/` | Historical v1 material; not current rules; to be removed from the tree |
+| [core/](core/) | Six short rule files, each readable on its own |
+| [skills/](skills/) | Step-by-step skills that apply the core rules |
+| [profiles/](profiles/) | The values a project fills in, with code and non-code defaults |
+| [PROJECT-CHARTER.md](PROJECT-CHARTER.md) | How ADW itself is governed: roles, authority, acceptance |
+| [decisions/](decisions/) | One record per decision about ADW itself |
+| [CHANGELOG.md](CHANGELOG.md) | Releases, and the single list of planned changes |
+| [AGENTS.md](AGENTS.md) | How agents change this repository |
+| [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) | Notices for adapted third-party text |
 
-## How a project will use it
+### Core
 
-1. Pick a release tag.
-2. Copy the core files and the skills you need into your own repository.
-3. Write your profile (check command, review tool, where decisions and plans
-   live) into your own agent instructions.
+| File | Covers |
+|---|---|
+| [repo-contract.md](core/repo-contract.md) | What a project's agent entry file must say: where things live, invariants, when to stop and ask, what never to do |
+| [backlog-loop.md](core/backlog-loop.md) | One planning file and the delivery loop |
+| [decisions.md](core/decisions.md) | Owner-class versus minor decisions, asking, the decision log |
+| [evidence.md](core/evidence.md) | No "done" without fresh evidence; the evidence line |
+| [review.md](core/review.md) | Independent review of an exact change; the verdict format |
+| [closeout.md](core/closeout.md) | What a task leaves behind, and the cleanup line |
+
+## How a project uses it
+
+1. Pick a release tag (the first core release is planned; see the
+   changelog).
+2. Copy `core/`, the skills you need, and one profile into your own
+   repository.
+3. Fill the [profile template](profiles/template.md) in your agent
+   instructions: plan file, checks, review channel, who accepts.
 4. Record the tag and commit you copied from. Update by copying again from a
    newer tag.
 
-There is no submodule, plugin, runtime dependency or automatic sync.
+There is no submodule, plugin, runtime dependency or automatic sync. The
+skills use the common `SKILL.md` format (a name, a description, then the
+steps) and name no vendor or tool.
+
+## History
+
+Workflow v1 (September to October 2026) designed a ChatGPT-coordinated control
+plane with separate gates for research, adoption, review and baseline
+acceptance. The process proved too heavy for day-to-day work and was replaced
+by this core. It stays readable at tag `v1`
+(`a1bd2fb76f3038d53e115e0218f3b8e1e0c8509e`) and in Git history.
 
 ## License
 
-There is no license file yet, so no reuse rights are granted. A license
-decision is pending.
+There is no license file yet, so no reuse rights are granted for this
+repository. A license decision is pending. Adapted third-party text keeps its
+own license; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).

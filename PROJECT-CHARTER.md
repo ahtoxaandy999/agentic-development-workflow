@@ -4,6 +4,7 @@ artifact_status: active
 authority: normative
 owner: repository-owner
 amendment_decision_id: ADW-CHARTER-AMENDMENT-001
+wording_update_decision_id: ADW-CORE-ADOPTION-001
 supersedes: PROJECT-CHARTER.md at a1bd2fb76f3038d53e115e0218f3b8e1e0c8509e
 ---
 
@@ -33,10 +34,11 @@ This repository may own:
 
 - this charter and the decision records for changes to ADW (`decisions/`);
 - the changelog and release tags;
-- arriving in a later change: a core of short workflow rules that are each
-  readable on their own (`core/`), portable skills that implement those rules
-  (`skills/`), and profiles that adapt the core to a kind of project
-  (`profiles/`).
+- a core of short workflow rules that are each readable on their own
+  (`core/`);
+- portable skills that implement those rules (`skills/`);
+- profiles that adapt the core to a kind of project (`profiles/`);
+- notices for third-party text that the core or skills adapt.
 
 ## Non-scope
 
@@ -135,7 +137,7 @@ consumer copies files from a tag and records the tag and commit it copied
 from. ADW never writes into a consumer's repository.
 
 Workflow v1 is preserved by the tag `v1` at
-`a1bd2fb76f3038d53e115e0218f3b8e1e0c8509e` (planned; see the changelog).
+`a1bd2fb76f3038d53e115e0218f3b8e1e0c8509e` and in Git history.
 
 ## Amendment and supersession
 
