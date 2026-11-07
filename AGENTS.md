@@ -18,8 +18,8 @@ historical v1 material. Do not edit them or cite them as current rules.
 ## How a change is made
 
 1. Work on an assignment from the owner. Check the live `origin/main` first.
-2. Create a branch `adw/<short-name>` from `origin/main`, in a separate
-   worktree.
+2. Create a branch from `origin/main` (the existing convention is
+   `adw/<short-name>`), preferably in a separate worktree.
 3. A change to a rule or to the charter needs a decision record in
    `decisions/` that names the rule, the target file and the scope. The rule
    edit lands in the same pull request.

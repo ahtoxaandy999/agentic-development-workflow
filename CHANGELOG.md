@@ -24,10 +24,9 @@ This section is the single owner of planned and in-progress changes to ADW
 
 - Tag `v1` at `a1bd2fb76f3038d53e115e0218f3b8e1e0c8509e`, the last Workflow v1
   commit, before any v1 file leaves the tree.
-- Next change, under its own decision record: add `core/` (six short rule
-  files), `skills/` and `profiles/` (code, non-code, template); remove
-  `WORKFLOW-V1.md`, `docs/`, `tools/`, `tests/` and `skills/adw-repo-handoff/`
-  from the tree; rename `PROJECT-CHARTER.md` to `CHARTER.md`.
+- Next change, under its own decision record that defines the contents: add
+  `core/`, `skills/` and `profiles/`; remove `WORKFLOW-V1.md`, `docs/`,
+  `tools/`, `tests/` and `skills/adw-repo-handoff/` from the tree.
 - First core release tag after that change.
 
 ## v1 (tag planned at `a1bd2fb`, 2026-10-01)

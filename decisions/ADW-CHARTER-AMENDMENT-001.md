@@ -76,5 +76,4 @@ and merged to `main` through a pull request. Until then the charter at
 - Create the annotated tag `v1` at `a1bd2fb76f3038d53e115e0218f3b8e1e0c8509e`
   (owner action; a published tag is not moved).
 - Next change, under its own decision record: add `core/`, `skills/` and
-  `profiles/`; remove the v1 material from the tree; rename
-  `PROJECT-CHARTER.md` to `CHARTER.md`.
+  `profiles/`, and remove the v1 material from the tree.
